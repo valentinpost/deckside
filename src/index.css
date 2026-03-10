@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --color-mtg-white: #f9faf4;
+  --color-mtg-blue: #0e68ab;
+  --color-mtg-black: #150b00;
+  --color-mtg-red: #d3202a;
+  --color-mtg-green: #00733e;
+  --color-mtg-gold: #c9a44e;
+  --color-mtg-colorless: #a8b6c0;
+}
+
+/* Card tile aspect ratio (standard MTG card is 63mm × 88mm ≈ 5:7) */
+.card-aspect {
+  aspect-ratio: 5 / 7;
+}
+
+/* Smooth bottom sheet transitions */
+.bottom-sheet-enter {
+  transform: translateY(100%);
+}
+.bottom-sheet-enter-active {
+  transform: translateY(0);
+  transition: transform 300ms ease-out;
+}
+
+/* Safe area insets for mobile */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}

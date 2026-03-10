@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit",
+      "MultiEdit",
+      "Bash(npm run lint)",
+      "Bash(npm run test *)",
+      "WebSearch",
+      "Bash(npm view:*)",
+      "WebFetch(domain:api.scryfall.com)",
+      "WebFetch(domain:api2.moxfield.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "WebFetch(domain:example.com)",
+      "Bash(curl *)"
+    ]
+  }
+}
