@@ -1,11 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchMoxfieldDeck, transformMoxfieldCards } from '@/api/moxfield';
+import { fetchMoxfieldDeck, transformMoxfieldCards, scryfallImageUrl } from '@/api/moxfield';
 import { fetchDeckFromCloud } from '@/api/cloudflare';
 import { getCachedDeck, cacheDeck } from '@/db/indexeddb';
 import { addRecentDeck } from '@/db/localstorage';
 import { buildMoxfieldUrl } from '@/utils/moxfieldUrl';
 import { useDeckStore } from '@/store/deckStore';
-import type { StoredDeck } from '@/types/deck';
+import type { StoredDeck, Card } from '@/types/deck';
+
+/** Rebuild missing image URLs from scryfallId (migrates old cached data) */
+function migrateImageUrls(cards: Card[]): boolean {
+  let migrated = false;
+  for (const card of cards) {
+    if (!card.imageUrl && card.scryfallId) {
+      card.imageUrl = scryfallImageUrl(card.scryfallId);
+      migrated = true;
+    }
+  }
+  return migrated;
+}
 
 async function loadDeck(deckId: string): Promise<StoredDeck> {
   console.log(`[loadDeck] Starting load for ${deckId}`);
@@ -31,12 +43,21 @@ async function loadDeck(deckId: string): Promise<StoredDeck> {
   // Use whichever is newer
   if (remote && (!cached || remote.version > cached.version)) {
     console.log('[loadDeck] Using remote data');
+    const m1 = migrateImageUrls(remote.mainboard);
+    const m2 = migrateImageUrls(remote.sideboard);
+    if (m1 || m2) console.log('[loadDeck] Migrated missing image URLs');
     await cacheDeck(remote);
     addRecentDeck({ deckId: remote.deckId, deckName: remote.deckName, lastOpened: Date.now() });
     return remote;
   }
   if (cached) {
     console.log('[loadDeck] Using cached data');
+    const c1 = migrateImageUrls(cached.mainboard);
+    const c2 = migrateImageUrls(cached.sideboard);
+    if (c1 || c2) {
+      console.log('[loadDeck] Migrated missing image URLs');
+      await cacheDeck(cached);
+    }
     addRecentDeck({ deckId: cached.deckId, deckName: cached.deckName, lastOpened: Date.now() });
     return cached;
   }

@@ -7,7 +7,7 @@ import { API } from '@/config';
  * Scryfall CDN format: https://cards.scryfall.io/SIZE/front/A/B/SCRYFALL_ID.jpg
  * where A and B are the first two characters of the ID.
  */
-function scryfallImageUrl(scryfallId: string, size: 'small' | 'normal' = 'small'): string {
+export function scryfallImageUrl(scryfallId: string, size: 'small' | 'normal' = 'small'): string {
   const a = scryfallId[0];
   const b = scryfallId[1];
   return `https://cards.scryfall.io/${size}/front/${a}/${b}/${scryfallId}.jpg`;
