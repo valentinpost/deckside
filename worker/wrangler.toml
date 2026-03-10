@@ -1,7 +1,0 @@
-name = "deckside-api"
-main = "src/index.ts"
-compatibility_date = "2025-03-10"
-
-[[kv_namespaces]]
-binding = "DECKS"
-id = "e5f6b307c8db4d4fb9797fec4c480180"
