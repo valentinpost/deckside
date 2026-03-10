@@ -1,6 +1,6 @@
 import type { StoredDeck } from '@/types/deck';
 
-const WORKER_BASE = 'https://sideboard-worker.pages.dev';
+const WORKER_BASE = 'https://deckside.deckside-35.workers.dev';
 
 export async function fetchDeckFromCloud(deckId: string): Promise<StoredDeck | null> {
   const res = await fetch(`${WORKER_BASE}/api/deck/${deckId}`);

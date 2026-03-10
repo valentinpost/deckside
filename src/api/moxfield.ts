@@ -1,7 +1,7 @@
 import type { MoxfieldDeckResponse } from '@/types/moxfield';
 import type { Card } from '@/types/deck';
 
-const WORKER_BASE = 'https://sideboard-worker.pages.dev';
+const WORKER_BASE = 'https://deckside.deckside-35.workers.dev';
 
 function getImageUrl(card: MoxfieldDeckResponse['mainboard'][string]['card']): string {
   // Double-faced cards have no top-level image_uris

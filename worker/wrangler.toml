@@ -4,5 +4,4 @@ compatibility_date = "2025-03-10"
 
 [[kv_namespaces]]
 binding = "DECKS"
-id = "your-kv-namespace-id"
-preview_id = "your-preview-kv-namespace-id"
+id = "e5f6b307c8db4d4fb9797fec4c480180"
