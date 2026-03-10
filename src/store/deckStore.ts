@@ -3,8 +3,7 @@ import { nanoid } from 'nanoid';
 import type { StoredDeck, Matchup, CardRef, HistoryEntry } from '@/types/deck';
 import { toSlug } from '@/utils/slug';
 import { cacheDeck } from '@/db/indexeddb';
-
-const HISTORY_CAP = 50;
+import { HISTORY_CAP } from '@/constants';
 
 interface DeckState {
   deck: StoredDeck | null;

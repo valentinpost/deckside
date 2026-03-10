@@ -1,7 +1,7 @@
 import type { CardRef, Card } from '@/types/deck';
 
-/** Sum all card quantities in a CardRef array */
-export function sumQuantities(refs: CardRef[]): number {
+/** Sum all card quantities in an array of objects with a `quantity` field */
+export function sumQuantities(refs: readonly { quantity: number }[]): number {
   return refs.reduce((sum, r) => sum + r.quantity, 0);
 }
 

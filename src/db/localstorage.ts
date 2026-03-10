@@ -1,8 +1,8 @@
 import type { RecentDeck } from '@/types/deck';
+import { MAX_RECENT_DECKS } from '@/constants';
 
 const RECENT_KEY = 'sideboard-recent-decks';
 const AUTHOR_KEY = 'sideboard-author';
-const MAX_RECENT = 20;
 
 export function getRecentDecks(): RecentDeck[] {
   try {
@@ -16,7 +16,7 @@ export function getRecentDecks(): RecentDeck[] {
 export function addRecentDeck(deck: RecentDeck): void {
   const recents = getRecentDecks().filter((d) => d.deckId !== deck.deckId);
   recents.unshift({ ...deck, lastOpened: Date.now() });
-  localStorage.setItem(RECENT_KEY, JSON.stringify(recents.slice(0, MAX_RECENT)));
+  localStorage.setItem(RECENT_KEY, JSON.stringify(recents.slice(0, MAX_RECENT_DECKS)));
 }
 
 export function removeRecentDeck(deckId: string): void {
