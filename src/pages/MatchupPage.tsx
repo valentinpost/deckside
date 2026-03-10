@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useDeck } from '@/hooks/useDeck';
 import { useDeckStore } from '@/store/deckStore';
 import { findStaleRefs } from '@/utils/deckDiff';
+import { toggleCardRef } from '@/utils/cardRefs';
 import { CardGrid } from '@/components/matchup/CardGrid';
 import { InOutCounter } from '@/components/matchup/InOutCounter';
 import { SideboardPlan } from '@/components/matchup/SideboardPlan';
@@ -35,11 +36,7 @@ export function MatchupPage() {
 
   const handleOutToggle = useCallback((name: string, qty: number) => {
     setOutRefs((prev) => {
-      const next = qty === 0
-        ? prev.filter((r) => r.name !== name)
-        : prev.some((r) => r.name === name)
-          ? prev.map((r) => (r.name === name ? { ...r, quantity: qty } : r))
-          : [...prev, { name, quantity: qty }];
+      const next = toggleCardRef(prev, name, qty);
       if (matchup) updateMatchupCards(matchup.id, next, inRefs);
       return next;
     });
@@ -47,11 +44,7 @@ export function MatchupPage() {
 
   const handleInToggle = useCallback((name: string, qty: number) => {
     setInRefs((prev) => {
-      const next = qty === 0
-        ? prev.filter((r) => r.name !== name)
-        : prev.some((r) => r.name === name)
-          ? prev.map((r) => (r.name === name ? { ...r, quantity: qty } : r))
-          : [...prev, { name, quantity: qty }];
+      const next = toggleCardRef(prev, name, qty);
       if (matchup) updateMatchupCards(matchup.id, outRefs, next);
       return next;
     });
@@ -60,6 +53,12 @@ export function MatchupPage() {
   const handleNotesBlur = useCallback(() => {
     if (matchup) updateMatchupNotes(matchup.id, notes);
   }, [matchup, notes, updateMatchupNotes]);
+
+  // Compute stale refs before early returns that need it
+  const staleMap = useMemo(
+    () => deck ? findStaleRefs(deck.matchups, deck.mainboard, deck.sideboard) : new Map(),
+    [deck?.matchups, deck?.mainboard, deck?.sideboard],
+  );
 
   if (isLoading) return <LoadingSpinner message="Loading deck..." />;
   if (error) return <ErrorBanner message={error.message} />;
@@ -75,10 +74,6 @@ export function MatchupPage() {
     );
   }
 
-  const staleMap = useMemo(
-    () => findStaleRefs(deck.matchups, deck.mainboard, deck.sideboard),
-    [deck.matchups, deck.mainboard, deck.sideboard],
-  );
   const staleCards = staleMap.get(matchup.id) ?? [];
 
   return (

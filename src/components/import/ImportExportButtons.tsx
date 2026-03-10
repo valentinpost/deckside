@@ -19,19 +19,15 @@ export function ImportExportButtons({ deck, onImport }: ImportExportButtonsProps
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Failed to import file');
     }
-    // Reset input
     if (fileRef.current) fileRef.current.value = '';
   }
 
   return (
     <div className="flex gap-2">
-      <button
-        onClick={() => exportDeckToJson(deck)}
-        className="rounded-lg border border-slate-600 hover:bg-slate-800 px-3 py-2 text-sm transition-colors"
-      >
+      <button onClick={() => exportDeckToJson(deck)} className="btn-secondary">
         Export JSON
       </button>
-      <label className="rounded-lg border border-slate-600 hover:bg-slate-800 px-3 py-2 text-sm transition-colors cursor-pointer">
+      <label className="btn-secondary cursor-pointer">
         Import JSON
         <input
           ref={fileRef}

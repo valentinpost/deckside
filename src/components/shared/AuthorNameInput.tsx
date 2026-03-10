@@ -28,12 +28,9 @@ export function AuthorNameInput({ onSet }: AuthorNameInputProps) {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Your name"
-          className="flex-1 rounded-lg bg-slate-900 border border-slate-600 px-3 py-2 text-sm placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="input-sm flex-1"
         />
-        <button
-          type="submit"
-          className="rounded-lg bg-blue-600 hover:bg-blue-500 px-4 py-2 text-sm font-medium transition-colors"
-        >
+        <button type="submit" className="btn-primary">
           Save
         </button>
       </div>

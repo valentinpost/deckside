@@ -1,4 +1,5 @@
 import type { StoredDeck } from '@/types/deck';
+import { sumQuantities } from '@/utils/validation';
 
 interface DeckHeaderProps {
   deck: StoredDeck;
@@ -11,16 +12,11 @@ export function DeckHeader({ deck, onRefreshMoxfield, refreshing }: DeckHeaderPr
     <div className="space-y-2">
       <h1 className="text-2xl font-bold">{deck.deckName}</h1>
       <div className="flex items-center gap-3 text-sm text-slate-400">
-        <span>{deck.mainboard.length} mainboard cards</span>
+        <span>{sumQuantities(deck.mainboard)} mainboard</span>
         <span className="text-slate-600">|</span>
-        <span>{deck.sideboard.length} sideboard cards</span>
+        <span>{sumQuantities(deck.sideboard)} sideboard</span>
         <span className="text-slate-600">|</span>
-        <a
-          href={deck.moxfieldUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-400 hover:text-blue-300"
-        >
+        <a href={deck.moxfieldUrl} target="_blank" rel="noopener noreferrer" className="link">
           Moxfield
         </a>
         {onRefreshMoxfield && (

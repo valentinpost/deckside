@@ -1,11 +1,10 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { parseMoxfieldUrl } from '@/utils/moxfieldUrl';
 import { importDeckFromJson } from '@/utils/exportImport';
 import { cacheDeck } from '@/db/indexeddb';
 import { addRecentDeck } from '@/db/localstorage';
 import { useRecentDecks, notifyRecentDecksChanged } from '@/hooks/useRecentDecks';
-import { Link } from 'react-router-dom';
 
 export function HomePage() {
   const [url, setUrl] = useState('');
@@ -59,12 +58,9 @@ export function HomePage() {
             value={url}
             onChange={(e) => { setUrl(e.target.value); setError(''); }}
             placeholder="https://www.moxfield.com/decks/..."
-            className="flex-1 rounded-lg bg-slate-800 border border-slate-700 px-4 py-3 text-sm placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="input-md flex-1"
           />
-          <button
-            type="submit"
-            className="rounded-lg bg-blue-600 hover:bg-blue-500 px-5 py-3 text-sm font-medium transition-colors"
-          >
+          <button type="submit" className="btn-primary px-5 py-3">
             Load
           </button>
         </div>
@@ -91,10 +87,7 @@ export function HomePage() {
         ) : (
           <div className="space-y-2">
             {recents.map((deck) => (
-              <div
-                key={deck.deckId}
-                className="flex items-center gap-3 rounded-lg bg-slate-800/50 border border-slate-700/50 p-3 hover:bg-slate-800 transition-colors"
-              >
+              <div key={deck.deckId} className="list-item">
                 <Link to={`/deck/${deck.deckId}`} className="flex-1 min-w-0">
                   <div className="font-medium truncate">{deck.deckName}</div>
                   <div className="text-xs text-slate-400 mt-0.5">
@@ -103,7 +96,7 @@ export function HomePage() {
                 </Link>
                 <button
                   onClick={() => remove(deck.deckId)}
-                  className="p-2 text-slate-500 hover:text-red-400 transition-colors shrink-0"
+                  className="btn-icon-danger"
                   aria-label={`Remove ${deck.deckName}`}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

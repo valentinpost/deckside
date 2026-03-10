@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useDeck } from '@/hooks/useDeck';
 import { useDeckStore } from '@/store/deckStore';
 import { useRefreshMoxfield } from '@/hooks/useRefreshMoxfield';
+import { sumQuantities } from '@/utils/validation';
 import { getAuthorName } from '@/db/localstorage';
 import { DeckHeader } from '@/components/deck/DeckHeader';
 import { MatchupList } from '@/components/deck/MatchupList';
@@ -20,6 +21,7 @@ export function DeckPage() {
   const deck = useDeckStore((s) => s.deck);
   const addMatchup = useDeckStore((s) => s.addMatchup);
   const removeMatchup = useDeckStore((s) => s.removeMatchup);
+  const renameMatchup = useDeckStore((s) => s.renameMatchup);
   const snapshotHistory = useDeckStore((s) => s.snapshotHistory);
   const revertToHistory = useDeckStore((s) => s.revertToHistory);
   const { refresh: refreshMoxfield, refreshing } = useRefreshMoxfield();
@@ -45,6 +47,13 @@ export function DeckPage() {
     removeMatchup(matchupId);
   }
 
+  function handleRenameMatchup(matchupId: string, name: string) {
+    const matchup = deck!.matchups.find((m) => m.id === matchupId);
+    if (!authorName || !matchup) return;
+    snapshotHistory(authorName, `Renamed matchup: ${matchup.name} -> ${name}`);
+    renameMatchup(matchupId, name);
+  }
+
   function handleRevert(entryId: string) {
     if (!authorName) return;
     revertToHistory(entryId, authorName);
@@ -54,10 +63,7 @@ export function DeckPage() {
     <div className="space-y-6">
       <DeckHeader deck={deck} onRefreshMoxfield={refreshMoxfield} refreshing={refreshing} />
 
-      {/* Author name prompt */}
-      {!authorName && (
-        <AuthorNameInput onSet={setAuthorName} />
-      )}
+      {!authorName && <AuthorNameInput onSet={setAuthorName} />}
 
       {/* Matchups */}
       <div className="space-y-3">
@@ -66,7 +72,7 @@ export function DeckPage() {
           <div className="flex gap-2">
             <button
               onClick={() => setShowHistory(true)}
-              className="rounded-lg border border-slate-600 hover:bg-slate-800 px-3 py-2 text-sm transition-colors"
+              className="btn-secondary"
               title="View edit history"
             >
               History
@@ -74,7 +80,7 @@ export function DeckPage() {
             <button
               onClick={() => setShowAddDialog(true)}
               disabled={!authorName}
-              className="rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-50 px-4 py-2 text-sm font-medium transition-colors"
+              className="btn-primary disabled:opacity-50"
             >
               + Add Matchup
             </button>
@@ -84,10 +90,10 @@ export function DeckPage() {
           deckId={deck.deckId}
           matchups={deck.matchups}
           onDelete={handleDeleteMatchup}
+          onRename={handleRenameMatchup}
         />
       </div>
 
-      {/* Export/Import */}
       <ImportExportButtons deck={deck} onImport={(imported) => useDeckStore.getState().setDeck(imported)} />
 
       {/* Card preview toggle */}
@@ -96,7 +102,7 @@ export function DeckPage() {
           onClick={() => setShowCards(!showCards)}
           className="text-sm text-slate-400 hover:text-slate-200 transition-colors"
         >
-          {showCards ? 'Hide' : 'Show'} deck cards ({deck.mainboard.reduce((s, c) => s + c.quantity, 0)} main / {deck.sideboard.reduce((s, c) => s + c.quantity, 0)} side)
+          {showCards ? 'Hide' : 'Show'} deck cards ({sumQuantities(deck.mainboard)} main / {sumQuantities(deck.sideboard)} side)
         </button>
         {showCards && (
           <div className="space-y-4">

@@ -1,22 +1,23 @@
 import { useState } from 'react';
 import type { Card } from '@/types/deck';
+import { EAGER_LOAD_COUNT } from '@/constants';
 
 interface CardTileProps {
   card: Card;
   selectedQty?: number;
   maxQty: number;
   mode?: 'out' | 'in' | 'view';
+  index?: number;
   onToggle?: (name: string, qty: number) => void;
 }
 
-export function CardTile({ card, selectedQty = 0, maxQty, mode = 'view', onToggle }: CardTileProps) {
+export function CardTile({ card, selectedQty = 0, maxQty, mode = 'view', index = 0, onToggle }: CardTileProps) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const isSelected = selectedQty > 0;
   const isInteractive = mode !== 'view' && onToggle;
 
   function handleClick() {
     if (!isInteractive) return;
-    // Cycle: 0 → 1 → 2 → ... → maxQty → 0
     const next = selectedQty >= maxQty ? 0 : selectedQty + 1;
     onToggle(card.name, next);
   }
@@ -45,28 +46,32 @@ export function CardTile({ card, selectedQty = 0, maxQty, mode = 'view', onToggl
       <img
         src={card.imageUrl}
         alt={card.name}
-        loading="lazy"
+        width={146}
+        height={204}
+        loading={index < EAGER_LOAD_COUNT ? 'eager' : 'lazy'}
+        decoding="async"
         onLoad={() => setImgLoaded(true)}
         className={`w-full h-full object-cover ${imgLoaded ? '' : 'opacity-0'}`}
       />
 
       {/* Quantity badge */}
       {card.quantity > 1 && (
-        <span className="absolute top-1 left-1 bg-black/70 text-white text-xs font-bold px-1.5 py-0.5 rounded">
-          {card.quantity}x
-        </span>
+        <span className="badge-qty">{card.quantity}x</span>
       )}
 
       {/* Selection count badge */}
       {isSelected && (
-        <span
-          className={`absolute top-1 right-1 text-white text-xs font-bold px-1.5 py-0.5 rounded ${
-            mode === 'out' ? 'bg-red-600' : 'bg-green-600'
-          }`}
-        >
+        <span className={`badge-selection ${mode === 'out' ? 'bg-red-600' : 'bg-green-600'}`}>
           {selectedQty}
         </span>
       )}
+
+      {/* Card name */}
+      <div className="card-name-overlay">
+        <p className="text-white text-[10px] leading-tight truncate font-medium">
+          {card.name}
+        </p>
+      </div>
     </button>
   );
 }

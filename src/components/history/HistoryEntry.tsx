@@ -1,26 +1,12 @@
 import type { HistoryEntry as HistoryEntryType } from '@/types/deck';
+import { formatTimestamp } from '@/utils/format';
 
 interface HistoryEntryProps {
   entry: HistoryEntryType;
   onRevert: (entryId: string) => void;
 }
 
-function formatTimestamp(ts: number): string {
-  const date = new Date(ts);
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
-  const diffHr = Math.floor(diffMin / 60);
-  const diffDay = Math.floor(diffHr / 24);
-
-  if (diffMin < 1) return 'just now';
-  if (diffMin < 60) return `${diffMin}m ago`;
-  if (diffHr < 24) return `${diffHr}h ago`;
-  if (diffDay < 7) return `${diffDay}d ago`;
-  return date.toLocaleDateString();
-}
-
-export function HistoryEntryComponent({ entry, onRevert }: HistoryEntryProps) {
+export function HistoryEntryItem({ entry, onRevert }: HistoryEntryProps) {
   return (
     <div className="flex items-start gap-3 py-3 border-b border-slate-700/50 last:border-0">
       <div className="flex-1 min-w-0">

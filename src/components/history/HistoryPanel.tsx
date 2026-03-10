@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { HistoryEntry } from '@/types/deck';
-import { HistoryEntryComponent } from './HistoryEntry';
+import { HistoryEntryItem } from './HistoryEntry';
 import { ConfirmDialog } from '@/components/shared/ConfirmDialog';
 
 interface HistoryPanelProps {
@@ -28,12 +28,10 @@ export function HistoryPanel({ history, onRevert, open, onClose }: HistoryPanelP
 
   return (
     <>
-      {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />
+      <div className="backdrop" onClick={onClose} />
 
-      {/* Panel */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-slate-900 border-t border-slate-700 rounded-t-2xl max-h-[70vh] flex flex-col safe-bottom">
-        <div className="flex items-center justify-between px-4 py-3 border-b border-slate-700/50">
+      <div className="bottom-sheet">
+        <div className="bottom-sheet-header">
           <h3 className="font-semibold">Edit History</h3>
           <button
             onClick={onClose}
@@ -49,7 +47,7 @@ export function HistoryPanel({ history, onRevert, open, onClose }: HistoryPanelP
             <p className="text-slate-500 text-sm py-6 text-center">No history yet</p>
           ) : (
             history.map((entry) => (
-              <HistoryEntryComponent
+              <HistoryEntryItem
                 key={entry.id}
                 entry={entry}
                 onRevert={handleRevert}
