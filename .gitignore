@@ -1,6 +1,7 @@
 node_modules
 dist
 worker/node_modules
+tsconfig.tsbuildinfo
 
 # agent tooling
 .claude
