@@ -47,7 +47,7 @@ async function loadDeck(deckId: string): Promise<StoredDeck> {
     const m2 = migrateImageUrls(remote.sideboard);
     if (m1 || m2) console.log('[loadDeck] Migrated missing image URLs');
     await cacheDeck(remote);
-    addRecentDeck({ deckId: remote.deckId, deckName: remote.deckName, lastOpened: Date.now() });
+    addRecentDeck({ deckId: remote.deckId, deckName: remote.deckName, format: remote.format, lastOpened: Date.now() });
     return remote;
   }
   if (cached) {
@@ -58,7 +58,7 @@ async function loadDeck(deckId: string): Promise<StoredDeck> {
       console.log('[loadDeck] Migrated missing image URLs');
       await cacheDeck(cached);
     }
-    addRecentDeck({ deckId: cached.deckId, deckName: cached.deckName, lastOpened: Date.now() });
+    addRecentDeck({ deckId: cached.deckId, deckName: cached.deckName, format: cached.format, lastOpened: Date.now() });
     return cached;
   }
 
@@ -70,6 +70,7 @@ async function loadDeck(deckId: string): Promise<StoredDeck> {
   const deck: StoredDeck = {
     deckId,
     deckName: moxfield.name,
+    format: moxfield.format,
     moxfieldUrl: buildMoxfieldUrl(deckId),
     lastFetchedFromMoxfield: Date.now(),
     mainboard: transformMoxfieldCards(moxfield.mainboard),
@@ -80,7 +81,7 @@ async function loadDeck(deckId: string): Promise<StoredDeck> {
   };
 
   await cacheDeck(deck);
-  addRecentDeck({ deckId, deckName: deck.deckName, lastOpened: Date.now() });
+  addRecentDeck({ deckId, deckName: deck.deckName, format: deck.format, lastOpened: Date.now() });
   return deck;
 }
 

@@ -147,6 +147,30 @@
   transition: transform 300ms ease-out;
 }
 
+/* ─── Sticky ─────────────────────────────────────────────── */
+
+.sticky-header {
+  @apply sticky top-0 z-40 bg-slate-900/80 backdrop-blur-md border-b border-slate-800;
+}
+
+.sticky-counter {
+  @apply sticky bottom-0 z-30 bg-slate-900/95 backdrop-blur-sm border-t border-slate-700;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ─── Spinner ─────────────────────────────────────────────── */
+
+.spinner {
+  @apply w-8 h-8 border-3 border-slate-600 border-t-blue-500 rounded-full animate-spin;
+}
+
+/* ─── Card tile ──────────────────────────────────────────── */
+
+.card-tile {
+  @apply relative rounded-lg overflow-hidden bg-slate-800 transition-all;
+  aspect-ratio: 5 / 7;
+}
+
 /* ─── Mobile ──────────────────────────────────────────────── */
 
 .safe-bottom {

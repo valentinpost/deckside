@@ -36,7 +36,7 @@ export function CardTile({ card, selectedQty = 0, maxQty, mode = 'view', index =
       type="button"
       onClick={handleClick}
       disabled={!isInteractive}
-      className={`relative card-aspect rounded-lg overflow-hidden bg-slate-800 transition-all ${borderColor} ${dimClass} ${isInteractive ? 'cursor-pointer active:scale-95' : 'cursor-default'}`}
+      className={`card-tile ${borderColor} ${dimClass} ${isInteractive ? 'cursor-pointer active:scale-95' : 'cursor-default'}`}
     >
       {!imgLoaded && (
         <div className="absolute inset-0 flex items-center justify-center">

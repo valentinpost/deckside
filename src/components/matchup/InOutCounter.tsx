@@ -13,7 +13,7 @@ export function InOutCounter({ out, inCards }: InOutCounterProps) {
   const diff = inCount - outCount;
 
   return (
-    <div className="sticky bottom-0 z-30 bg-slate-900/95 backdrop-blur-sm border-t border-slate-700 safe-bottom">
+    <div className="sticky-counter">
       <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4 text-sm">
           <span className="text-red-400 font-medium">Out: {outCount}</span>

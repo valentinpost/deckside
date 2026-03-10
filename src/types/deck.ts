@@ -32,6 +32,7 @@ export interface HistoryEntry {
 export interface StoredDeck {
   deckId: string;
   deckName: string;
+  format?: string;
   moxfieldUrl: string;
   lastFetchedFromMoxfield: number;
   mainboard: Card[];
@@ -44,5 +45,6 @@ export interface StoredDeck {
 export interface RecentDeck {
   deckId: string;
   deckName: string;
+  format?: string;
   lastOpened: number;
 }

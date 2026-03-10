@@ -1,23 +1,30 @@
 import type { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { ChevronLeftIcon, HomeIcon } from '@/components/icons';
 
 export function AppShell({ children }: { children: ReactNode }) {
   const location = useLocation();
-  const isHome = location.pathname === '/';
+  const segments = location.pathname.split('/').filter(Boolean);
+
+  // /deck/:id/:slug → /deck/:id, /deck/:id → /, / → null
+  const backTo =
+    segments.length >= 3 && segments[0] === 'deck'
+      ? `/deck/${segments[1]}`
+      : segments.length >= 1
+        ? '/'
+        : null;
 
   return (
     <div className="min-h-dvh flex flex-col">
-      <header className="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+      <header className="sticky-header">
         <div className="max-w-5xl mx-auto px-4 h-14 flex items-center gap-3">
-          {!isHome && (
+          {backTo && (
             <Link
-              to="/"
+              to={backTo}
               className="text-slate-400 hover:text-slate-200 transition-colors -ml-1 p-1"
-              aria-label="Back to home"
+              aria-label={backTo === '/' ? 'Back to home' : 'Back to deck'}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m15 18-6-6 6-6" />
-              </svg>
+              {backTo === '/' ? <HomeIcon /> : <ChevronLeftIcon />}
             </Link>
           )}
           <Link to="/" className="font-bold text-lg tracking-tight">

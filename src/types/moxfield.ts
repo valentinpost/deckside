@@ -14,6 +14,7 @@ export interface MoxfieldDeckResponse {
   id: string;
   name: string;
   publicUrl: string;
+  format?: string;
   mainboard: Record<string, MoxfieldCard>;
   sideboard: Record<string, MoxfieldCard>;
 }
