@@ -3,38 +3,53 @@ import { fetchMoxfieldDeck, transformMoxfieldCards } from '@/api/moxfield';
 import { fetchDeckFromCloud } from '@/api/cloudflare';
 import { getCachedDeck, cacheDeck } from '@/db/indexeddb';
 import { addRecentDeck } from '@/db/localstorage';
+import { buildMoxfieldUrl } from '@/utils/moxfieldUrl';
 import { useDeckStore } from '@/store/deckStore';
 import type { StoredDeck } from '@/types/deck';
 
 async function loadDeck(deckId: string): Promise<StoredDeck> {
+  console.log(`[loadDeck] Starting load for ${deckId}`);
+
   // 1. Try IndexedDB cache first
-  const cached = await getCachedDeck(deckId);
+  let cached: StoredDeck | undefined;
+  try {
+    cached = await getCachedDeck(deckId);
+    console.log(`[loadDeck] IndexedDB cache: ${cached ? `found v${cached.version}` : 'miss'}`);
+  } catch (err) {
+    console.error('[loadDeck] IndexedDB read failed:', err);
+  }
 
   // 2. Try Cloudflare KV
   let remote: StoredDeck | null = null;
   try {
     remote = await fetchDeckFromCloud(deckId);
-  } catch {
-    // Offline or worker not deployed yet — use cache
+    console.log(`[loadDeck] Cloud fetch: ${remote ? `found v${remote.version}` : '404'}`);
+  } catch (err) {
+    console.error('[loadDeck] Cloud fetch failed:', err);
   }
 
   // Use whichever is newer
   if (remote && (!cached || remote.version > cached.version)) {
+    console.log('[loadDeck] Using remote data');
     await cacheDeck(remote);
     addRecentDeck({ deckId: remote.deckId, deckName: remote.deckName, lastOpened: Date.now() });
     return remote;
   }
   if (cached) {
+    console.log('[loadDeck] Using cached data');
     addRecentDeck({ deckId: cached.deckId, deckName: cached.deckName, lastOpened: Date.now() });
     return cached;
   }
 
   // 3. Neither exists — import fresh from Moxfield
+  console.log('[loadDeck] No cache or remote — fetching from Moxfield');
   const moxfield = await fetchMoxfieldDeck(deckId);
+  console.log(`[loadDeck] Moxfield returned: ${moxfield.name} (${Object.keys(moxfield.mainboard).length} main, ${Object.keys(moxfield.sideboard).length} side)`);
+
   const deck: StoredDeck = {
     deckId,
     deckName: moxfield.name,
-    moxfieldUrl: `https://www.moxfield.com/decks/${deckId}`,
+    moxfieldUrl: buildMoxfieldUrl(deckId),
     lastFetchedFromMoxfield: Date.now(),
     mainboard: transformMoxfieldCards(moxfield.mainboard),
     sideboard: transformMoxfieldCards(moxfield.sideboard),

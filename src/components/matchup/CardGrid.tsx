@@ -13,10 +13,11 @@ export function CardGrid({ cards, selectedRefs = [], mode = 'view', onToggle }: 
 
   return (
     <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2">
-      {cards.map((card) => (
+      {cards.map((card, index) => (
         <CardTile
           key={card.name}
           card={card}
+          index={index}
           selectedQty={refMap.get(card.name) ?? 0}
           maxQty={card.quantity}
           mode={mode}

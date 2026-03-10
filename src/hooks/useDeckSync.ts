@@ -1,8 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useDeckStore } from '@/store/deckStore';
 import { saveDeckToCloud } from '@/api/cloudflare';
-
-const DEBOUNCE_MS = 2000;
+import { SYNC_DEBOUNCE_MS } from '@/constants';
 
 export function useDeckSync() {
   const deck = useDeckStore((s) => s.deck);
@@ -17,17 +16,18 @@ export function useDeckSync() {
     if (!current || syncingRef.current) return;
 
     syncingRef.current = true;
+    console.log(`[sync] Saving deck v${current.version} to cloud...`);
     try {
       const result = await saveDeckToCloud(current);
       if (result.ok) {
+        console.log('[sync] Save successful');
         markClean();
       } else if (result.conflict) {
-        // Server has a newer version — adopt it
+        console.warn(`[sync] Conflict — server has v${result.conflict.version}, adopting`);
         setDeck(result.conflict);
-        console.warn('Sync conflict — adopted server version');
       }
     } catch (err) {
-      console.error('Sync failed:', err);
+      console.error('[sync] Save failed:', err);
     } finally {
       syncingRef.current = false;
     }
@@ -39,7 +39,7 @@ export function useDeckSync() {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       sync();
-    }, DEBOUNCE_MS);
+    }, SYNC_DEBOUNCE_MS);
 
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [dirty, deck, sync]);
