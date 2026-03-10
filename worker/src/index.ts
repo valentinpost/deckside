@@ -29,8 +29,10 @@ export default {
         const body = await request.json() as { version?: number; [key: string]: unknown };
         const existing = await env.DECKS.get(deckId, 'json') as { version?: number } | null;
 
-        // Optimistic concurrency check
-        if (existing && body.version !== existing.version) {
+        // Optimistic concurrency: reject only if the cloud version is
+        // ahead of or equal to what the client sent (another device wrote).
+        // Accept when the client version is higher (local edits).
+        if (existing && typeof existing.version === 'number' && typeof body.version === 'number' && existing.version >= body.version) {
           return json(existing, 409);
         }
 
