@@ -1,7 +1,6 @@
 import type { MoxfieldDeckResponse } from '@/types/moxfield';
 import type { Card } from '@/types/deck';
-
-const WORKER_BASE = 'https://deckside.deckside-35.workers.dev';
+import { API } from '@/config';
 
 function getImageUrl(card: MoxfieldDeckResponse['mainboard'][string]['card']): string {
   // Double-faced cards have no top-level image_uris
@@ -23,19 +22,7 @@ export function transformMoxfieldCards(
 }
 
 export async function fetchMoxfieldDeck(deckId: string): Promise<MoxfieldDeckResponse> {
-  // Use Cloudflare Worker proxy to bypass CORS
-  const res = await fetch(`${WORKER_BASE}/api/moxfield/${deckId}`);
-  if (!res.ok) {
-    throw new Error(`Failed to fetch deck from Moxfield (${res.status})`);
-  }
-  return res.json() as Promise<MoxfieldDeckResponse>;
-}
-
-/** Direct fetch — works in dev with a CORS proxy or if Moxfield allows it */
-export async function fetchMoxfieldDeckDirect(deckId: string): Promise<MoxfieldDeckResponse> {
-  const res = await fetch(`https://api2.moxfield.com/v2/decks/all/${deckId}`, {
-    headers: { 'User-Agent': 'SideboardGuide/1.0' },
-  });
+  const res = await fetch(API.moxfield(deckId));
   if (!res.ok) {
     throw new Error(`Failed to fetch deck from Moxfield (${res.status})`);
   }

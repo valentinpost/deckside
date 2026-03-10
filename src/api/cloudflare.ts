@@ -1,16 +1,15 @@
 import type { StoredDeck } from '@/types/deck';
-
-const WORKER_BASE = 'https://deckside.deckside-35.workers.dev';
+import { API } from '@/config';
 
 export async function fetchDeckFromCloud(deckId: string): Promise<StoredDeck | null> {
-  const res = await fetch(`${WORKER_BASE}/api/deck/${deckId}`);
+  const res = await fetch(API.deck(deckId));
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`Cloud fetch failed (${res.status})`);
   return res.json() as Promise<StoredDeck>;
 }
 
 export async function saveDeckToCloud(deck: StoredDeck): Promise<{ ok: boolean; conflict?: StoredDeck }> {
-  const res = await fetch(`${WORKER_BASE}/api/deck/${deck.deckId}`, {
+  const res = await fetch(API.deck(deck.deckId), {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(deck),

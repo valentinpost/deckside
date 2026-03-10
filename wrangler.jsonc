@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "deckside",
+  "main": "worker/src/index.ts",
   "compatibility_date": "2025-09-27",
   "observability": {
     "enabled": true
@@ -10,5 +11,11 @@
   },
   "compatibility_flags": [
     "nodejs_compat"
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "DECKS",
+      "id": "e5f6b307c8db4d4fb9797fec4c480180"
+    }
   ]
 }

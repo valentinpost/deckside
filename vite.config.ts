@@ -6,7 +6,7 @@ import path from 'path';
 import { cloudflare } from "@cloudflare/vite-plugin";
 
 export default defineConfig({
-  base: '/deckside/',
+  base: '/',
   plugins: [react(), tailwindcss(), cloudflare()],
   resolve: {
     alias: {

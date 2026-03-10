@@ -2,30 +2,17 @@ interface Env {
   DECKS: KVNamespace;
 }
 
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, PUT, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-};
-
 function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+    headers: { 'Content-Type': 'application/json' },
   });
-}
-
-function cors(): Response {
-  return new Response(null, { status: 204, headers: CORS_HEADERS });
 }
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     const path = url.pathname;
-
-    // CORS preflight
-    if (request.method === 'OPTIONS') return cors();
 
     // GET /api/deck/:deckId — Read deck from KV
     const deckMatch = path.match(/^\/api\/deck\/([A-Za-z0-9_-]+)$/);
