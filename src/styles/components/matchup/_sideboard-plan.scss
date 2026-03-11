@@ -31,6 +31,8 @@
     display: flex;
     flex-direction: column;
     gap: $sp-0_5;
+    list-style: none;
+    padding-left: 0;
   }
 
   .item {

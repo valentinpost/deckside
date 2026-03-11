@@ -17,20 +17,18 @@ export function InOutCounter({ out, inCards }: InOutCounterProps) {
 
   return (
     <div className="in-out-counter">
-      <div className="inner">
-        <div className="counts">
-          <span className="out-count">Out: {outCount}</span>
-          <span className="in-count">In: {inCount}</span>
-        </div>
-        <div className="status">
-          {balanced ? (
-            <span className="balanced">Balanced</span>
-          ) : (
-            <span className="diff">
-              {diff > 0 ? `+${diff}` : diff} cards
-            </span>
-          )}
-        </div>
+      <div className="counts">
+        <span className="out-count">Out: {outCount}</span>
+        <span className="in-count">In: {inCount}</span>
+      </div>
+      <div className="status">
+        {balanced ? (
+          <span className="balanced">Balanced</span>
+        ) : (
+          <span className="diff">
+            {diff > 0 ? `+${diff}` : diff} cards
+          </span>
+        )}
       </div>
     </div>
   );
