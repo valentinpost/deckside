@@ -2,9 +2,9 @@
 
 .card-tile {
   position: relative;
-  border-radius: $radius-lg;
+  border-radius: $radius-card;
   overflow: hidden;
-  background: $slate-800;
+  background: rgba($slate-800, 0.5);
   transition: $transition-all;
   aspect-ratio: 5 / 7;
   cursor: default;
@@ -22,11 +22,11 @@
   }
 
   &[data-mode='out'][data-selected] {
-    box-shadow: 0 0 0 2px $red-500;
+    box-shadow: 0 0 0 2px $red-500, $glass-glow-red;
   }
 
   &[data-mode='in'][data-selected] {
-    box-shadow: 0 0 0 2px $green-500;
+    box-shadow: 0 0 0 2px $green-500, $glass-glow-green;
   }
 
   .loading-overlay {
@@ -40,7 +40,7 @@
   .spinner {
     width: $sp-5;
     height: $sp-5;
-    border: 2px solid $slate-600;
+    border: 2px solid rgba($white, 0.1);
     border-top-color: $slate-400;
     border-radius: $radius-full;
     animation: spin 1s linear infinite;
@@ -60,13 +60,14 @@
     position: absolute;
     top: $sp-1;
     left: $sp-1;
-    background: rgba($black, 0.7);
+    background: rgba($black, 0.6);
+    @include glass-blur;
     color: $white;
     font-size: $text-xs;
     line-height: $leading-xs;
     font-weight: 700;
     padding: $sp-0_5 $sp-1_5;
-    border-radius: $radius-default;
+    border-radius: $radius-md;
   }
 
   .badge-selection {
@@ -78,14 +79,15 @@
     line-height: $leading-xs;
     font-weight: 700;
     padding: $sp-0_5 $sp-1_5;
-    border-radius: $radius-default;
+    border-radius: $radius-md;
+    @include glass-blur;
 
     &[data-mode='out'] {
-      background: $red-600;
+      background: rgba($red-600, 0.85);
     }
 
     &[data-mode='in'] {
-      background: $green-600;
+      background: rgba($green-600, 0.85);
     }
   }
 
@@ -94,7 +96,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba($black, 0.8), transparent);
+    background: linear-gradient(to top, rgba($black, 0.7), transparent);
     padding: $sp-4 $sp-1_5 $sp-1 $sp-1_5;
   }
 

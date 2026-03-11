@@ -27,12 +27,12 @@
     flex-shrink: 0;
     color: $slate-500;
     padding: $sp-1;
-    border-radius: $radius-default;
+    border-radius: $radius-lg;
     transition: $transition-colors;
 
     &:hover {
       color: $slate-200;
-      background: rgba($slate-700, 0.5);
+      background: $glass-tint;
     }
 
     &:disabled {
@@ -64,8 +64,7 @@
     text-transform: capitalize;
     font-weight: 500;
     color: $slate-300;
-    background: $slate-800;
-    border-radius: $radius-full;
+    @include glass-badge;
     padding: $sp-0_5 $sp-2;
     font-size: $text-xs;
     line-height: $leading-xs;

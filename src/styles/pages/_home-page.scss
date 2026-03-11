@@ -9,7 +9,7 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: $sp-2;
+    gap: $sp-3;
     padding-top: $sp-8;
   }
 
@@ -17,9 +17,12 @@
     font-size: $text-3xl;
     line-height: $leading-3xl;
     font-weight: 700;
+    letter-spacing: -0.03em;
   }
 
   .subtitle {
     color: $slate-400;
+    font-size: $text-base;
+    line-height: $leading-base;
   }
 }

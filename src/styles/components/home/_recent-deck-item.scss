@@ -4,14 +4,14 @@
   display: flex;
   align-items: center;
   gap: $sp-3;
-  border-radius: $radius-lg;
-  background: rgba($slate-800, 0.5);
-  border: 1px solid rgba($slate-700, 0.5);
+  border-radius: $radius-xl;
+  @include glass-panel;
   padding: $sp-3;
-  transition: $transition-colors;
+  transition: $transition-all;
 
   &:hover {
-    background: $slate-800;
+    background: rgba($slate-800, 0.6);
+    border-color: $glass-highlight;
   }
 
   .link {
@@ -20,6 +20,12 @@
   }
 
   .name {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .name-text {
     font-weight: 500;
     @include truncate;
   }
@@ -29,8 +35,7 @@
     font-size: $text-xs;
     line-height: $leading-xs;
     color: $slate-400;
-    background: $slate-700;
-    border-radius: $radius-default;
+    @include glass-badge;
     padding: $sp-0_5 $sp-1_5;
     text-transform: capitalize;
   }
@@ -47,9 +52,11 @@
     color: $slate-500;
     flex-shrink: 0;
     transition: $transition-colors;
+    border-radius: $radius-lg;
 
     &:hover {
       color: $red-400;
+      background: $danger-tint;
     }
   }
 }

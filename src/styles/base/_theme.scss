@@ -1,0 +1,284 @@
+@use '../abstracts' as *;
+
+// ─── Light Theme Overrides ─────────────────────────────
+// Applied when [data-theme="light"] is set on <html>.
+// Dark mode is the default — no overrides needed.
+
+[data-theme='light'] {
+  background: #f1f5f9;
+  color: #1e293b;
+
+  body {
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(37, 99, 235, 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(59, 130, 246, 0.04) 0%, transparent 60%),
+      #f1f5f9;
+  }
+
+  // ─── Glass Panels (white-based in light mode) ───────
+  .app-shell__header {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .matchup-list-item,
+  .recent-deck-item {
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(0, 0, 0, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.75);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .author-name-input {
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(0, 0, 0, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .confirm-dialog {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(0, 0, 0, 0.06);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+    color: #1e293b;
+
+    &::backdrop {
+      background: rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  .history-panel {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(0, 0, 0, 0.06);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .history-panel-backdrop {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  // ─── Sideboard Summary ──────────────────────────────
+  .matchup-page .sideboard-summary {
+    background: rgba(255, 255, 255, 0.75);
+    border-color: rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  // ─── Glass Inset (inputs, textareas) ────────────────
+  .add-matchup-inline .input,
+  .matchup-notes .textarea,
+  .deck-url-form .input,
+  .author-name-input .input,
+  .matchup-list-item .inline-input {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+    color: #1e293b;
+
+    &::placeholder {
+      color: #94a3b8;
+    }
+  }
+
+  // ─── Glass Buttons ──────────────────────────────────
+  .deck-page .btn-secondary,
+  .import-export-buttons .btn-secondary,
+  .import-export-buttons .import-label {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
+    border-top-color: rgba(255, 255, 255, 0.5);
+    color: #334155;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .confirm-dialog .btn-ghost {
+    color: #475569;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  // ─── Glass Badges ───────────────────────────────────
+  .format-badge {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+    color: #475569;
+  }
+
+  // ─── Text Colors ────────────────────────────────────
+  .deck-header .title,
+  .matchup-page .title,
+  .home-page .title,
+  .recent-deck-list .title,
+  .history-panel .title,
+  .confirm-dialog .title {
+    color: #0f172a;
+  }
+
+  .deck-header .meta,
+  .deck-header .counts,
+  .matchup-list-item .subtitle,
+  .recent-deck-item .meta,
+  .history-entry .meta,
+  .matchup-notes .label,
+  .card-preview .section-label,
+  .card-preview .toggle-btn,
+  .home-page .subtitle,
+  .loading-spinner .message,
+  .match-result-logger .stats,
+  .match-result-logger .time,
+  .match-result-logger .play-draw-tag {
+    color: #64748b;
+  }
+
+  .deck-header .win-rate-badge,
+  .deck-header .format-badge,
+  .matchup-list-item .name,
+  .recent-deck-item .name-text,
+  .history-entry .action,
+  .confirm-dialog .message,
+  .match-result-logger .label,
+  .deck-url-form .label,
+  .author-name-input .prompt,
+  .sideboard-plan .item {
+    color: #334155;
+  }
+
+  .matchup-page .matchups-title,
+  .deck-page .matchups-title {
+    color: #1e293b;
+  }
+
+  // ─── Header Theme Toggle ────────────────────────────
+  .app-shell__header .theme-toggle {
+    color: #64748b;
+
+    &:hover {
+      color: #334155;
+      background: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  .app-shell__header .back-link {
+    &:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  // ─── Icon Buttons ───────────────────────────────────
+  .matchup-list-item .btn-icon-neutral,
+  .history-panel .close-btn,
+  .deck-header .refresh-btn {
+    color: #94a3b8;
+
+    &:hover {
+      color: #334155;
+      background: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  .matchup-list-item .btn-icon-danger,
+  .recent-deck-item .remove-btn,
+  .match-result-logger .remove-btn {
+    color: #94a3b8;
+
+    &:hover {
+      color: $red-500;
+      background: rgba(239, 68, 68, 0.08);
+    }
+  }
+
+  // ─── Dividers ───────────────────────────────────────
+  .history-entry {
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .history-panel .header {
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+  }
+
+  // ─── Score / Toggle Buttons ─────────────────────────
+  .match-result-logger .toggle-btn {
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #64748b;
+
+    &:hover {
+      color: #334155;
+      background: rgba(0, 0, 0, 0.03);
+      border-color: rgba(0, 0, 0, 0.15);
+    }
+
+    &.active {
+      background: rgba(59, 130, 246, 0.1);
+      color: $blue-600;
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+  }
+
+  .match-result-logger .result-item:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  // ─── Card Tiles ─────────────────────────────────────
+  .card-tile {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .card-tile .spinner {
+    border-color: rgba(0, 0, 0, 0.1);
+    border-top-color: $blue-500;
+  }
+
+  .loading-spinner .spinner {
+    border-color: rgba(0, 0, 0, 0.08);
+    border-top-color: $blue-500;
+  }
+
+  // ─── Banners ────────────────────────────────────────
+  .error-banner {
+    background: rgba(254, 202, 202, 0.4);
+    border-color: rgba(239, 68, 68, 0.2);
+  }
+
+  .stale-card-banner {
+    background: rgba(254, 240, 138, 0.3);
+    border-color: rgba(250, 204, 21, 0.3);
+  }
+
+  // ─── JSON Import ────────────────────────────────────
+  .json-import-button .label {
+    border-color: rgba(0, 0, 0, 0.12);
+    color: #64748b;
+
+    &:hover {
+      border-color: rgba(0, 0, 0, 0.2);
+      color: #334155;
+      background: rgba(0, 0, 0, 0.02);
+    }
+  }
+
+  // ─── Empty / Muted States ──────────────────────────
+  .matchup-list-empty,
+  .recent-deck-list .empty,
+  .history-panel .empty,
+  .sideboard-plan .none,
+  .in-out-counter .diff {
+    color: #94a3b8;
+  }
+
+  .matchup-list-empty {
+    color: #94a3b8;
+  }
+}

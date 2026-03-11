@@ -4,5 +4,6 @@ interface FormatBadgeProps {
 
 export function FormatBadge({ format }: FormatBadgeProps) {
   if (!format) return null;
-  return <span className="format-badge">{format}</span>;
+  const formatTitleCase = format.charAt(0).toUpperCase() + format.substring(1).toLowerCase();
+  return <span className="format-badge">{formatTitleCase}</span>;
 }

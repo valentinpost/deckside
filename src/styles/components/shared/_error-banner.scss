@@ -1,9 +1,10 @@
 @use '../../abstracts' as *;
 
 .error-banner {
-  border-radius: $radius-lg;
-  background: rgba($red-950, 0.5);
-  border: 1px solid $red-900;
+  border-radius: $radius-xl;
+  background: rgba($red-950, 0.4);
+  @include glass-blur(12px);
+  border: 1px solid rgba($red-900, 0.5);
   padding: $sp-4;
   display: flex;
   align-items: flex-start;

@@ -1,12 +1,14 @@
 import type { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDeckStore } from '@/store/deckStore';
-import { ChevronLeftIcon, LogoIcon } from '@/components/icons';
+import { useTheme } from '@/hooks';
+import { ChevronLeftIcon, LogoIcon, SunIcon, MoonIcon } from '@/components/icons';
 
 export function AppShell({ children }: { children: ReactNode }) {
   const location = useLocation();
   const segments = location.pathname.split('/').filter(Boolean);
   const deckName = useDeckStore((state) => state.deck?.deckName);
+  const { theme, toggleTheme } = useTheme();
 
   // On matchup page: back arrow → deck page, header shows deck name
   // On deck page: back arrow → home, header shows Deckside logo
@@ -39,6 +41,13 @@ export function AppShell({ children }: { children: ReactNode }) {
               Deckside
             </Link>
           )}
+          <button
+            onClick={toggleTheme}
+            className="theme-toggle"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            {theme === 'dark' ? <SunIcon size={18} /> : <MoonIcon size={18} />}
+          </button>
         </div>
       </header>
       <main className="app-shell__main">

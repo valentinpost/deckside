@@ -5,9 +5,8 @@
   flex-direction: column;
   gap: $sp-3;
   padding: $sp-4;
-  background: $slate-800;
-  border-radius: $radius-lg;
-  border: 1px solid $slate-700;
+  @include glass-panel;
+  border-radius: $radius-xl;
 
   .prompt {
     font-size: $text-sm;
@@ -22,9 +21,8 @@
 
   .input {
     flex: 1;
-    border-radius: $radius-lg;
-    background: $slate-900;
-    border: 1px solid $slate-600;
+    border-radius: $radius-xl;
+    @include glass-inset;
     padding: $sp-2 $sp-3;
     font-size: $text-sm;
     line-height: $leading-sm;
@@ -40,18 +38,11 @@
   }
 
   .btn-primary {
-    border-radius: $radius-lg;
+    border-radius: $radius-xl;
     font-size: $text-sm;
     line-height: $leading-sm;
     font-weight: 500;
-    transition: $transition-colors;
-    cursor: pointer;
-    background: $blue-600;
-    color: $white;
     padding: $sp-2 $sp-4;
-
-    &:hover {
-      background: $blue-500;
-    }
+    @include glass-btn-primary;
   }
 }

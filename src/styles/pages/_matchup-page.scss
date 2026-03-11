@@ -41,8 +41,7 @@
     font-size: $text-xs;
     line-height: $leading-xs;
     color: $slate-400;
-    background: $slate-700;
-    border-radius: $radius-default;
+    @include glass-badge;
     padding: $sp-0_5 $sp-1_5;
     text-transform: capitalize;
   }
@@ -73,9 +72,9 @@
 
   .sideboard-summary {
     z-index: $z-30;
-    background: rgba($slate-900, 0.95);
-    backdrop-filter: blur(8px);
-    border: 1px solid $slate-700;
+    @include glass-panel-heavy;
+    border-left: none;
+    border-right: none;
 
     .summary-inner {
       padding: $sp-3 $sp-4;
@@ -89,7 +88,9 @@
       top: 3.75rem;
       order: -1;
       min-height: 5rem;
-      border-radius: $radius-lg;
+      border-radius: $radius-xl;
+      border: 1px solid $glass-border;
+      border-top-color: $glass-highlight;
       overflow: hidden;
       transition: height 300ms ease;
     }

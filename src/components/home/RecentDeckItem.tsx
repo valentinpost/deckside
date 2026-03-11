@@ -13,7 +13,7 @@ export function RecentDeckItem({ deck, onRemove }: RecentDeckItemProps) {
     <div className="recent-deck-item">
       <Link to={`/deck/${deck.deckId}`} className="link">
         <div className="name">
-          {deck.deckName}
+          <span className="name-text">{deck.deckName}</span>
           <FormatBadge format={deck.format} />
         </div>
         <div className="meta">

@@ -41,13 +41,12 @@
   .btn-secondary {
     display: inline-flex;
     align-items: center;
-    border-radius: $radius-lg;
+    @include glass-button;
+    border-radius: $radius-xl;
     font-size: $text-xs;
     line-height: $leading-xs;
     font-weight: 500;
-    transition: $transition-colors;
     cursor: pointer;
-    border: 1px solid $slate-600;
     padding: $sp-1_5 $sp-2;
 
     @include respond-sm {
@@ -55,33 +54,22 @@
       line-height: $leading-sm;
       padding: $sp-2 $sp-3;
     }
-
-    &:hover {
-      background: $slate-800;
-    }
   }
 
   .btn-primary {
     display: inline-flex;
     align-items: center;
-    border-radius: $radius-lg;
+    border-radius: $radius-xl;
     font-size: $text-xs;
     line-height: $leading-xs;
     font-weight: 500;
-    transition: $transition-colors;
-    cursor: pointer;
-    background: $blue-600;
-    color: $white;
     padding: $sp-1_5 $sp-3;
+    @include glass-btn-primary;
 
     @include respond-sm {
       font-size: $text-sm;
       line-height: $leading-sm;
       padding: $sp-2 $sp-4;
-    }
-
-    &:hover {
-      background: $blue-500;
     }
 
     &:disabled {

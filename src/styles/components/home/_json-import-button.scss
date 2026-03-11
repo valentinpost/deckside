@@ -8,18 +8,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: $radius-lg;
-    border: 1px dashed $slate-600;
+    border-radius: $radius-xl;
+    border: 1px dashed $glass-highlight;
     padding: $sp-4;
     font-size: $text-sm;
     line-height: $leading-sm;
     color: $slate-400;
-    transition: $transition-colors;
+    transition: $transition-all;
     cursor: pointer;
 
     &:hover {
-      border-color: $slate-500;
+      border-color: rgba($white, 0.2);
       color: $slate-300;
+      background: $glass-tint-subtle;
     }
   }
 }

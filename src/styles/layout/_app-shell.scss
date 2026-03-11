@@ -10,21 +10,23 @@
   position: sticky;
   top: 0;
   z-index: $z-40;
-  background: rgba($slate-900, 0.8);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid $slate-800;
+  @include glass-panel-heavy;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-radius: 0;
 
   .header-inner {
     max-width: $max-w-5xl;
     margin: 0 auto;
-    padding: 0 $sp-3;
-    height: 3rem;
+    padding: 0 $sp-4;
+    height: 3.25rem;
     display: flex;
     align-items: center;
     gap: $sp-2;
 
     @include respond-sm {
-      padding: 0 $sp-4;
+      padding: 0 $sp-6;
       height: 3.5rem;
       gap: $sp-3;
     }
@@ -32,30 +34,46 @@
 
   .back-link {
     flex-shrink: 0;
-    color: $slate-400;
+    color: $blue-400;
     padding: $sp-1;
     margin-left: -$sp-1;
     transition: $transition-colors;
+    border-radius: $radius-lg;
 
     &:hover {
-      color: $slate-200;
+      color: $blue-300;
+      background: $glass-tint;
     }
   }
 
   .logo {
+    flex: 1;
     display: flex;
     align-items: center;
     gap: $sp-2;
-    font-weight: 700;
+    font-weight: 600;
     font-size: $text-base;
     line-height: $leading-base;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.02em;
     min-width: 0;
     @include truncate;
 
     @include respond-sm {
       font-size: $text-lg;
       line-height: $leading-lg;
+    }
+  }
+
+  .theme-toggle {
+    flex-shrink: 0;
+    color: $slate-400;
+    padding: $sp-1_5;
+    border-radius: $radius-lg;
+    transition: $transition-colors;
+
+    &:hover {
+      color: $slate-200;
+      background: $glass-tint;
     }
   }
 }
@@ -65,9 +83,9 @@
   max-width: $max-w-5xl;
   margin: 0 auto;
   width: 100%;
-  padding: $sp-4 $sp-3;
+  padding: $sp-4 $sp-4;
 
   @include respond-sm {
-    padding: $sp-6 $sp-4;
+    padding: $sp-6 $sp-6;
   }
 }

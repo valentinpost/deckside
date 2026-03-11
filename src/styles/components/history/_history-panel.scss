@@ -3,7 +3,7 @@
 .history-panel-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba($black, 0.5);
+  @include glass-backdrop;
   z-index: $z-40;
 }
 
@@ -13,8 +13,10 @@
   left: 0;
   right: 0;
   z-index: $z-50;
-  background: $slate-900;
-  border-top: 1px solid $slate-700;
+  @include glass-panel-heavy;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
   border-radius: $radius-2xl $radius-2xl 0 0;
   max-height: 70vh;
   display: flex;
@@ -26,7 +28,7 @@
     align-items: center;
     justify-content: space-between;
     padding: $sp-3 $sp-4;
-    border-bottom: 1px solid rgba($slate-700, 0.5);
+    border-bottom: 1px solid $glass-tint;
   }
 
   .title {
@@ -37,9 +39,11 @@
     padding: $sp-1;
     color: $slate-400;
     transition: $transition-colors;
+    border-radius: $radius-lg;
 
     &:hover {
       color: $slate-200;
+      background: $glass-tint;
     }
   }
 

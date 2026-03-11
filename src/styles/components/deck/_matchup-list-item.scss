@@ -4,14 +4,14 @@
   display: flex;
   align-items: center;
   gap: $sp-3;
-  border-radius: $radius-lg;
-  background: rgba($slate-800, 0.5);
-  border: 1px solid rgba($slate-700, 0.5);
+  border-radius: $radius-xl;
+  @include glass-panel;
   padding: $sp-3;
-  transition: $transition-colors;
+  transition: $transition-all;
 
   &:hover {
-    background: $slate-800;
+    background: rgba($slate-800, 0.6);
+    border-color: $glass-highlight;
   }
 
   .link {
@@ -21,9 +21,8 @@
 
   .inline-input {
     width: 100%;
-    border-radius: $radius-default;
-    background: $slate-900;
-    border: 1px solid $slate-600;
+    border-radius: $radius-lg;
+    @include glass-inset;
     padding: $sp-1 $sp-2;
     font-size: $text-base;
     line-height: $leading-base;
@@ -65,9 +64,11 @@
     color: $slate-500;
     flex-shrink: 0;
     transition: $transition-colors;
+    border-radius: $radius-lg;
 
     &:hover {
       color: $slate-300;
+      background: $glass-tint;
     }
   }
 
@@ -76,9 +77,11 @@
     color: $slate-500;
     flex-shrink: 0;
     transition: $transition-colors;
+    border-radius: $radius-lg;
 
     &:hover {
       color: $red-400;
+      background: $danger-tint;
     }
   }
 }

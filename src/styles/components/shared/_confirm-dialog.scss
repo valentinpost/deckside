@@ -1,16 +1,15 @@
 @use '../../abstracts' as *;
 
 .confirm-dialog {
-  background: $slate-800;
+  @include glass-panel-heavy;
   color: $slate-100;
-  border-radius: $radius-xl;
+  border-radius: $radius-2xl;
   padding: 0;
   max-width: $max-w-sm;
   width: 100%;
-  border: none;
 
   &::backdrop {
-    background: rgba($black, 0.6);
+    @include glass-backdrop;
   }
 
   .body {
@@ -39,7 +38,7 @@
   }
 
   .btn-ghost {
-    border-radius: $radius-lg;
+    border-radius: $radius-xl;
     font-size: $text-sm;
     line-height: $leading-sm;
     transition: $transition-colors;
@@ -48,39 +47,25 @@
     padding: $sp-2 $sp-4;
 
     &:hover {
-      background: $slate-700;
+      background: $glass-tint;
     }
   }
 
   .confirm-primary {
-    border-radius: $radius-lg;
+    border-radius: $radius-xl;
     font-size: $text-sm;
     line-height: $leading-sm;
     font-weight: 500;
-    transition: $transition-colors;
-    cursor: pointer;
-    background: $blue-600;
-    color: $white;
     padding: $sp-2 $sp-4;
-
-    &:hover {
-      background: $blue-500;
-    }
+    @include glass-btn-primary;
   }
 
   .confirm-danger {
-    border-radius: $radius-lg;
+    border-radius: $radius-xl;
     font-size: $text-sm;
     line-height: $leading-sm;
     font-weight: 500;
-    transition: $transition-colors;
-    cursor: pointer;
-    background: $red-600;
-    color: $white;
     padding: $sp-2 $sp-4;
-
-    &:hover {
-      background: $red-500;
-    }
+    @include glass-btn-danger;
   }
 }

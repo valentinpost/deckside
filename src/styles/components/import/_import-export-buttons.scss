@@ -4,33 +4,14 @@
   display: flex;
   gap: $sp-2;
 
-  .btn-secondary {
-    border-radius: $radius-lg;
-    font-size: $text-sm;
-    line-height: $leading-sm;
-    font-weight: 500;
-    transition: $transition-colors;
-    cursor: pointer;
-    border: 1px solid $slate-600;
-    padding: $sp-2 $sp-3;
-
-    &:hover {
-      background: $slate-800;
-    }
-  }
-
+  .btn-secondary,
   .import-label {
-    border-radius: $radius-lg;
+    @include glass-button;
+    border-radius: $radius-xl;
     font-size: $text-sm;
     line-height: $leading-sm;
     font-weight: 500;
-    transition: $transition-colors;
     cursor: pointer;
-    border: 1px solid $slate-600;
     padding: $sp-2 $sp-3;
-
-    &:hover {
-      background: $slate-800;
-    }
   }
 }

@@ -15,9 +15,8 @@
 
   .textarea {
     width: 100%;
-    border-radius: $radius-lg;
-    background: $slate-800;
-    border: 1px solid $slate-700;
+    border-radius: $radius-xl;
+    @include glass-inset;
     padding: $sp-3 $sp-4;
     font-size: $text-sm;
     line-height: $leading-sm;

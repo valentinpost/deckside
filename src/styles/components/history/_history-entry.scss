@@ -5,7 +5,7 @@
   align-items: flex-start;
   gap: $sp-3;
   padding: $sp-3 0;
-  border-bottom: 1px solid rgba($slate-700, 0.5);
+  border-bottom: 1px solid $glass-tint;
 
   &:last-child {
     border-bottom: 0;
@@ -36,13 +36,13 @@
     line-height: $leading-xs;
     color: $blue-400;
     padding: $sp-1 $sp-2;
-    border-radius: $radius-default;
+    border-radius: $radius-lg;
     flex-shrink: 0;
     transition: $transition-colors;
 
     &:hover {
       color: $blue-300;
-      background: rgba($slate-700, 0.5);
+      background: rgba($blue-400, 0.1);
     }
   }
 }

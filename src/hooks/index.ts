@@ -3,3 +3,4 @@ export { useDeckSync } from './useDeckSync';
 export { useRecentDecks, notifyRecentDecksChanged } from './useRecentDecks';
 export { useRefreshMoxfield } from './useRefreshMoxfield';
 export { useResizeAnimation } from './useResizeAnimation';
+export { useTheme } from './useTheme';

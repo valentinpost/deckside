@@ -22,9 +22,8 @@
 
   .input {
     flex: 1;
-    border-radius: $radius-lg;
-    background: $slate-900;
-    border: 1px solid $slate-600;
+    border-radius: $radius-xl;
+    @include glass-inset;
     padding: $sp-3 $sp-4;
     font-size: $text-sm;
     line-height: $leading-sm;
@@ -40,19 +39,12 @@
   }
 
   .submit-btn {
-    border-radius: $radius-lg;
+    border-radius: $radius-xl;
     font-size: $text-sm;
     line-height: $leading-sm;
     font-weight: 500;
-    transition: $transition-colors;
-    cursor: pointer;
-    background: $blue-600;
-    color: $white;
     padding: $sp-3 $sp-5;
-
-    &:hover {
-      background: $blue-500;
-    }
+    @include glass-btn-primary;
   }
 
   .error {

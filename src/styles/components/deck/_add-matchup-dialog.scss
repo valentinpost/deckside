@@ -7,9 +7,8 @@
 
   .input {
     width: 100%;
-    border-radius: $radius-lg;
-    background: rgba($slate-800, 0.5);
-    border: 1px solid $slate-600;
+    border-radius: $radius-xl;
+    @include glass-inset;
     padding: $sp-3;
     font-size: $text-base;
     line-height: $leading-base;

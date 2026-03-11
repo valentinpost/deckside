@@ -1,9 +1,10 @@
 @use '../../abstracts' as *;
 
 .stale-card-banner {
-  border-radius: $radius-lg;
-  background: rgba($yellow-950, 0.5);
-  border: 1px solid $yellow-800;
+  border-radius: $radius-xl;
+  background: rgba($yellow-950, 0.4);
+  @include glass-blur(12px);
+  border: 1px solid rgba($yellow-800, 0.5);
   padding: $sp-3;
 
   .heading {

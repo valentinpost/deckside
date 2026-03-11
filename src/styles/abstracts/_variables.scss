@@ -8,6 +8,7 @@ $slate-600: #475569;
 $slate-700: #334155;
 $slate-800: #1e293b;
 $slate-900: #0f172a;
+$slate-950: #020617;
 
 // ─── Colors: Blue ───────────────────────────────────────
 $blue-300: #93c5fd;
@@ -88,9 +89,11 @@ $leading-3xl: 2.25rem;
 $radius-sm: 0.125rem;
 $radius-default: 0.25rem;
 $radius-md: 0.375rem;
-$radius-lg: 0.5rem;
-$radius-xl: 0.75rem;
-$radius-2xl: 1rem;
+$radius-card: 0.4rem;
+$radius-lg: 0.75rem;
+$radius-xl: 1rem;
+$radius-2xl: 1.25rem;
+$radius-3xl: 1.5rem;
 $radius-full: 9999px;
 
 // ─── Z-Index ────────────────────────────────────────────
@@ -103,14 +106,30 @@ $bp-sm: 640px;
 $bp-lg: 1024px;
 
 // ─── Transitions ────────────────────────────────────────
-$transition-colors: color 150ms cubic-bezier(0.4, 0, 0.2, 1),
-  background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
-  border-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
-  box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-colors: color 200ms ease,
+  background-color 200ms ease,
+  border-color 200ms ease,
+  box-shadow 200ms ease;
 
-$transition-all: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-all: all 200ms ease;
 
 // ─── Max Width ──────────────────────────────────────────
 $max-w-sm: 24rem;
 $max-w-lg: 32rem;
 $max-w-5xl: 64rem;
+
+// ─── Glass Design Tokens ────────────────────────────────
+$glass-bg: rgba($slate-800, 0.45);
+$glass-bg-heavy: rgba($slate-800, 0.65);
+$glass-border: rgba($white, 0.08);
+$glass-highlight: rgba($white, 0.12);
+$glass-tint: rgba($white, 0.06);
+$glass-tint-subtle: rgba($white, 0.04);
+$glass-blur: 20px;
+$glass-blur-heavy: 40px;
+$glass-shadow: 0 4px 24px rgba($black, 0.25), 0 1px 4px rgba($black, 0.15);
+$glass-shadow-lg: 0 8px 40px rgba($black, 0.35), 0 2px 8px rgba($black, 0.2);
+$glass-glow-blue: 0 0 16px rgba($blue-500, 0.25);
+$glass-glow-red: 0 0 16px rgba($red-500, 0.25);
+$glass-glow-green: 0 0 12px rgba($green-500, 0.15);
+$danger-tint: rgba($red-500, 0.1);
