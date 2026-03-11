@@ -1,3 +1,5 @@
+export type DeckColor = 'slate' | 'rose' | 'amber' | 'emerald' | 'sky' | 'violet';
+
 export interface Card {
   name: string;
   scryfallId: string;
@@ -5,6 +7,7 @@ export interface Card {
   quantity: number;
   manaCost?: string;
   typeLine?: string;
+  price?: number;
 }
 
 export interface CardRef {
@@ -50,6 +53,8 @@ export interface StoredDeck {
   matchups: Matchup[];
   history: HistoryEntry[];
   version: number;
+  deckColor?: DeckColor;
+  faceCardId?: string;
 }
 
 export interface RecentDeck {
@@ -57,4 +62,6 @@ export interface RecentDeck {
   deckName: string;
   format?: string;
   lastOpened: number;
+  deckColor?: DeckColor;
+  faceCardId?: string;
 }

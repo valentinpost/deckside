@@ -78,6 +78,25 @@
   // Body gradient
   --body-gradient-1: #{rgba($blue-600, 0.08)};
   --body-gradient-2: #{rgba($blue-500, 0.05)};
+
+  // Deck color swatches
+  --deck-slate: #8b9db8;
+  --deck-rose: #fb7ea8;
+  --deck-amber: #f9b732;
+  --deck-emerald: #3dd9a0;
+  --deck-sky: #4abcf7;
+  --deck-violet: #a48afe;
+
+  // Deck color tints (for backgrounds)
+  --deck-slate-tint: rgba(139, 157, 184, 0.25);
+  --deck-rose-tint: rgba(251, 126, 168, 0.25);
+  --deck-amber-tint: rgba(249, 183, 50, 0.25);
+  --deck-emerald-tint: rgba(61, 217, 160, 0.25);
+  --deck-sky-tint: rgba(74, 188, 247, 0.25);
+  --deck-violet-tint: rgba(164, 138, 254, 0.25);
+
+  // Face card selection
+  --face-card-ring: #{$yellow-400};
 }
 
 // ─── Light Theme ───────────────────────────────────────
@@ -158,4 +177,23 @@
   // Body gradient
   --body-gradient-1: #{rgba($blue-600, 0.05)};
   --body-gradient-2: #{rgba($blue-500, 0.03)};
+
+  // Deck color swatches
+  --deck-slate: #8b9db8;
+  --deck-rose: #fb7ea8;
+  --deck-amber: #f9b732;
+  --deck-emerald: #3dd9a0;
+  --deck-sky: #4abcf7;
+  --deck-violet: #a48afe;
+
+  // Deck color tints
+  --deck-slate-tint: rgba(139, 157, 184, 0.22);
+  --deck-rose-tint: rgba(251, 126, 168, 0.22);
+  --deck-amber-tint: rgba(249, 183, 50, 0.22);
+  --deck-emerald-tint: rgba(61, 217, 160, 0.22);
+  --deck-sky-tint: rgba(74, 188, 247, 0.22);
+  --deck-violet-tint: rgba(164, 138, 254, 0.22);
+
+  // Face card selection
+  --face-card-ring: #{$yellow-400};
 }

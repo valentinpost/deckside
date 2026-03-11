@@ -40,6 +40,8 @@ function registerRecentDeck(deck: StoredDeck) {
     deckName: deck.deckName,
     format: deck.format,
     lastOpened: Date.now(),
+    deckColor: deck.deckColor,
+    faceCardId: deck.faceCardId,
   });
   notifyRecentDecksChanged();
 }

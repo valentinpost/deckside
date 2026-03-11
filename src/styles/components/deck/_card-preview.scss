@@ -16,6 +16,13 @@
     }
   }
 
+  .face-card-hint {
+    font-size: $text-xs;
+    line-height: $leading-xs;
+    color: var(--text-faint);
+    font-style: italic;
+  }
+
   .cards {
     display: flex;
     flex-direction: column;

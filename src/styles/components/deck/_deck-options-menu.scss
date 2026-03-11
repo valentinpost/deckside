@@ -1,0 +1,97 @@
+@use '../../abstracts' as *;
+
+.deck-options-menu {
+  .trigger-btn {
+    color: var(--text-faint);
+    padding: $sp-1;
+    border-radius: $radius-lg;
+    transition: $transition-colors;
+
+    &:hover {
+      color: var(--text-primary);
+      background: var(--glass-tint);
+    }
+  }
+}
+
+// Portaled to document.body — top-level class
+.deck-options-dropdown {
+  position: fixed;
+  min-width: 12rem;
+  border-radius: $radius-xl;
+  @include glass-panel-heavy;
+  padding: $sp-2;
+  z-index: $z-50;
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-1_5;
+  }
+
+  .section-label {
+    font-size: $text-xs;
+    line-height: $leading-xs;
+    color: var(--text-faint);
+    padding: $sp-1 $sp-2;
+    font-weight: 500;
+  }
+
+  .color-swatches {
+    display: flex;
+    gap: $sp-1_5;
+    padding: $sp-1 $sp-2;
+  }
+
+  .swatch {
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: $radius-full;
+    border: 2px solid var(--glass-border);
+    cursor: pointer;
+    transition: $transition-all;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+
+    &[data-color='slate'] { background: var(--deck-slate); }
+    &[data-color='rose'] { background: var(--deck-rose); }
+    &[data-color='amber'] { background: var(--deck-amber); }
+    &[data-color='emerald'] { background: var(--deck-emerald); }
+    &[data-color='sky'] { background: var(--deck-sky); }
+    &[data-color='violet'] { background: var(--deck-violet); }
+
+    &:hover {
+      transform: scale(1.2);
+      border-color: var(--glass-highlight);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    &[data-active] {
+      border-color: var(--text-primary);
+      box-shadow: 0 0 0 2px var(--bg-base), 0 0 0 4px var(--text-muted);
+    }
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--divider);
+    margin: $sp-1_5 0;
+  }
+
+  .menu-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: $sp-1_5 $sp-2;
+    border-radius: $radius-lg;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    color: var(--text-secondary);
+    transition: $transition-colors;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--glass-tint);
+      color: var(--text-primary);
+    }
+  }
+}

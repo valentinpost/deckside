@@ -1,12 +1,10 @@
 import { useParams } from 'react-router-dom';
-import { useDeckStore } from '@/store/deckStore';
 import { useDeckPage } from '@/hooks/useDeckPage';
 import { DeckHeader } from '@/components/deck/DeckHeader';
 import { MatchupList } from '@/components/deck/MatchupList';
 import { AddMatchupInline } from '@/components/deck/AddMatchupInline';
 import { CardPreview } from '@/components/deck/CardPreview';
 import { HistoryPanel } from '@/components/history/HistoryPanel';
-import { ImportExportButtons } from '@/components/import/ImportExportButtons';
 import { AuthorNameInput } from '@/components/shared/AuthorNameInput';
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
 import { ErrorBanner } from '@/components/shared/ErrorBanner';
@@ -20,6 +18,7 @@ export function DeckPage() {
     showHistory, setShowHistory,
     refreshMoxfield, refreshing,
     handleAddMatchup, handleDeleteMatchup, handleRenameMatchup, handleRevert,
+    handleImport, handleColorChange, handleFaceCardSelect,
   } = useDeckPage(deckId);
 
   if (isLoading) return <LoadingSpinner message="Loading deck..." />;
@@ -28,7 +27,13 @@ export function DeckPage() {
 
   return (
     <div className="deck-page">
-      <DeckHeader deck={deck} onRefreshMoxfield={refreshMoxfield} refreshing={refreshing} />
+      <DeckHeader
+        deck={deck}
+        onRefreshMoxfield={refreshMoxfield}
+        refreshing={refreshing}
+        onImport={handleImport}
+        onColorChange={handleColorChange}
+      />
 
       {!authorName && <AuthorNameInput onSet={setAuthorName} />}
 
@@ -61,8 +66,12 @@ export function DeckPage() {
         )}
       </div>
 
-      <ImportExportButtons deck={deck} onImport={(imported) => useDeckStore.getState().setDeck(imported)} />
-      <CardPreview mainboard={deck.mainboard} sideboard={deck.sideboard} />
+      <CardPreview
+        mainboard={deck.mainboard}
+        sideboard={deck.sideboard}
+        faceCardId={deck.faceCardId}
+        onFaceCardSelect={handleFaceCardSelect}
+      />
       <HistoryPanel
         history={deck.history}
         onRevert={handleRevert}

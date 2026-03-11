@@ -82,6 +82,36 @@ export function MoonIcon({ size = 20, className }: IconProps) {
   );
 }
 
+export function MoreHorizontalIcon({ size = 20, className }: IconProps) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" />
+    </svg>
+  );
+}
+
+export function CheckIcon({ size = 16, className }: IconProps) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  );
+}
+
+export function BroomIcon({ size = 20, className }: IconProps) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M14 3l-1 8" />
+      <path d="m7 13 1.5-1.5" />
+      <path d="m17 13-1.5-1.5" />
+      <path d="M12 11c-3 0-5.5 1.5-6.5 4l-.5 2c-.3 1.2.5 2 1.5 2h11c1 0 1.8-.8 1.5-2l-.5-2c-1-2.5-3.5-4-6.5-4z" />
+      <path d="M9 19v2" />
+      <path d="M12 19v2" />
+      <path d="M15 19v2" />
+    </svg>
+  );
+}
+
 export function AlertCircleIcon({ size = 20, className }: IconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>

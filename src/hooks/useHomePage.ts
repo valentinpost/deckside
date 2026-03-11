@@ -26,7 +26,7 @@ export function useHomePage() {
     try {
       const deck = await importDeckFromJson(file);
       await cacheDeck(deck);
-      addRecentDeck({ deckId: deck.deckId, deckName: deck.deckName, format: deck.format, lastOpened: Date.now() });
+      addRecentDeck({ deckId: deck.deckId, deckName: deck.deckName, format: deck.format, lastOpened: Date.now(), deckColor: deck.deckColor, faceCardId: deck.faceCardId });
       notifyRecentDecksChanged();
       navigate(`/deck/${deck.deckId}`);
     } catch (err) {

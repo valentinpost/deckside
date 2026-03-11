@@ -6,8 +6,14 @@ export interface MoxfieldCard {
     card_faces?: Array<{ image_uris?: { normal?: string; small?: string } }>;
     mana_cost?: string;
     type_line?: string;
+    prices?: {
+      usd?: string;
+      usd_foil?: string;
+      eur?: string;
+    };
   };
   quantity: number;
+  price?: number;
 }
 
 export interface MoxfieldDeckResponse {

@@ -6,11 +6,13 @@ import { sortCards } from '@/utils/cardSort';
 interface CardGridProps {
   cards: Card[];
   selectedRefs?: CardRef[];
-  mode?: 'out' | 'in' | 'view';
+  mode?: 'out' | 'in' | 'view' | 'face';
   onToggle?: (name: string, qty: number) => void;
+  faceCardId?: string;
+  onFaceCardSelect?: (scryfallId: string | undefined) => void;
 }
 
-export function CardGrid({ cards, selectedRefs = [], mode = 'view', onToggle }: CardGridProps) {
+export function CardGrid({ cards, selectedRefs = [], mode = 'view', onToggle, faceCardId, onFaceCardSelect }: CardGridProps) {
   const selectedQuantityByName = new Map(selectedRefs.map((ref) => [ref.name, ref.quantity]));
   const sorted = useMemo(() => sortCards(cards), [cards]);
 
@@ -25,6 +27,8 @@ export function CardGrid({ cards, selectedRefs = [], mode = 'view', onToggle }: 
           maxQty={card.quantity}
           mode={mode}
           onToggle={onToggle}
+          isFaceCard={faceCardId === card.scryfallId}
+          onFaceCardSelect={onFaceCardSelect}
         />
       ))}
     </div>

@@ -1,8 +1,10 @@
 import { create } from 'zustand';
 import { nanoid } from 'nanoid';
-import type { StoredDeck, Matchup, MatchResult, CardRef, HistoryEntry } from '@/types/deck';
+import type { StoredDeck, Matchup, MatchResult, CardRef, HistoryEntry, DeckColor } from '@/types/deck';
 import { toSlug } from '@/utils/slug';
 import { cacheDeck } from '@/db/indexeddb';
+import { addRecentDeck } from '@/db/localstorage';
+import { notifyRecentDecksChanged } from '@/hooks/useRecentDecks';
 import { HISTORY_CAP } from '@/constants';
 
 interface DeckState {
@@ -18,12 +20,26 @@ interface DeckState {
   revertToHistory: (entryId: string, author: string) => void;
   addMatchResult: (matchupId: string, result: Omit<MatchResult, 'id' | 'timestamp'>) => void;
   removeMatchResult: (matchupId: string, resultId: string) => void;
+  setDeckColor: (color: DeckColor) => void;
+  setFaceCard: (scryfallId: string | undefined) => void;
   refreshFromMoxfield: (mainboard: StoredDeck['mainboard'], sideboard: StoredDeck['sideboard'], format?: string) => void;
   markClean: () => void;
 }
 
 function persistDeck(deck: StoredDeck) {
   cacheDeck(deck).catch(console.error);
+}
+
+function updateRecentEntry(deck: StoredDeck) {
+  addRecentDeck({
+    deckId: deck.deckId,
+    deckName: deck.deckName,
+    format: deck.format,
+    lastOpened: Date.now(),
+    deckColor: deck.deckColor,
+    faceCardId: deck.faceCardId,
+  });
+  notifyRecentDecksChanged();
 }
 
 /** Create an updated deck with a single matchup modified by the updater function */
@@ -169,6 +185,24 @@ export const useDeckStore = create<DeckState>((set, get) => ({
         ...matchup, results: (matchup.results ?? []).filter((result) => result.id !== resultId),
       }));
       persistDeck(updatedDeck);
+      return { deck: updatedDeck, dirty: true };
+    }),
+
+  setDeckColor: (color) =>
+    set((state) => {
+      if (!state.deck) return state;
+      const updatedDeck = { ...state.deck, deckColor: color, version: state.deck.version + 1 };
+      persistDeck(updatedDeck);
+      updateRecentEntry(updatedDeck);
+      return { deck: updatedDeck, dirty: true };
+    }),
+
+  setFaceCard: (scryfallId) =>
+    set((state) => {
+      if (!state.deck) return state;
+      const updatedDeck = { ...state.deck, faceCardId: scryfallId, version: state.deck.version + 1 };
+      persistDeck(updatedDeck);
+      updateRecentEntry(updatedDeck);
       return { deck: updatedDeck, dirty: true };
     }),
 

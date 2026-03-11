@@ -3,6 +3,7 @@ import { useDeck } from '@/hooks/useDeck';
 import { useDeckStore } from '@/store/deckStore';
 import { useRefreshMoxfield } from '@/hooks/useRefreshMoxfield';
 import { getAuthorName } from '@/db/localstorage';
+import type { StoredDeck, DeckColor } from '@/types/deck';
 
 export function useDeckPage(deckId?: string) {
   const { isLoading, error, refetch } = useDeck(deckId);
@@ -12,6 +13,9 @@ export function useDeckPage(deckId?: string) {
   const renameMatchup = useDeckStore((state) => state.renameMatchup);
   const snapshotHistory = useDeckStore((state) => state.snapshotHistory);
   const revertToHistory = useDeckStore((state) => state.revertToHistory);
+  const setDeck = useDeckStore((state) => state.setDeck);
+  const setDeckColor = useDeckStore((state) => state.setDeckColor);
+  const setFaceCard = useDeckStore((state) => state.setFaceCard);
   const { refresh: refreshMoxfield, refreshing } = useRefreshMoxfield();
 
   const [showAddMatchup, setShowAddMatchup] = useState(false);
@@ -43,6 +47,18 @@ export function useDeckPage(deckId?: string) {
     revertToHistory(entryId, authorName);
   }
 
+  function handleImport(imported: StoredDeck) {
+    setDeck(imported);
+  }
+
+  function handleColorChange(color: DeckColor) {
+    setDeckColor(color);
+  }
+
+  function handleFaceCardSelect(scryfallId: string | undefined) {
+    setFaceCard(scryfallId);
+  }
+
   return {
     isLoading,
     error,
@@ -60,5 +76,8 @@ export function useDeckPage(deckId?: string) {
     handleDeleteMatchup,
     handleRenameMatchup,
     handleRevert,
+    handleImport,
+    handleColorChange,
+    handleFaceCardSelect,
   };
 }

@@ -4,6 +4,32 @@
   display: flex;
   flex-direction: column;
   gap: $sp-2;
+  position: relative;
+  border-radius: $radius-xl;
+  padding: $sp-4;
+  @include glass-panel;
+
+  .color-tint {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: inherit;
+    opacity: 0.6;
+  }
+
+  &[data-color='slate'] .color-tint { background: var(--deck-slate-tint); }
+  &[data-color='rose'] .color-tint { background: var(--deck-rose-tint); }
+  &[data-color='amber'] .color-tint { background: var(--deck-amber-tint); }
+  &[data-color='emerald'] .color-tint { background: var(--deck-emerald-tint); }
+  &[data-color='sky'] .color-tint { background: var(--deck-sky-tint); }
+  &[data-color='violet'] .color-tint { background: var(--deck-violet-tint); }
+
+  // All content above tint
+  > *:not(.color-tint) {
+    position: relative;
+    z-index: 1;
+  }
 
   .title-row {
     display: flex;
@@ -12,6 +38,7 @@
   }
 
   .title {
+    flex: 1;
     font-size: $text-xl;
     line-height: $leading-xl;
     font-weight: 700;
@@ -21,6 +48,13 @@
       font-size: $text-2xl;
       line-height: $leading-2xl;
     }
+  }
+
+  .title-actions {
+    display: flex;
+    align-items: center;
+    gap: $sp-1;
+    flex-shrink: 0;
   }
 
   .refresh-btn {
@@ -77,6 +111,11 @@
 
   .counts {
     color: var(--text-faint);
+  }
+
+  .price {
+    color: var(--text-secondary);
+    font-weight: 500;
   }
 
   .link {

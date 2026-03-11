@@ -22,47 +22,47 @@ function baseDeck(overrides?: Partial<StoredDeck>): StoredDeck {
 
 describe('DeckHeader', () => {
   it('renders deck name and card counts', () => {
-    render(<DeckHeader deck={baseDeck()} />);
+    render(<DeckHeader deck={baseDeck()} onImport={vi.fn()} onColorChange={vi.fn()} />);
     expect(screen.getByText('Burn')).toBeInTheDocument();
     expect(screen.getByText('4 main / 2 side')).toBeInTheDocument();
   });
 
   it('renders format badge when format exists', () => {
-    render(<DeckHeader deck={baseDeck({ format: 'legacy' })} />);
+    render(<DeckHeader deck={baseDeck({ format: 'legacy' })} onImport={vi.fn()} onColorChange={vi.fn()} />);
     expect(screen.getByText('legacy')).toBeInTheDocument();
   });
 
   it('hides format badge when no format', () => {
-    render(<DeckHeader deck={baseDeck({ format: undefined })} />);
+    render(<DeckHeader deck={baseDeck({ format: undefined })} onImport={vi.fn()} onColorChange={vi.fn()} />);
     expect(screen.queryByText('modern')).not.toBeInTheDocument();
   });
 
   it('renders Moxfield link with correct href', () => {
-    render(<DeckHeader deck={baseDeck()} />);
+    render(<DeckHeader deck={baseDeck()} onImport={vi.fn()} onColorChange={vi.fn()} />);
     const link = screen.getByText('Moxfield');
     expect(link).toHaveAttribute('href', 'https://moxfield.com/decks/test');
     expect(link).toHaveAttribute('target', '_blank');
   });
 
   it('shows refresh button when onRefreshMoxfield provided', () => {
-    render(<DeckHeader deck={baseDeck()} onRefreshMoxfield={vi.fn()} />);
+    render(<DeckHeader deck={baseDeck()} onRefreshMoxfield={vi.fn()} onImport={vi.fn()} onColorChange={vi.fn()} />);
     expect(screen.getByTitle('Refresh from Moxfield')).toBeInTheDocument();
   });
 
   it('hides refresh button when onRefreshMoxfield not provided', () => {
-    render(<DeckHeader deck={baseDeck()} />);
+    render(<DeckHeader deck={baseDeck()} onImport={vi.fn()} onColorChange={vi.fn()} />);
     expect(screen.queryByTitle('Refresh from Moxfield')).not.toBeInTheDocument();
   });
 
   it('disables refresh button when refreshing', () => {
-    render(<DeckHeader deck={baseDeck()} onRefreshMoxfield={vi.fn()} refreshing />);
+    render(<DeckHeader deck={baseDeck()} onRefreshMoxfield={vi.fn()} refreshing onImport={vi.fn()} onColorChange={vi.fn()} />);
     expect(screen.getByTitle('Refresh from Moxfield')).toBeDisabled();
   });
 
   it('calls onRefreshMoxfield when refresh button clicked', async () => {
     const user = userEvent.setup();
     const onRefresh = vi.fn();
-    render(<DeckHeader deck={baseDeck()} onRefreshMoxfield={onRefresh} />);
+    render(<DeckHeader deck={baseDeck()} onRefreshMoxfield={onRefresh} onImport={vi.fn()} onColorChange={vi.fn()} />);
     await user.click(screen.getByTitle('Refresh from Moxfield'));
     expect(onRefresh).toHaveBeenCalledOnce();
   });
@@ -77,14 +77,14 @@ describe('DeckHeader', () => {
         ],
       }],
     });
-    render(<DeckHeader deck={deck} />);
+    render(<DeckHeader deck={deck} onImport={vi.fn()} onColorChange={vi.fn()} />);
     expect(screen.getByText(/50%/)).toBeInTheDocument();
     expect(screen.getByText(/1W/)).toBeInTheDocument();
     expect(screen.getByText(/1L/)).toBeInTheDocument();
   });
 
   it('hides win rate when no results', () => {
-    render(<DeckHeader deck={baseDeck()} />);
+    render(<DeckHeader deck={baseDeck()} onImport={vi.fn()} onColorChange={vi.fn()} />);
     expect(screen.queryByText(/%/)).not.toBeInTheDocument();
   });
 });

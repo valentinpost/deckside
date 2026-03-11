@@ -7,10 +7,21 @@ import { API } from '@/config';
  * Scryfall CDN format: https://cards.scryfall.io/SIZE/front/A/B/SCRYFALL_ID.jpg
  * where A and B are the first two characters of the ID.
  */
-export function scryfallImageUrl(scryfallId: string, size: 'small' | 'normal' = 'small'): string {
+export function scryfallImageUrl(scryfallId: string, size: 'small' | 'normal' | 'art_crop' = 'small'): string {
   const firstChar = scryfallId[0];
   const secondChar = scryfallId[1];
   return `https://cards.scryfall.io/${size}/front/${firstChar}/${secondChar}/${scryfallId}.jpg`;
+}
+
+function parsePrice(entry: MoxfieldDeckResponse['mainboard'][string]): number | undefined {
+  // Moxfield sometimes returns price at entry level, sometimes on card.prices
+  if (typeof entry.price === 'number' && entry.price > 0) return entry.price;
+  const usd = entry.card.prices?.usd;
+  if (usd) {
+    const parsed = parseFloat(usd);
+    if (!isNaN(parsed) && parsed > 0) return parsed;
+  }
+  return undefined;
 }
 
 export function transformMoxfieldCards(
@@ -23,6 +34,7 @@ export function transformMoxfieldCards(
     quantity: entry.quantity,
     manaCost: entry.card.mana_cost,
     typeLine: entry.card.type_line,
+    price: parsePrice(entry),
   }));
 }
 

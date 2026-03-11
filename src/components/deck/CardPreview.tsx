@@ -6,9 +6,11 @@ import { CardGrid } from '@/components/matchup/CardGrid';
 interface CardPreviewProps {
   mainboard: Card[];
   sideboard: Card[];
+  faceCardId?: string;
+  onFaceCardSelect?: (scryfallId: string | undefined) => void;
 }
 
-export function CardPreview({ mainboard, sideboard }: CardPreviewProps) {
+export function CardPreview({ mainboard, sideboard, faceCardId, onFaceCardSelect }: CardPreviewProps) {
   const [showCards, setShowCards] = useState(false);
 
   return (
@@ -21,13 +23,26 @@ export function CardPreview({ mainboard, sideboard }: CardPreviewProps) {
       </button>
       {showCards && (
         <div className="cards">
+          {onFaceCardSelect && (
+            <p className="face-card-hint">Click a card to set it as your deck's face card</p>
+          )}
           <div>
             <h3 className="section-label">Mainboard</h3>
-            <CardGrid cards={mainboard} />
+            <CardGrid
+              cards={mainboard}
+              mode={onFaceCardSelect ? 'face' : 'view'}
+              faceCardId={faceCardId}
+              onFaceCardSelect={onFaceCardSelect}
+            />
           </div>
           <div>
             <h3 className="section-label">Sideboard</h3>
-            <CardGrid cards={sideboard} />
+            <CardGrid
+              cards={sideboard}
+              mode={onFaceCardSelect ? 'face' : 'view'}
+              faceCardId={faceCardId}
+              onFaceCardSelect={onFaceCardSelect}
+            />
           </div>
         </div>
       )}
