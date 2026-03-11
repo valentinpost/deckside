@@ -1,0 +1,32 @@
+@use '../../abstracts' as *;
+
+.card-preview {
+  display: flex;
+  flex-direction: column;
+  gap: $sp-3;
+
+  .toggle-btn {
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    color: $slate-400;
+    transition: $transition-colors;
+
+    &:hover {
+      color: $slate-200;
+    }
+  }
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-4;
+  }
+
+  .section-label {
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    font-weight: 500;
+    color: $slate-400;
+    margin-bottom: $sp-2;
+  }
+}

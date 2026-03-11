@@ -9,25 +9,24 @@ interface InOutCounterProps {
 export function InOutCounter({ out, inCards }: InOutCounterProps) {
   const outCount = sumQuantities(out);
   const inCount = sumQuantities(inCards);
+
+  if (outCount === 0 && inCount === 0) return null;
+
   const balanced = outCount === inCount;
   const diff = inCount - outCount;
 
   return (
-    <div className="sticky-counter">
-      <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-4 text-sm">
-          <span className="text-red-400 font-medium">Out: {outCount}</span>
-          <span className="text-green-400 font-medium">In: {inCount}</span>
+    <div className="in-out-counter">
+      <div className="inner">
+        <div className="counts">
+          <span className="out-count">Out: {outCount}</span>
+          <span className="in-count">In: {inCount}</span>
         </div>
-        <div className="text-sm">
+        <div className="status">
           {balanced ? (
-            outCount > 0 ? (
-              <span className="text-green-400 font-medium">Balanced</span>
-            ) : (
-              <span className="text-slate-500">No swaps</span>
-            )
+            <span className="balanced">Balanced</span>
           ) : (
-            <span className="text-yellow-400 font-medium">
+            <span className="diff">
               {diff > 0 ? `+${diff}` : diff} cards
             </span>
           )}

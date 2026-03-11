@@ -27,19 +27,19 @@ export function DeckPage() {
   if (!deck) return <ErrorBanner message="Deck not found" />;
 
   return (
-    <div className="space-y-6">
+    <div className="deck-page">
       <DeckHeader deck={deck} onRefreshMoxfield={refreshMoxfield} refreshing={refreshing} />
 
       {!authorName && <AuthorNameInput onSet={setAuthorName} />}
 
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Matchups</h2>
-          <div className="flex gap-2">
+      <div className="matchups-section">
+        <div className="matchups-header">
+          <h2 className="matchups-title">Matchups</h2>
+          <div className="button-group">
             <button onClick={() => setShowHistory(true)} className="btn-secondary" title="View edit history">
               History
             </button>
-            <button onClick={() => setShowAddDialog(true)} disabled={!authorName} className="btn-primary disabled:opacity-50">
+            <button onClick={() => setShowAddDialog(true)} disabled={!authorName} className="btn-primary">
               + Add Matchup
             </button>
           </div>

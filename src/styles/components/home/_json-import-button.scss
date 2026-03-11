@@ -1,0 +1,25 @@
+@use '../../abstracts' as *;
+
+.json-import-button {
+  max-width: $max-w-lg;
+  margin: 0 auto;
+
+  .label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-lg;
+    border: 1px dashed $slate-600;
+    padding: $sp-4;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    color: $slate-400;
+    transition: $transition-colors;
+    cursor: pointer;
+
+    &:hover {
+      border-color: $slate-500;
+      color: $slate-300;
+    }
+  }
+}

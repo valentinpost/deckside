@@ -1,0 +1,86 @@
+@use '../../abstracts' as *;
+
+.confirm-dialog {
+  background: $slate-800;
+  color: $slate-100;
+  border-radius: $radius-xl;
+  padding: 0;
+  max-width: $max-w-sm;
+  width: 100%;
+  border: none;
+
+  &::backdrop {
+    background: rgba($black, 0.6);
+  }
+
+  .body {
+    padding: $sp-6;
+    display: flex;
+    flex-direction: column;
+    gap: $sp-4;
+  }
+
+  .title {
+    font-size: $text-lg;
+    line-height: $leading-lg;
+    font-weight: 600;
+  }
+
+  .message {
+    color: $slate-300;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+  }
+
+  .actions {
+    display: flex;
+    gap: $sp-3;
+    justify-content: flex-end;
+  }
+
+  .btn-ghost {
+    border-radius: $radius-lg;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    transition: $transition-colors;
+    cursor: pointer;
+    color: $slate-300;
+    padding: $sp-2 $sp-4;
+
+    &:hover {
+      background: $slate-700;
+    }
+  }
+
+  .confirm-primary {
+    border-radius: $radius-lg;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    font-weight: 500;
+    transition: $transition-colors;
+    cursor: pointer;
+    background: $blue-600;
+    color: $white;
+    padding: $sp-2 $sp-4;
+
+    &:hover {
+      background: $blue-500;
+    }
+  }
+
+  .confirm-danger {
+    border-radius: $radius-lg;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    font-weight: 500;
+    transition: $transition-colors;
+    cursor: pointer;
+    background: $red-600;
+    color: $white;
+    padding: $sp-2 $sp-4;
+
+    &:hover {
+      background: $red-500;
+    }
+  }
+}

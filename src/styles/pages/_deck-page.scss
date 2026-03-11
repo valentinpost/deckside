@@ -1,0 +1,70 @@
+@use '../abstracts' as *;
+
+.deck-page {
+  display: flex;
+  flex-direction: column;
+  gap: $sp-6;
+
+  .matchups-section {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-3;
+  }
+
+  .matchups-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .matchups-title {
+    font-size: $text-lg;
+    line-height: $leading-lg;
+    font-weight: 600;
+  }
+
+  .button-group {
+    display: flex;
+    gap: $sp-2;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    border-radius: $radius-lg;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    font-weight: 500;
+    transition: $transition-colors;
+    cursor: pointer;
+    border: 1px solid $slate-600;
+    padding: $sp-2 $sp-3;
+
+    &:hover {
+      background: $slate-800;
+    }
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    border-radius: $radius-lg;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    font-weight: 500;
+    transition: $transition-colors;
+    cursor: pointer;
+    background: $blue-600;
+    color: $white;
+    padding: $sp-2 $sp-4;
+
+    &:hover {
+      background: $blue-500;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+}

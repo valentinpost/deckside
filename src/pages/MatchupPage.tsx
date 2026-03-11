@@ -21,9 +21,9 @@ export function MatchupPage() {
   if (!deck) return <ErrorBanner message="Deck not found" />;
   if (!matchup) {
     return (
-      <div className="space-y-4">
+      <div className="matchup-page-not-found">
         <ErrorBanner message={`Matchup "${matchupSlug}" not found`} />
-        <Link to={`/deck/${deckId}`} className="text-blue-400 hover:text-blue-300 text-sm">
+        <Link to={`/deck/${deckId}`} className="back-link">
           Back to deck
         </Link>
       </div>
@@ -31,18 +31,18 @@ export function MatchupPage() {
   }
 
   return (
-    <div className="space-y-6 pb-20">
-      <h1 className="text-2xl font-bold">{matchup.name}</h1>
+    <div className="matchup-page">
+      <h1 className="title">{matchup.name}</h1>
 
       <StaleCardBanner staleCards={staleCards} />
 
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium text-red-400">Tap mainboard cards to take OUT</h3>
+      <div className="section">
+        <h3 className="out-label">Tap mainboard cards to take OUT</h3>
         <CardGrid cards={deck.mainboard} selectedRefs={outRefs} mode="out" onToggle={handleOutToggle} />
       </div>
 
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium text-green-400">Tap sideboard cards to bring IN</h3>
+      <div className="section">
+        <h3 className="in-label">Tap sideboard cards to bring IN</h3>
         <CardGrid cards={deck.sideboard} selectedRefs={inRefs} mode="in" onToggle={handleInToggle} />
       </div>
 

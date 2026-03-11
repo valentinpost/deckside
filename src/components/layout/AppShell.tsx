@@ -15,24 +15,24 @@ export function AppShell({ children }: { children: ReactNode }) {
         : null;
 
   return (
-    <div className="min-h-dvh flex flex-col">
-      <header className="sticky-header">
-        <div className="max-w-5xl mx-auto px-4 h-14 flex items-center gap-3">
+    <div className="app-shell">
+      <header className="app-shell__header">
+        <div className="header-inner">
           {backTo && (
             <Link
               to={backTo}
-              className="text-slate-400 hover:text-slate-200 transition-colors -ml-1 p-1"
+              className="back-link"
               aria-label={backTo === '/' ? 'Back to home' : 'Back to deck'}
             >
               {backTo === '/' ? <HomeIcon /> : <ChevronLeftIcon />}
             </Link>
           )}
-          <Link to="/" className="font-bold text-lg tracking-tight">
+          <Link to="/" className="logo">
             Sideboard Guide
           </Link>
         </div>
       </header>
-      <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-6">
+      <main className="app-shell__main">
         {children}
       </main>
     </div>

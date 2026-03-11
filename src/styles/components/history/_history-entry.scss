@@ -1,0 +1,48 @@
+@use '../../abstracts' as *;
+
+.history-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: $sp-3;
+  padding: $sp-3 0;
+  border-bottom: 1px solid rgba($slate-700, 0.5);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  .body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .action {
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    font-weight: 500;
+    color: $slate-200;
+    @include truncate;
+  }
+
+  .meta {
+    font-size: $text-xs;
+    line-height: $leading-xs;
+    color: $slate-400;
+    margin-top: $sp-0_5;
+  }
+
+  .revert-btn {
+    font-size: $text-xs;
+    line-height: $leading-xs;
+    color: $blue-400;
+    padding: $sp-1 $sp-2;
+    border-radius: $radius-default;
+    flex-shrink: 0;
+    transition: $transition-colors;
+
+    &:hover {
+      color: $blue-300;
+      background: rgba($slate-700, 0.5);
+    }
+  }
+}

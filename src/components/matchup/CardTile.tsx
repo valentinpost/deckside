@@ -22,25 +22,20 @@ export function CardTile({ card, selectedQty = 0, maxQty, mode = 'view', index =
     onToggle(card.name, next);
   }
 
-  const borderColor =
-    mode === 'out' && isSelected
-      ? 'ring-2 ring-red-500'
-      : mode === 'in' && isSelected
-        ? 'ring-2 ring-green-500'
-        : '';
-
-  const dimClass = isInteractive && !isSelected ? 'opacity-50' : '';
-
   return (
     <button
       type="button"
       onClick={handleClick}
       disabled={!isInteractive}
-      className={`card-tile ${borderColor} ${dimClass} ${isInteractive ? 'cursor-pointer active:scale-95' : 'cursor-default'}`}
+      className="card-tile"
+      data-mode={mode}
+      data-interactive={isInteractive ? 'true' : undefined}
+      data-dim={isInteractive && !isSelected ? 'true' : undefined}
+      data-selected={isSelected ? '' : undefined}
     >
       {!imgLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-5 h-5 border-2 border-slate-600 border-t-slate-400 rounded-full animate-spin" />
+        <div className="loading-overlay">
+          <div className="spinner" />
         </div>
       )}
       <img
@@ -51,7 +46,8 @@ export function CardTile({ card, selectedQty = 0, maxQty, mode = 'view', index =
         loading={index < EAGER_LOAD_COUNT ? 'eager' : 'lazy'}
         decoding="async"
         onLoad={() => setImgLoaded(true)}
-        className={`w-full h-full object-cover ${imgLoaded ? '' : 'opacity-0'}`}
+        className="image"
+        data-loaded={imgLoaded ? 'true' : 'false'}
       />
 
       {/* Quantity badge */}
@@ -61,14 +57,14 @@ export function CardTile({ card, selectedQty = 0, maxQty, mode = 'view', index =
 
       {/* Selection count badge */}
       {isSelected && (
-        <span className={`badge-selection ${mode === 'out' ? 'bg-red-600' : 'bg-green-600'}`}>
+        <span className="badge-selection" data-mode={mode}>
           {selectedQty}
         </span>
       )}
 
       {/* Card name */}
-      <div className="card-name-overlay">
-        <p className="text-white text-[10px] leading-tight truncate font-medium">
+      <div className="name-overlay">
+        <p className="card-name">
           {card.name}
         </p>
       </div>

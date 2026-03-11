@@ -1,0 +1,25 @@
+@use '../abstracts' as *;
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  gap: $sp-8;
+
+  .hero {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: $sp-2;
+    padding-top: $sp-8;
+  }
+
+  .title {
+    font-size: $text-3xl;
+    line-height: $leading-3xl;
+    font-weight: 700;
+  }
+
+  .subtitle {
+    color: $slate-400;
+  }
+}

@@ -43,21 +43,21 @@ export function AddMatchupDialog({ open, onAdd, onClose, existingSlugs }: AddMat
   }
 
   return (
-    <dialog ref={dialogRef} onClose={onClose} className="dialog">
-      <form onSubmit={handleSubmit} className="dialog-body">
-        <h2 className="text-lg font-semibold">Add Matchup</h2>
-        <div className="space-y-2">
+    <dialog ref={dialogRef} onClose={onClose} className="add-matchup-dialog">
+      <form onSubmit={handleSubmit} className="body">
+        <h2 className="title">Add Matchup</h2>
+        <div className="field-group">
           <input
             ref={inputRef}
             type="text"
             value={name}
             onChange={(e) => { setName(e.target.value); setError(''); }}
             placeholder='e.g., "vs Burn"'
-            className="input-md w-full"
+            className="input"
           />
-          {error && <p className="text-red-400 text-sm">{error}</p>}
+          {error && <p className="error">{error}</p>}
         </div>
-        <div className="dialog-actions">
+        <div className="actions">
           <button type="button" onClick={onClose} className="btn-ghost">
             Cancel
           </button>

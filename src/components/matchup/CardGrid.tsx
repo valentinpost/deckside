@@ -15,7 +15,7 @@ export function CardGrid({ cards, selectedRefs = [], mode = 'view', onToggle }: 
   const sorted = useMemo(() => sortCards(cards), [cards]);
 
   return (
-    <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2">
+    <div className="card-grid">
       {sorted.map((card, index) => (
         <CardTile
           key={card.name}

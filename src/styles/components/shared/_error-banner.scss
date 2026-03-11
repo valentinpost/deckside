@@ -1,0 +1,40 @@
+@use '../../abstracts' as *;
+
+.error-banner {
+  border-radius: $radius-lg;
+  background: rgba($red-950, 0.5);
+  border: 1px solid $red-900;
+  padding: $sp-4;
+  display: flex;
+  align-items: flex-start;
+  gap: $sp-3;
+
+  .icon {
+    color: $red-400;
+    flex-shrink: 0;
+    margin-top: $sp-0_5;
+  }
+
+  .body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .message {
+    color: $red-200;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+  }
+
+  .retry-btn {
+    margin-top: $sp-2;
+    color: $red-400;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    text-decoration: underline;
+
+    &:hover {
+      color: $red-300;
+    }
+  }
+}

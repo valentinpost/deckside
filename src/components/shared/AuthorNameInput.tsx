@@ -18,17 +18,17 @@ export function AuthorNameInput({ onSet }: AuthorNameInputProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 p-4 bg-slate-800 rounded-lg border border-slate-700">
-      <p className="text-sm text-slate-300">
+    <form onSubmit={handleSubmit} className="author-name-input">
+      <p className="prompt">
         Enter your name to track edits:
       </p>
-      <div className="flex gap-2">
+      <div className="row">
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Your name"
-          className="input-sm flex-1"
+          className="input"
         />
         <button type="submit" className="btn-primary">
           Save

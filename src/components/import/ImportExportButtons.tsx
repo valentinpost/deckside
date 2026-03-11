@@ -23,11 +23,11 @@ export function ImportExportButtons({ deck, onImport }: ImportExportButtonsProps
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="import-export-buttons">
       <button onClick={() => exportDeckToJson(deck)} className="btn-secondary">
         Export JSON
       </button>
-      <label className="btn-secondary cursor-pointer">
+      <label className="import-label">
         Import JSON
         <input
           ref={fileRef}

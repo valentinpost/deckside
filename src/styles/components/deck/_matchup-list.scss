@@ -1,0 +1,14 @@
+@use '../../abstracts' as *;
+
+.matchup-list-empty {
+  color: $slate-500;
+  font-size: $text-sm;
+  line-height: $leading-sm;
+  padding: $sp-4 0;
+}
+
+.matchup-list {
+  display: flex;
+  flex-direction: column;
+  gap: $sp-2;
+}

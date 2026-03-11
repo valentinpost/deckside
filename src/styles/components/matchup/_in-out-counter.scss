@@ -1,0 +1,73 @@
+@use '../../abstracts' as *;
+
+.in-out-counter {
+  position: fixed;
+  top: 3.5rem;
+  left: 0;
+  right: 0;
+  z-index: $z-30;
+  background: rgba($slate-900, 0.95);
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid $slate-700;
+
+  .inner {
+    max-width: $max-w-5xl;
+    margin: 0 auto;
+    padding: $sp-3 $sp-4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media (max-width: $bp-sm) {
+      padding: $sp-2 $sp-3;
+    }
+  }
+
+  .counts {
+    display: flex;
+    align-items: center;
+    gap: $sp-4;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+
+    @media (max-width: $bp-sm) {
+      gap: $sp-3;
+      font-size: $text-xs;
+      line-height: $leading-xs;
+    }
+  }
+
+  .out-count {
+    color: $red-400;
+    font-weight: 500;
+  }
+
+  .in-count {
+    color: $green-400;
+    font-weight: 500;
+  }
+
+  .status {
+    font-size: $text-sm;
+    line-height: $leading-sm;
+
+    @media (max-width: $bp-sm) {
+      font-size: $text-xs;
+      line-height: $leading-xs;
+    }
+  }
+
+  .balanced {
+    color: $green-400;
+    font-weight: 500;
+  }
+
+  .no-swaps {
+    color: $slate-500;
+  }
+
+  .diff {
+    color: $yellow-400;
+    font-weight: 500;
+  }
+}

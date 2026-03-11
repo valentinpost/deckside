@@ -29,21 +29,21 @@ export function HistoryPanel({ history, onRevert, open, onClose }: HistoryPanelP
 
   return (
     <>
-      <div className="backdrop" onClick={onClose} />
+      <div className="history-panel-backdrop" onClick={onClose} />
 
-      <div className="bottom-sheet">
-        <div className="bottom-sheet-header">
-          <h3 className="font-semibold">Edit History</h3>
+      <div className="history-panel">
+        <div className="header">
+          <h3 className="title">Edit History</h3>
           <button
             onClick={onClose}
-            className="p-1 text-slate-400 hover:text-slate-200 transition-colors"
+            className="close-btn"
           >
             <CloseIcon />
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto px-4">
+        <div className="content">
           {history.length === 0 ? (
-            <p className="text-slate-500 text-sm py-6 text-center">No history yet</p>
+            <p className="empty">No history yet</p>
           ) : (
             history.map((entry) => (
               <HistoryEntryItem

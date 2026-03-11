@@ -1,0 +1,78 @@
+@use '../../abstracts' as *;
+
+.matchup-list-item {
+  display: flex;
+  align-items: center;
+  gap: $sp-3;
+  border-radius: $radius-lg;
+  background: rgba($slate-800, 0.5);
+  border: 1px solid rgba($slate-700, 0.5);
+  padding: $sp-3;
+  transition: $transition-colors;
+
+  &:hover {
+    background: $slate-800;
+  }
+
+  .link {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .inline-input {
+    width: 100%;
+    border-radius: $radius-default;
+    background: $slate-900;
+    border: 1px solid $slate-600;
+    padding: $sp-1 $sp-2;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    color: inherit;
+
+    &:focus {
+      @include focus-ring;
+    }
+  }
+
+  .name {
+    font-weight: 500;
+    @include truncate;
+  }
+
+  .subtitle {
+    font-size: $text-xs;
+    line-height: $leading-xs;
+    color: $slate-400;
+    margin-top: $sp-0_5;
+  }
+
+  .balanced {
+    color: $green-400;
+  }
+
+  .unbalanced {
+    color: $yellow-400;
+  }
+
+  .btn-icon-neutral {
+    padding: $sp-2;
+    color: $slate-500;
+    flex-shrink: 0;
+    transition: $transition-colors;
+
+    &:hover {
+      color: $slate-300;
+    }
+  }
+
+  .btn-icon-danger {
+    padding: $sp-2;
+    color: $slate-500;
+    flex-shrink: 0;
+    transition: $transition-colors;
+
+    &:hover {
+      color: $red-400;
+    }
+  }
+}

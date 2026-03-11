@@ -1,0 +1,49 @@
+@use '../abstracts' as *;
+
+.matchup-page-not-found {
+  display: flex;
+  flex-direction: column;
+  gap: $sp-4;
+
+  .back-link {
+    color: $blue-400;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+
+    &:hover {
+      color: $blue-300;
+    }
+  }
+}
+
+.matchup-page {
+  display: flex;
+  flex-direction: column;
+  gap: $sp-6;
+
+  .title {
+    font-size: $text-2xl;
+    line-height: $leading-2xl;
+    font-weight: 700;
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-2;
+  }
+
+  .out-label {
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    font-weight: 500;
+    color: $red-400;
+  }
+
+  .in-label {
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    font-weight: 500;
+    color: $green-400;
+  }
+}

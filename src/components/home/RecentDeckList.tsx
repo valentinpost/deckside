@@ -8,14 +8,14 @@ interface RecentDeckListProps {
 
 export function RecentDeckList({ recents, onRemove }: RecentDeckListProps) {
   return (
-    <div className="space-y-3">
-      <h2 className="text-lg font-semibold text-slate-300">Recent Decks</h2>
+    <div className="recent-deck-list">
+      <h2 className="title">Recent Decks</h2>
       {recents.length === 0 ? (
-        <p className="text-slate-500 text-sm">
+        <p className="empty">
           No recent decks yet. Paste a Moxfield URL above to get started.
         </p>
       ) : (
-        <div className="space-y-2">
+        <div className="list">
           {recents.map((deck) => (
             <RecentDeckItem
               key={deck.deckId}

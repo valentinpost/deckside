@@ -7,24 +7,24 @@ interface DeckUrlFormProps {
 
 export function DeckUrlForm({ url, error, onUrlChange, onSubmit }: DeckUrlFormProps) {
   return (
-    <form onSubmit={onSubmit} className="max-w-lg mx-auto space-y-3">
-      <label htmlFor="moxfield-url" className="block text-sm font-medium text-slate-300">
+    <form onSubmit={onSubmit} className="deck-url-form">
+      <label htmlFor="moxfield-url" className="label">
         Moxfield Deck URL
       </label>
-      <div className="flex gap-2">
+      <div className="row">
         <input
           id="moxfield-url"
           type="url"
           value={url}
           onChange={(e) => onUrlChange(e.target.value)}
           placeholder="https://www.moxfield.com/decks/..."
-          className="input-md flex-1"
+          className="input"
         />
-        <button type="submit" className="btn-primary px-5 py-3">
+        <button type="submit" className="submit-btn">
           Load
         </button>
       </div>
-      {error && <p className="text-red-400 text-sm">{error}</p>}
+      {error && <p className="error">{error}</p>}
     </form>
   );
 }

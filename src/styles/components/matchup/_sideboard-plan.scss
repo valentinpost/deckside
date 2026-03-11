@@ -1,0 +1,39 @@
+@use '../../abstracts' as *;
+
+.sideboard-plan {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $sp-4;
+  font-size: $text-sm;
+  line-height: $leading-sm;
+
+  .column {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-1;
+  }
+
+  .out-heading {
+    font-weight: 500;
+    color: $red-400;
+  }
+
+  .in-heading {
+    font-weight: 500;
+    color: $green-400;
+  }
+
+  .none {
+    color: $slate-500;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-0_5;
+  }
+
+  .item {
+    color: $slate-300;
+  }
+}

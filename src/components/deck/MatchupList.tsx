@@ -11,14 +11,14 @@ interface MatchupListProps {
 export function MatchupList({ deckId, matchups, onDelete, onRename }: MatchupListProps) {
   if (matchups.length === 0) {
     return (
-      <p className="text-slate-500 text-sm py-4">
+      <p className="matchup-list-empty">
         No matchups yet. Add one to start building your sideboard guide.
       </p>
     );
   }
 
   return (
-    <div className="space-y-2">
+    <div className="matchup-list">
       {matchups.map((m) => (
         <MatchupListItem
           key={m.id}

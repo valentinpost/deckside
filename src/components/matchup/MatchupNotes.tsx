@@ -6,8 +6,8 @@ interface MatchupNotesProps {
 
 export function MatchupNotes({ notes, onChange, onBlur }: MatchupNotesProps) {
   return (
-    <div className="space-y-2">
-      <label htmlFor="matchup-notes" className="block text-sm font-medium text-slate-400">
+    <div className="matchup-notes">
+      <label htmlFor="matchup-notes" className="label">
         Notes
       </label>
       <textarea

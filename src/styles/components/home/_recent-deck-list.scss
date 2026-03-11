@@ -1,0 +1,26 @@
+@use '../../abstracts' as *;
+
+.recent-deck-list {
+  display: flex;
+  flex-direction: column;
+  gap: $sp-3;
+
+  .title {
+    font-size: $text-lg;
+    line-height: $leading-lg;
+    font-weight: 600;
+    color: $slate-300;
+  }
+
+  .empty {
+    color: $slate-500;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-2;
+  }
+}

@@ -1,0 +1,52 @@
+@use '../abstracts' as *;
+
+.app-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-shell__header {
+  position: sticky;
+  top: 0;
+  z-index: $z-40;
+  background: rgba($slate-900, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid $slate-800;
+
+  .header-inner {
+    max-width: $max-w-5xl;
+    margin: 0 auto;
+    padding: 0 $sp-4;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    gap: $sp-3;
+  }
+
+  .back-link {
+    color: $slate-400;
+    margin-left: -$sp-1;
+    padding: $sp-1;
+    transition: $transition-colors;
+
+    &:hover {
+      color: $slate-200;
+    }
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: $text-lg;
+    line-height: $leading-lg;
+    letter-spacing: -0.025em;
+  }
+}
+
+.app-shell__main {
+  flex: 1;
+  max-width: $max-w-5xl;
+  margin: 0 auto;
+  width: 100%;
+  padding: $sp-6 $sp-4;
+}

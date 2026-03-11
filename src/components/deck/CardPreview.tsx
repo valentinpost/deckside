@@ -12,21 +12,21 @@ export function CardPreview({ mainboard, sideboard }: CardPreviewProps) {
   const [showCards, setShowCards] = useState(false);
 
   return (
-    <div className="space-y-3">
+    <div className="card-preview">
       <button
         onClick={() => setShowCards(!showCards)}
-        className="text-sm text-slate-400 hover:text-slate-200 transition-colors"
+        className="toggle-btn"
       >
         {showCards ? 'Hide' : 'Show'} deck cards ({sumQuantities(mainboard)} main / {sumQuantities(sideboard)} side)
       </button>
       {showCards && (
-        <div className="space-y-4">
+        <div className="cards">
           <div>
-            <h3 className="text-sm font-medium text-slate-400 mb-2">Mainboard</h3>
+            <h3 className="section-label">Mainboard</h3>
             <CardGrid cards={mainboard} />
           </div>
           <div>
-            <h3 className="text-sm font-medium text-slate-400 mb-2">Sideboard</h3>
+            <h3 className="section-label">Sideboard</h3>
             <CardGrid cards={sideboard} />
           </div>
         </div>

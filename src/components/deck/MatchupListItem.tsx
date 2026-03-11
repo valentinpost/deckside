@@ -27,8 +27,8 @@ export function MatchupListItem({ deckId, matchup, onDelete, onRename }: Matchup
   }
 
   return (
-    <div className="list-item">
-      <Link to={`/deck/${deckId}/${matchup.slug}`} className="flex-1 min-w-0">
+    <div className="matchup-list-item">
+      <Link to={`/deck/${deckId}/${matchup.slug}`} className="link">
         {editing ? (
           <input
             type="text"
@@ -38,14 +38,14 @@ export function MatchupListItem({ deckId, matchup, onDelete, onRename }: Matchup
             onKeyDown={(e) => { if (e.key === 'Enter') handleRenameSubmit(); if (e.key === 'Escape') setEditing(false); }}
             onClick={(e) => e.preventDefault()}
             autoFocus
-            className="input-inline"
+            className="inline-input"
           />
         ) : (
           <>
-            <div className="font-medium truncate">{matchup.name}</div>
-            <div className="text-xs text-slate-400 mt-0.5">
+            <div className="name">{matchup.name}</div>
+            <div className="subtitle">
               {outCount > 0 || inCount > 0 ? (
-                <span className={balanced ? 'text-green-400' : 'text-yellow-400'}>
+                <span className={balanced ? 'balanced' : 'unbalanced'}>
                   -{outCount} / +{inCount}
                 </span>
               ) : (

@@ -1,0 +1,35 @@
+@use '../../abstracts' as *;
+
+.matchup-notes {
+  display: flex;
+  flex-direction: column;
+  gap: $sp-2;
+
+  .label {
+    display: block;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    font-weight: 500;
+    color: $slate-400;
+  }
+
+  .textarea {
+    width: 100%;
+    border-radius: $radius-lg;
+    background: $slate-800;
+    border: 1px solid $slate-700;
+    padding: $sp-3 $sp-4;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    color: inherit;
+    resize: vertical;
+
+    &::placeholder {
+      color: $slate-500;
+    }
+
+    &:focus {
+      @include focus-ring;
+    }
+  }
+}

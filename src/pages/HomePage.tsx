@@ -7,10 +7,10 @@ export function HomePage() {
   const { url, error, recents, remove, handleUrlChange, handleSubmit, handleImport } = useHomePage();
 
   return (
-    <div className="space-y-8">
-      <div className="text-center space-y-2 pt-8">
-        <h1 className="text-3xl font-bold">Sideboard Guide</h1>
-        <p className="text-slate-400">
+    <div className="home-page">
+      <div className="hero">
+        <h1 className="title">Sideboard Guide</h1>
+        <p className="subtitle">
           Create matchup-specific sideboard plans for your MTG decks
         </p>
       </div>

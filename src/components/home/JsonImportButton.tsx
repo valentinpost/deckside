@@ -14,8 +14,8 @@ export function JsonImportButton({ onImport }: JsonImportButtonProps) {
   }
 
   return (
-    <div className="max-w-lg mx-auto">
-      <label className="rounded-lg border border-dashed border-slate-600 hover:border-slate-500 p-4 flex items-center justify-center text-sm text-slate-400 hover:text-slate-300 transition-colors cursor-pointer">
+    <div className="json-import-button">
+      <label className="label">
         Or import a saved sideboard guide (JSON)
         <input
           ref={fileRef}

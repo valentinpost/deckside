@@ -1,0 +1,116 @@
+// ─── Colors: Slate ──────────────────────────────────────
+$slate-100: #f1f5f9;
+$slate-200: #e2e8f0;
+$slate-300: #cbd5e1;
+$slate-400: #94a3b8;
+$slate-500: #64748b;
+$slate-600: #475569;
+$slate-700: #334155;
+$slate-800: #1e293b;
+$slate-900: #0f172a;
+
+// ─── Colors: Blue ───────────────────────────────────────
+$blue-300: #93c5fd;
+$blue-400: #60a5fa;
+$blue-500: #3b82f6;
+$blue-600: #2563eb;
+
+// ─── Colors: Red ────────────────────────────────────────
+$red-200: #fecaca;
+$red-300: #fca5a5;
+$red-400: #f87171;
+$red-500: #ef4444;
+$red-600: #dc2626;
+$red-900: #7f1d1d;
+$red-950: #450a0a;
+
+// ─── Colors: Green ──────────────────────────────────────
+$green-400: #4ade80;
+$green-500: #22c55e;
+$green-600: #16a34a;
+
+// ─── Colors: Yellow ─────────────────────────────────────
+$yellow-200: #fef08a;
+$yellow-300: #fde047;
+$yellow-400: #facc15;
+$yellow-800: #854d0e;
+$yellow-950: #422006;
+
+// ─── Colors: Base ───────────────────────────────────────
+$black: #000;
+$white: #fff;
+
+// ─── Colors: MTG Theme ──────────────────────────────────
+$mtg-white: #f9faf4;
+$mtg-blue: #0e68ab;
+$mtg-black: #150b00;
+$mtg-red: #d3202a;
+$mtg-green: #00733e;
+$mtg-gold: #c9a44e;
+$mtg-colorless: #a8b6c0;
+
+// ─── Spacing ────────────────────────────────────────────
+$sp-0_5: 0.125rem;
+$sp-1: 0.25rem;
+$sp-1_5: 0.375rem;
+$sp-2: 0.5rem;
+$sp-3: 0.75rem;
+$sp-4: 1rem;
+$sp-5: 1.25rem;
+$sp-6: 1.5rem;
+$sp-8: 2rem;
+$sp-12: 3rem;
+$sp-20: 5rem;
+
+// ─── Font Sizes ─────────────────────────────────────────
+$text-xs: 0.75rem;
+$leading-xs: 1rem;
+
+$text-sm: 0.875rem;
+$leading-sm: 1.25rem;
+
+$text-base: 1rem;
+$leading-base: 1.5rem;
+
+$text-lg: 1.125rem;
+$leading-lg: 1.75rem;
+
+$text-xl: 1.25rem;
+$leading-xl: 1.75rem;
+
+$text-2xl: 1.5rem;
+$leading-2xl: 2rem;
+
+$text-3xl: 1.875rem;
+$leading-3xl: 2.25rem;
+
+// ─── Border Radius ──────────────────────────────────────
+$radius-sm: 0.125rem;
+$radius-default: 0.25rem;
+$radius-md: 0.375rem;
+$radius-lg: 0.5rem;
+$radius-xl: 0.75rem;
+$radius-2xl: 1rem;
+$radius-full: 9999px;
+
+// ─── Z-Index ────────────────────────────────────────────
+$z-30: 30;
+$z-40: 40;
+$z-50: 50;
+
+// ─── Breakpoints ────────────────────────────────────────
+$bp-sm: 640px;
+$bp-lg: 1024px;
+
+// ─── Transitions ────────────────────────────────────────
+$transition-colors: color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+  background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+  border-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+  box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+$transition-all: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+// ─── Max Width ──────────────────────────────────────────
+$max-w-sm: 24rem;
+$max-w-lg: 32rem;
+$max-w-5xl: 64rem;

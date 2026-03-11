@@ -1,0 +1,15 @@
+@use '../../abstracts' as *;
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $sp-2;
+
+  @include respond-sm {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  @include respond-lg {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}

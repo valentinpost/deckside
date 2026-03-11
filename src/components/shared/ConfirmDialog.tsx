@@ -29,17 +29,17 @@ export function ConfirmDialog({
   }, [open]);
 
   return (
-    <dialog ref={dialogRef} onClose={onCancel} className="dialog">
-      <div className="dialog-body">
-        <h2 className="text-lg font-semibold">{title}</h2>
-        <p className="text-slate-300 text-sm">{message}</p>
-        <div className="dialog-actions">
+    <dialog ref={dialogRef} onClose={onCancel} className="confirm-dialog">
+      <div className="body">
+        <h2 className="title">{title}</h2>
+        <p className="message">{message}</p>
+        <div className="actions">
           <button onClick={onCancel} className="btn-ghost">
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className={confirmVariant === 'danger' ? 'btn-danger' : 'btn-primary'}
+            className={confirmVariant === 'danger' ? 'confirm-danger' : 'confirm-primary'}
           >
             {confirmLabel}
           </button>
