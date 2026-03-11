@@ -25,9 +25,14 @@
     background: $slate-900;
     border: 1px solid $slate-600;
     padding: $sp-1 $sp-2;
-    font-size: $text-sm;
-    line-height: $leading-sm;
+    font-size: $text-base;
+    line-height: $leading-base;
     color: inherit;
+
+    @include respond-sm {
+      font-size: $text-sm;
+      line-height: $leading-sm;
+    }
 
     &:focus {
       @include focus-ring;

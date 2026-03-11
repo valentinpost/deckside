@@ -11,8 +11,13 @@
     background: rgba($slate-800, 0.5);
     border: 1px solid $slate-600;
     padding: $sp-3;
-    font-size: $text-sm;
-    line-height: $leading-sm;
+    font-size: $text-base;
+    line-height: $leading-base;
+
+    @include respond-sm {
+      font-size: $text-sm;
+      line-height: $leading-sm;
+    }
     color: inherit;
     font-weight: 500;
 

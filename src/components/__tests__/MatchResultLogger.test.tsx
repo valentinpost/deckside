@@ -151,6 +151,6 @@ describe('MatchResultLogger', () => {
     const removeBtn = screen.getByLabelText('Remove result');
     await user.click(removeBtn);
 
-    expect(onRemove).toHaveBeenCalledWith(results[0].id);
+    expect(onRemove).toHaveBeenCalledWith(results[0]!.id);
   });
 });

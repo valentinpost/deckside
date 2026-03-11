@@ -67,7 +67,7 @@ describe('calcDeckWinRate', () => {
   });
 
   it('handles matchups with undefined results (backward compat)', () => {
-    const m = { id: '1', name: 'vs X', slug: 'vs-x', notes: '', out: [], in: [] } as Matchup;
+    const m = { id: '1', name: 'vs X', slug: 'vs-x', notes: '', out: [], in: [] } as unknown as Matchup;
     const stats = calcDeckWinRate([m]);
     expect(stats.totalMatches).toBe(0);
     expect(stats.matchWinRate).toBeNull();
