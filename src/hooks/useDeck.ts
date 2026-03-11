@@ -92,6 +92,7 @@ async function loadDeck(deckId: string): Promise<StoredDeck> {
 
 export function useDeck(deckId: string | undefined) {
   const setDeck = useDeckStore((s) => s.setDeck);
+  const currentDeckId = useDeckStore((s) => s.deck?.deckId);
 
   const query = useQuery({
     queryKey: ['deck', deckId],
@@ -99,12 +100,15 @@ export function useDeck(deckId: string | undefined) {
     enabled: !!deckId,
   });
 
-  // Sync query data to the Zustand store whenever it changes.
-  // This covers both fresh fetches and cached react-query results
-  // (e.g. navigating back to a previously loaded deck).
+  // Sync query data to the Zustand store only when switching decks.
+  // If the store already has data for this deckId, don't overwrite —
+  // the store may have newer edits (added matchups, card toggles, etc.)
+  // that react-query's cache doesn't know about.
   useEffect(() => {
-    if (query.data) setDeck(query.data);
-  }, [query.data, setDeck]);
+    if (query.data && query.data.deckId !== currentDeckId) {
+      setDeck(query.data);
+    }
+  }, [query.data, currentDeckId, setDeck]);
 
   return query;
 }
