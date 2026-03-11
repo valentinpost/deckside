@@ -18,10 +18,10 @@ function result(won: boolean, gamesWon: number, gamesLost: number, extra?: Parti
 describe('MatchResultLogger', () => {
   it('renders score buttons', () => {
     render(<MatchResultLogger results={[]} onAdd={vi.fn()} onRemove={vi.fn()} />);
-    expect(screen.getByText('2–0')).toBeInTheDocument();
-    expect(screen.getByText('2–1')).toBeInTheDocument();
-    expect(screen.getByText('1–2')).toBeInTheDocument();
-    expect(screen.getByText('0–2')).toBeInTheDocument();
+    expect(screen.getByText('2-0')).toBeInTheDocument();
+    expect(screen.getByText('2-1')).toBeInTheDocument();
+    expect(screen.getByText('1-2')).toBeInTheDocument();
+    expect(screen.getByText('0-2')).toBeInTheDocument();
   });
 
   it('calls onAdd with correct data when clicking a win button', async () => {
@@ -29,7 +29,7 @@ describe('MatchResultLogger', () => {
     const onAdd = vi.fn();
     render(<MatchResultLogger results={[]} onAdd={onAdd} onRemove={vi.fn()} />);
 
-    await user.click(screen.getByText('2–1'));
+    await user.click(screen.getByText('2-1'));
 
     expect(onAdd).toHaveBeenCalledWith({
       won: true,
@@ -44,7 +44,7 @@ describe('MatchResultLogger', () => {
     const onAdd = vi.fn();
     render(<MatchResultLogger results={[]} onAdd={onAdd} onRemove={vi.fn()} />);
 
-    await user.click(screen.getByText('0–2'));
+    await user.click(screen.getByText('0-2'));
 
     expect(onAdd).toHaveBeenCalledWith({
       won: false,
@@ -60,7 +60,7 @@ describe('MatchResultLogger', () => {
     render(<MatchResultLogger results={[]} onAdd={onAdd} onRemove={vi.fn()} />);
 
     await user.click(screen.getByText('Play'));
-    await user.click(screen.getByText('2–0'));
+    await user.click(screen.getByText('2-0'));
 
     expect(onAdd).toHaveBeenCalledWith(
       expect.objectContaining({ onPlay: true }),
@@ -73,7 +73,7 @@ describe('MatchResultLogger', () => {
     render(<MatchResultLogger results={[]} onAdd={onAdd} onRemove={vi.fn()} />);
 
     await user.click(screen.getByText('Draw'));
-    await user.click(screen.getByText('2–0'));
+    await user.click(screen.getByText('2-0'));
 
     expect(onAdd).toHaveBeenCalledWith(
       expect.objectContaining({ onPlay: false }),
@@ -86,10 +86,10 @@ describe('MatchResultLogger', () => {
     render(<MatchResultLogger results={[]} onAdd={onAdd} onRemove={vi.fn()} />);
 
     await user.click(screen.getByText('Play'));
-    await user.click(screen.getByText('2–0'));
+    await user.click(screen.getByText('2-0'));
 
     // Second click should have onPlay undefined (reset)
-    await user.click(screen.getByText('2–1'));
+    await user.click(screen.getByText('2-1'));
     expect(onAdd).toHaveBeenLastCalledWith(
       expect.objectContaining({ onPlay: undefined }),
     );
@@ -102,7 +102,7 @@ describe('MatchResultLogger', () => {
 
     await user.click(screen.getByText('Play'));
     await user.click(screen.getByText('Play')); // deselect
-    await user.click(screen.getByText('2–0'));
+    await user.click(screen.getByText('2-0'));
 
     expect(onAdd).toHaveBeenCalledWith(
       expect.objectContaining({ onPlay: undefined }),
@@ -133,9 +133,9 @@ describe('MatchResultLogger', () => {
     ];
     render(<MatchResultLogger results={results} onAdd={vi.fn()} onRemove={vi.fn()} />);
     // Score buttons + result entries both contain score text, so use getAllByText
-    const twoZero = screen.getAllByText('2–0');
+    const twoZero = screen.getAllByText('2-0');
     expect(twoZero.length).toBeGreaterThanOrEqual(2); // button + history entry
-    const zeroTwo = screen.getAllByText('0–2');
+    const zeroTwo = screen.getAllByText('0-2');
     expect(zeroTwo.length).toBeGreaterThanOrEqual(2);
     // Play/Draw tag in history + toggle button
     const playElements = screen.getAllByText('Play');

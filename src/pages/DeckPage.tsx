@@ -3,7 +3,7 @@ import { useDeckStore } from '@/store/deckStore';
 import { useDeckPage } from '@/hooks/useDeckPage';
 import { DeckHeader } from '@/components/deck/DeckHeader';
 import { MatchupList } from '@/components/deck/MatchupList';
-import { AddMatchupInline } from '@/components/deck/AddMatchupDialog';
+import { AddMatchupInline } from '@/components/deck/AddMatchupInline';
 import { CardPreview } from '@/components/deck/CardPreview';
 import { HistoryPanel } from '@/components/history/HistoryPanel';
 import { ImportExportButtons } from '@/components/import/ImportExportButtons';

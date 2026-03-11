@@ -33,7 +33,7 @@ export function DeckHeader({ deck, onRefreshMoxfield, refreshing }: DeckHeaderPr
         {deck.format && <span className="format-badge">{deck.format}</span>}
         {deckStats.totalMatches > 0 && (
           <span className="win-rate-badge">
-            {formatWinRate(deckStats.matchWinRate)} ({deckStats.matchWins}W–{deckStats.matchLosses}L)
+            {formatWinRate(deckStats.matchWinRate)} ({deckStats.matchWins}W-{deckStats.matchLosses}L)
           </span>
         )}
         <span className="counts">{mainCount} main / {sideCount} side</span>

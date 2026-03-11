@@ -10,10 +10,10 @@ interface MatchResultLoggerProps {
 }
 
 const SCORES = [
-  { label: '2–0', gamesWon: 2, gamesLost: 0 },
-  { label: '2–1', gamesWon: 2, gamesLost: 1 },
-  { label: '1–2', gamesWon: 1, gamesLost: 2 },
-  { label: '0–2', gamesWon: 0, gamesLost: 2 },
+  { label: '2-0', gamesWon: 2, gamesLost: 0 },
+  { label: '2-1', gamesWon: 2, gamesLost: 1 },
+  { label: '1-2', gamesWon: 1, gamesLost: 2 },
+  { label: '0-2', gamesWon: 0, gamesLost: 2 },
 ] as const;
 
 export function MatchResultLogger({ results, onAdd, onRemove }: MatchResultLoggerProps) {
@@ -38,7 +38,7 @@ export function MatchResultLogger({ results, onAdd, onRemove }: MatchResultLogge
         <span className="label">Match Results</span>
         {stats.totalMatches > 0 && (
           <span className="stats">
-            {formatWinRate(stats.matchWinRate)} ({stats.matchWins}W–{stats.matchLosses}L)
+            {formatWinRate(stats.matchWinRate)} ({stats.matchWins}W-{stats.matchLosses}L)
           </span>
         )}
       </div>
@@ -77,7 +77,7 @@ export function MatchResultLogger({ results, onAdd, onRemove }: MatchResultLogge
           {sorted.map((r) => (
             <div key={r.id} className="result-item">
               <span className={`score ${r.won ? 'win' : 'loss'}`}>
-                {r.gamesWon}–{r.gamesLost}
+                {r.gamesWon}-{r.gamesLost}
               </span>
               {r.onPlay !== undefined && (
                 <span className="play-draw-tag">{r.onPlay ? 'Play' : 'Draw'}</span>

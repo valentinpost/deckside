@@ -51,7 +51,7 @@ export function MatchupListItem({ deckId, matchup, onDelete, onRename }: Matchup
                 : 'No swaps configured'}
               {stats.totalMatches > 0 && (
                 <span className="win-rate">
-                  {formatWinRate(stats.matchWinRate)} ({stats.matchWins}W–{stats.matchLosses}L)
+                  {formatWinRate(stats.matchWinRate)} ({stats.matchWins}W-{stats.matchLosses}L)
                 </span>
               )}
             </div>
