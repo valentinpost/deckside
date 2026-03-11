@@ -16,7 +16,7 @@ interface DeckState {
   renameMatchup: (matchupId: string, name: string) => void;
   snapshotHistory: (author: string, action: string) => void;
   revertToHistory: (entryId: string, author: string) => void;
-  refreshFromMoxfield: (mainboard: StoredDeck['mainboard'], sideboard: StoredDeck['sideboard']) => void;
+  refreshFromMoxfield: (mainboard: StoredDeck['mainboard'], sideboard: StoredDeck['sideboard'], format?: string) => void;
   markClean: () => void;
 }
 
@@ -141,13 +141,14 @@ export const useDeckStore = create<DeckState>((set, get) => ({
     });
   },
 
-  refreshFromMoxfield: (mainboard, sideboard) =>
+  refreshFromMoxfield: (mainboard, sideboard, format) =>
     set((state) => {
       if (!state.deck) return state;
       const deck = {
         ...state.deck,
         mainboard,
         sideboard,
+        format: format ?? state.deck.format,
         lastFetchedFromMoxfield: Date.now(),
         version: state.deck.version + 1,
       };

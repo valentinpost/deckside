@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchMoxfieldDeck, transformMoxfieldCards, scryfallImageUrl } from '@/api/moxfield';
 import { fetchDeckFromCloud } from '@/api/cloudflare';
@@ -5,6 +6,7 @@ import { getCachedDeck, cacheDeck } from '@/db/indexeddb';
 import { addRecentDeck } from '@/db/localstorage';
 import { buildMoxfieldUrl } from '@/utils/moxfieldUrl';
 import { useDeckStore } from '@/store/deckStore';
+import { notifyRecentDecksChanged } from '@/hooks/useRecentDecks';
 import type { StoredDeck, Card } from '@/types/deck';
 
 /** Rebuild missing image URLs from scryfallId (migrates old cached data) */
@@ -48,6 +50,7 @@ async function loadDeck(deckId: string): Promise<StoredDeck> {
     if (m1 || m2) console.log('[loadDeck] Migrated missing image URLs');
     await cacheDeck(remote);
     addRecentDeck({ deckId: remote.deckId, deckName: remote.deckName, format: remote.format, lastOpened: Date.now() });
+    notifyRecentDecksChanged();
     return remote;
   }
   if (cached) {
@@ -59,6 +62,7 @@ async function loadDeck(deckId: string): Promise<StoredDeck> {
       await cacheDeck(cached);
     }
     addRecentDeck({ deckId: cached.deckId, deckName: cached.deckName, format: cached.format, lastOpened: Date.now() });
+    notifyRecentDecksChanged();
     return cached;
   }
 
@@ -82,19 +86,25 @@ async function loadDeck(deckId: string): Promise<StoredDeck> {
 
   await cacheDeck(deck);
   addRecentDeck({ deckId, deckName: deck.deckName, format: deck.format, lastOpened: Date.now() });
+  notifyRecentDecksChanged();
   return deck;
 }
 
 export function useDeck(deckId: string | undefined) {
   const setDeck = useDeckStore((s) => s.setDeck);
 
-  return useQuery({
+  const query = useQuery({
     queryKey: ['deck', deckId],
-    queryFn: async () => {
-      const deck = await loadDeck(deckId!);
-      setDeck(deck);
-      return deck;
-    },
+    queryFn: () => loadDeck(deckId!),
     enabled: !!deckId,
   });
+
+  // Sync query data to the Zustand store whenever it changes.
+  // This covers both fresh fetches and cached react-query results
+  // (e.g. navigating back to a previously loaded deck).
+  useEffect(() => {
+    if (query.data) setDeck(query.data);
+  }, [query.data, setDeck]);
+
+  return query;
 }

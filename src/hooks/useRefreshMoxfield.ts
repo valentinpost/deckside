@@ -14,7 +14,7 @@ export function useRefreshMoxfield() {
       const moxfield = await fetchMoxfieldDeck(deck.deckId);
       const mainboard = transformMoxfieldCards(moxfield.mainboard);
       const sideboard = transformMoxfieldCards(moxfield.sideboard);
-      refreshFromMoxfield(mainboard, sideboard);
+      refreshFromMoxfield(mainboard, sideboard, moxfield.format);
     } catch (err) {
       console.error('Failed to refresh from Moxfield:', err);
     } finally {
