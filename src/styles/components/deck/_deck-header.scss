@@ -5,43 +5,34 @@
   flex-direction: column;
   gap: $sp-2;
 
-  .title {
-    font-size: $text-2xl;
-    line-height: $leading-2xl;
-    font-weight: 700;
-  }
-
-  .meta {
+  .title-row {
     display: flex;
     align-items: center;
     gap: $sp-3;
-    font-size: $text-sm;
-    line-height: $leading-sm;
-    color: $slate-400;
   }
 
-  .capitalize {
-    text-transform: capitalize;
-  }
+  .title {
+    font-size: $text-xl;
+    line-height: $leading-xl;
+    font-weight: 700;
+    @include truncate;
 
-  .separator {
-    color: $slate-600;
-  }
-
-  .link {
-    color: $blue-400;
-
-    &:hover {
-      color: $blue-300;
+    @include respond-sm {
+      font-size: $text-2xl;
+      line-height: $leading-2xl;
     }
   }
 
   .refresh-btn {
-    color: $slate-400;
+    flex-shrink: 0;
+    color: $slate-500;
+    padding: $sp-1;
+    border-radius: $radius-default;
     transition: $transition-colors;
 
     &:hover {
       color: $slate-200;
+      background: rgba($slate-700, 0.5);
     }
 
     &:disabled {
@@ -51,5 +42,45 @@
 
   .spinning {
     animation: spin 1s linear infinite;
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: $sp-2;
+    font-size: $text-xs;
+    line-height: $leading-xs;
+    color: $slate-400;
+    flex-wrap: wrap;
+
+    @include respond-sm {
+      font-size: $text-sm;
+      line-height: $leading-sm;
+      gap: $sp-3;
+    }
+  }
+
+  .format-badge {
+    text-transform: capitalize;
+    font-weight: 500;
+    color: $slate-300;
+    background: $slate-800;
+    border-radius: $radius-full;
+    padding: $sp-0_5 $sp-2;
+    font-size: $text-xs;
+    line-height: $leading-xs;
+  }
+
+  .counts {
+    color: $slate-500;
+  }
+
+  .link {
+    color: $blue-400;
+    font-weight: 500;
+
+    &:hover {
+      color: $blue-300;
+    }
   }
 }

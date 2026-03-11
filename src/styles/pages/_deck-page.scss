@@ -3,7 +3,11 @@
 .deck-page {
   display: flex;
   flex-direction: column;
-  gap: $sp-6;
+  gap: $sp-4;
+
+  @include respond-sm {
+    gap: $sp-6;
+  }
 
   .matchups-section {
     display: flex;
@@ -15,12 +19,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: $sp-2;
   }
 
   .matchups-title {
-    font-size: $text-lg;
-    line-height: $leading-lg;
+    font-size: $text-base;
+    line-height: $leading-base;
     font-weight: 600;
+
+    @include respond-sm {
+      font-size: $text-lg;
+      line-height: $leading-lg;
+    }
   }
 
   .button-group {
@@ -32,13 +42,19 @@
     display: inline-flex;
     align-items: center;
     border-radius: $radius-lg;
-    font-size: $text-sm;
-    line-height: $leading-sm;
+    font-size: $text-xs;
+    line-height: $leading-xs;
     font-weight: 500;
     transition: $transition-colors;
     cursor: pointer;
     border: 1px solid $slate-600;
-    padding: $sp-2 $sp-3;
+    padding: $sp-1_5 $sp-2;
+
+    @include respond-sm {
+      font-size: $text-sm;
+      line-height: $leading-sm;
+      padding: $sp-2 $sp-3;
+    }
 
     &:hover {
       background: $slate-800;
@@ -49,14 +65,20 @@
     display: inline-flex;
     align-items: center;
     border-radius: $radius-lg;
-    font-size: $text-sm;
-    line-height: $leading-sm;
+    font-size: $text-xs;
+    line-height: $leading-xs;
     font-weight: 500;
     transition: $transition-colors;
     cursor: pointer;
     background: $blue-600;
     color: $white;
-    padding: $sp-2 $sp-4;
+    padding: $sp-1_5 $sp-3;
+
+    @include respond-sm {
+      font-size: $text-sm;
+      line-height: $leading-sm;
+      padding: $sp-2 $sp-4;
+    }
 
     &:hover {
       background: $blue-500;

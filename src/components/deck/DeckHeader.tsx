@@ -9,23 +9,13 @@ interface DeckHeaderProps {
 }
 
 export function DeckHeader({ deck, onRefreshMoxfield, refreshing }: DeckHeaderProps) {
+  const mainCount = sumQuantities(deck.mainboard);
+  const sideCount = sumQuantities(deck.sideboard);
+
   return (
     <div className="deck-header">
-      <h1 className="title">{deck.deckName}</h1>
-      <div className="meta">
-        {deck.format && (
-          <>
-            <span className="capitalize">{deck.format}</span>
-            <span className="separator">|</span>
-          </>
-        )}
-        <span>{sumQuantities(deck.mainboard)} mainboard</span>
-        <span className="separator">|</span>
-        <span>{sumQuantities(deck.sideboard)} sideboard</span>
-        <span className="separator">|</span>
-        <a href={deck.moxfieldUrl} target="_blank" rel="noopener noreferrer" className="link">
-          Moxfield
-        </a>
+      <div className="title-row">
+        <h1 className="title">{deck.deckName}</h1>
         {onRefreshMoxfield && (
           <button
             onClick={onRefreshMoxfield}
@@ -33,9 +23,16 @@ export function DeckHeader({ deck, onRefreshMoxfield, refreshing }: DeckHeaderPr
             className="refresh-btn"
             title="Refresh from Moxfield"
           >
-            <RefreshIcon className={refreshing ? 'spinning' : undefined} />
+            <RefreshIcon size={18} className={refreshing ? 'spinning' : undefined} />
           </button>
         )}
+      </div>
+      <div className="meta">
+        {deck.format && <span className="format-badge">{deck.format}</span>}
+        <span className="counts">{mainCount} main / {sideCount} side</span>
+        <a href={deck.moxfieldUrl} target="_blank" rel="noopener noreferrer" className="link">
+          Moxfield
+        </a>
       </div>
     </div>
   );
