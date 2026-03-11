@@ -30,7 +30,7 @@ export function MatchupList({ deckId, matchups, onDelete, onRename }: MatchupLis
   if (matchups.length === 0) {
     return (
       <p className="matchup-list-empty">
-        No matchups yet. Add one to start building your sideboard guide.
+        No matchups yet. Add one to start building your sideboard plan.
       </p>
     );
   }

@@ -55,6 +55,16 @@ export function CloseIcon({ size = 20, className }: IconProps) {
   );
 }
 
+export function LogoIcon({ size = 24, className }: IconProps) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 32 32" fill="none" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="16" cy="16" r="13" stroke="#b45309" strokeWidth="2" />
+      <circle cx="16" cy="16" r="9" stroke="#92400e" strokeWidth="1.2" />
+      <ellipse cx="16" cy="16" rx="3.5" ry="5" stroke="#d97706" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
 export function AlertCircleIcon({ size = 20, className }: IconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>

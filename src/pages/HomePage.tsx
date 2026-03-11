@@ -9,7 +9,7 @@ export function HomePage() {
   return (
     <div className="home-page">
       <div className="hero">
-        <h1 className="title">Sideboard Guide</h1>
+        <h1 className="title">Deckside</h1>
         <p className="subtitle">
           Create matchup-specific sideboard plans for your MTG decks
         </p>

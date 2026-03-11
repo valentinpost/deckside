@@ -36,10 +36,14 @@
   }
 
   .logo {
+    display: flex;
+    align-items: center;
+    gap: $sp-2;
     font-weight: 700;
     font-size: $text-lg;
     line-height: $leading-lg;
     letter-spacing: -0.025em;
+    @include truncate;
   }
 }
 

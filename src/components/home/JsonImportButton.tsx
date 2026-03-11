@@ -16,7 +16,7 @@ export function JsonImportButton({ onImport }: JsonImportButtonProps) {
   return (
     <div className="json-import-button">
       <label className="label">
-        Or import a saved sideboard guide (JSON)
+        Or import a saved deck (JSON)
         <input
           ref={fileRef}
           type="file"
