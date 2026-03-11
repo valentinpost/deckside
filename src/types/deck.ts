@@ -12,6 +12,15 @@ export interface CardRef {
   quantity: number;
 }
 
+export interface MatchResult {
+  id: string;
+  timestamp: number;
+  won: boolean;
+  gamesWon: number;
+  gamesLost: number;
+  onPlay?: boolean;
+}
+
 export interface Matchup {
   id: string;
   name: string;
@@ -19,6 +28,7 @@ export interface Matchup {
   notes: string;
   out: CardRef[];
   in: CardRef[];
+  results: MatchResult[];
 }
 
 export interface HistoryEntry {

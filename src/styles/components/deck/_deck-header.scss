@@ -71,6 +71,11 @@
     line-height: $leading-xs;
   }
 
+  .win-rate-badge {
+    font-weight: 500;
+    color: $slate-300;
+  }
+
   .counts {
     color: $slate-500;
   }

@@ -6,6 +6,7 @@ import { InOutCounter } from '@/components/matchup/InOutCounter';
 import { SideboardPlan } from '@/components/matchup/SideboardPlan';
 import { StaleCardBanner } from '@/components/matchup/StaleCardBanner';
 import { MatchupNotes } from '@/components/matchup/MatchupNotes';
+import { MatchResultLogger } from '@/components/matchup/MatchResultLogger';
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
 import { ErrorBanner } from '@/components/shared/ErrorBanner';
 
@@ -17,6 +18,7 @@ export function MatchupPage() {
     isLoading, error, deck, matchup,
     outRefs, inRefs, notes, setNotes,
     staleCards, handleOutToggle, handleInToggle, handleNotesBlur,
+    handleAddResult, handleRemoveResult,
   } = useMatchup(deckId, matchupSlug);
 
   const summaryRef = useRef<HTMLDivElement>(null);
@@ -94,6 +96,12 @@ export function MatchupPage() {
       </div>
 
       <MatchupNotes notes={notes} onChange={setNotes} onBlur={handleNotesBlur} />
+
+      <MatchResultLogger
+        results={matchup.results ?? []}
+        onAdd={handleAddResult}
+        onRemove={handleRemoveResult}
+      />
 
       {hasSwaps && (
         <div

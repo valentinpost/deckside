@@ -3,7 +3,7 @@ import { useDeckStore } from '@/store/deckStore';
 import { useDeckPage } from '@/hooks/useDeckPage';
 import { DeckHeader } from '@/components/deck/DeckHeader';
 import { MatchupList } from '@/components/deck/MatchupList';
-import { AddMatchupDialog } from '@/components/deck/AddMatchupDialog';
+import { AddMatchupInline } from '@/components/deck/AddMatchupDialog';
 import { CardPreview } from '@/components/deck/CardPreview';
 import { HistoryPanel } from '@/components/history/HistoryPanel';
 import { ImportExportButtons } from '@/components/import/ImportExportButtons';
@@ -39,9 +39,11 @@ export function DeckPage() {
             <button onClick={() => setShowHistory(true)} className="btn-secondary" title="View edit history">
               History
             </button>
-            <button onClick={() => setShowAddDialog(true)} disabled={!authorName} className="btn-primary">
-              + Add Matchup
-            </button>
+            {!showAddDialog && (
+              <button onClick={() => setShowAddDialog(true)} disabled={!authorName} className="btn-primary">
+                + Add Matchup
+              </button>
+            )}
           </div>
         </div>
         <MatchupList
@@ -50,17 +52,17 @@ export function DeckPage() {
           onDelete={handleDeleteMatchup}
           onRename={handleRenameMatchup}
         />
+        {showAddDialog && (
+          <AddMatchupInline
+            onAdd={(name) => { handleAddMatchup(name); setShowAddDialog(false); }}
+            onCancel={() => setShowAddDialog(false)}
+            existingSlugs={deck.matchups.map((m) => m.slug)}
+          />
+        )}
       </div>
 
       <ImportExportButtons deck={deck} onImport={(imported) => useDeckStore.getState().setDeck(imported)} />
       <CardPreview mainboard={deck.mainboard} sideboard={deck.sideboard} />
-
-      <AddMatchupDialog
-        open={showAddDialog}
-        onAdd={handleAddMatchup}
-        onClose={() => setShowAddDialog(false)}
-        existingSlugs={deck.matchups.map((m) => m.slug)}
-      />
       <HistoryPanel
         history={deck.history}
         onRevert={handleRevert}

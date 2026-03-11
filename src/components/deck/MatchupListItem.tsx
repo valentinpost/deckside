@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Matchup } from '@/types/deck';
 import { sumQuantities } from '@/utils/validation';
+import { calcWinRate, formatWinRate } from '@/utils/winRate';
 import { EditIcon, TrashIcon } from '@/components/icons';
 
 interface MatchupListItemProps {
@@ -16,6 +17,8 @@ export function MatchupListItem({ deckId, matchup, onDelete, onRename }: Matchup
   const [editName, setEditName] = useState(matchup.name);
   const outCount = sumQuantities(matchup.out);
   const inCount = sumQuantities(matchup.in);
+  const results = matchup.results ?? [];
+  const stats = calcWinRate(results);
 
   function handleRenameSubmit() {
     const trimmed = editName.trim();
@@ -46,6 +49,11 @@ export function MatchupListItem({ deckId, matchup, onDelete, onRename }: Matchup
               {outCount > 0 || inCount > 0
                 ? `-${outCount} / +${inCount}`
                 : 'No swaps configured'}
+              {stats.totalMatches > 0 && (
+                <span className="win-rate">
+                  {formatWinRate(stats.matchWinRate)} ({stats.matchWins}W–{stats.matchLosses}L)
+                </span>
+              )}
             </div>
           </>
         )}

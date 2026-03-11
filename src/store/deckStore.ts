@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { nanoid } from 'nanoid';
-import type { StoredDeck, Matchup, CardRef, HistoryEntry } from '@/types/deck';
+import type { StoredDeck, Matchup, MatchResult, CardRef, HistoryEntry } from '@/types/deck';
 import { toSlug } from '@/utils/slug';
 import { cacheDeck } from '@/db/indexeddb';
 import { HISTORY_CAP } from '@/constants';
@@ -16,6 +16,8 @@ interface DeckState {
   renameMatchup: (matchupId: string, name: string) => void;
   snapshotHistory: (author: string, action: string) => void;
   revertToHistory: (entryId: string, author: string) => void;
+  addMatchResult: (matchupId: string, result: Omit<MatchResult, 'id' | 'timestamp'>) => void;
+  removeMatchResult: (matchupId: string, resultId: string) => void;
   refreshFromMoxfield: (mainboard: StoredDeck['mainboard'], sideboard: StoredDeck['sideboard'], format?: string) => void;
   markClean: () => void;
 }
@@ -40,6 +42,7 @@ export const useDeckStore = create<DeckState>((set, get) => ({
         notes: '',
         out: [],
         in: [],
+        results: [],
       };
       const deck = {
         ...state.deck,
@@ -140,6 +143,43 @@ export const useDeckStore = create<DeckState>((set, get) => ({
       return { deck, dirty: true };
     });
   },
+
+  addMatchResult: (matchupId, partialResult) =>
+    set((state) => {
+      if (!state.deck) return state;
+      const result: MatchResult = {
+        ...partialResult,
+        id: nanoid(),
+        timestamp: Date.now(),
+      };
+      const deck = {
+        ...state.deck,
+        matchups: state.deck.matchups.map((m) =>
+          m.id === matchupId
+            ? { ...m, results: [...(m.results ?? []), result] }
+            : m,
+        ),
+        version: state.deck.version + 1,
+      };
+      persistDeck(deck);
+      return { deck, dirty: true };
+    }),
+
+  removeMatchResult: (matchupId, resultId) =>
+    set((state) => {
+      if (!state.deck) return state;
+      const deck = {
+        ...state.deck,
+        matchups: state.deck.matchups.map((m) =>
+          m.id === matchupId
+            ? { ...m, results: (m.results ?? []).filter((r) => r.id !== resultId) }
+            : m,
+        ),
+        version: state.deck.version + 1,
+      };
+      persistDeck(deck);
+      return { deck, dirty: true };
+    }),
 
   refreshFromMoxfield: (mainboard, sideboard, format) =>
     set((state) => {

@@ -1,0 +1,149 @@
+@use '../../abstracts' as *;
+
+.match-result-logger {
+  display: flex;
+  flex-direction: column;
+  gap: $sp-3;
+
+  .header {
+    display: flex;
+    align-items: baseline;
+    gap: $sp-2;
+  }
+
+  .label {
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    font-weight: 500;
+    color: $slate-300;
+  }
+
+  .stats {
+    font-size: $text-xs;
+    line-height: $leading-xs;
+    color: $slate-400;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: $sp-3;
+  }
+
+  .play-draw {
+    display: flex;
+    gap: $sp-1;
+    flex-shrink: 0;
+  }
+
+  .toggle-btn {
+    font-size: $text-xs;
+    line-height: $leading-xs;
+    padding: $sp-1 $sp-2;
+    border-radius: $radius-md;
+    border: 1px solid $slate-600;
+    color: $slate-400;
+    transition: $transition-colors;
+    cursor: pointer;
+    background: transparent;
+
+    &:hover {
+      color: $slate-200;
+      border-color: $slate-500;
+    }
+
+    &.active {
+      background: $slate-700;
+      color: $slate-200;
+      border-color: $blue-500;
+    }
+  }
+
+  .score-buttons {
+    display: flex;
+    gap: $sp-2;
+    flex: 1;
+  }
+
+  .score-btn {
+    flex: 1;
+    padding: $sp-2 $sp-3;
+    border-radius: $radius-lg;
+    font-size: $text-sm;
+    line-height: $leading-sm;
+    font-weight: 600;
+    cursor: pointer;
+    transition: $transition-colors;
+    background: transparent;
+
+    &.win {
+      color: $green-400;
+      border: 1px solid rgba($green-600, 0.4);
+
+      &:hover {
+        background: rgba($green-600, 0.2);
+      }
+    }
+
+    &.loss {
+      color: $red-400;
+      border: 1px solid rgba($red-600, 0.4);
+
+      &:hover {
+        background: rgba($red-600, 0.2);
+      }
+    }
+  }
+
+  .result-list {
+    display: flex;
+    flex-direction: column;
+    gap: $sp-1;
+  }
+
+  .result-item {
+    display: flex;
+    align-items: center;
+    gap: $sp-2;
+    padding: $sp-1_5 $sp-2;
+    border-radius: $radius-default;
+    font-size: $text-xs;
+    line-height: $leading-xs;
+
+    &:hover {
+      background: rgba($slate-800, 0.5);
+    }
+  }
+
+  .score {
+    font-weight: 600;
+    min-width: 1.75rem;
+
+    &.win { color: $green-400; }
+    &.loss { color: $red-400; }
+  }
+
+  .play-draw-tag {
+    color: $slate-500;
+    font-size: $text-xs;
+  }
+
+  .time {
+    color: $slate-500;
+    margin-left: auto;
+  }
+
+  .remove-btn {
+    padding: $sp-1;
+    color: $slate-600;
+    flex-shrink: 0;
+    transition: $transition-colors;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      color: $red-400;
+    }
+  }
+}

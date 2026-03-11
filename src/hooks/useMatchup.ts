@@ -3,13 +3,15 @@ import { useDeck } from '@/hooks/useDeck';
 import { useDeckStore } from '@/store/deckStore';
 import { findStaleRefs } from '@/utils/deckDiff';
 import { toggleCardRef } from '@/utils/cardRefs';
-import type { CardRef } from '@/types/deck';
+import type { CardRef, MatchResult } from '@/types/deck';
 
 export function useMatchup(deckId?: string, matchupSlug?: string) {
   const { isLoading, error } = useDeck(deckId);
   const deck = useDeckStore((s) => s.deck);
   const updateMatchupCards = useDeckStore((s) => s.updateMatchupCards);
   const updateMatchupNotes = useDeckStore((s) => s.updateMatchupNotes);
+  const addMatchResult = useDeckStore((s) => s.addMatchResult);
+  const removeMatchResult = useDeckStore((s) => s.removeMatchResult);
   const matchup = deck?.matchups.find((m) => m.slug === matchupSlug);
 
   const [outRefs, setOutRefs] = useState<CardRef[]>([]);
@@ -44,6 +46,20 @@ export function useMatchup(deckId?: string, matchupSlug?: string) {
     if (matchup) updateMatchupNotes(matchup.id, notes);
   }, [matchup, notes, updateMatchupNotes]);
 
+  const handleAddResult = useCallback(
+    (result: Omit<MatchResult, 'id' | 'timestamp'>) => {
+      if (matchup) addMatchResult(matchup.id, result);
+    },
+    [matchup, addMatchResult],
+  );
+
+  const handleRemoveResult = useCallback(
+    (resultId: string) => {
+      if (matchup) removeMatchResult(matchup.id, resultId);
+    },
+    [matchup, removeMatchResult],
+  );
+
   const staleMap = useMemo(
     () => deck ? findStaleRefs(deck.matchups, deck.mainboard, deck.sideboard) : new Map(),
     [deck?.matchups, deck?.mainboard, deck?.sideboard],
@@ -64,5 +80,7 @@ export function useMatchup(deckId?: string, matchupSlug?: string) {
     handleOutToggle,
     handleInToggle,
     handleNotesBlur,
+    handleAddResult,
+    handleRemoveResult,
   };
 }
