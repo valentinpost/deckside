@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { Matchup } from '@/types/deck';
-import { sumQuantities } from '@/utils/validation';
+import { getSwapSummary } from '@/utils/validation';
 import { MatchupListItem } from './MatchupListItem';
 
 interface MatchupListProps {
@@ -10,17 +10,11 @@ interface MatchupListProps {
   onRename: (matchupId: string, name: string) => void;
 }
 
-function isComplete(m: Matchup): boolean {
-  const outCount = sumQuantities(m.out);
-  const inCount = sumQuantities(m.in);
-  return outCount > 0 && outCount === inCount;
-}
-
 export function MatchupList({ deckId, matchups, onDelete, onRename }: MatchupListProps) {
   const sorted = useMemo(
     () => [...matchups].sort((a, b) => {
-      const aComplete = isComplete(a);
-      const bComplete = isComplete(b);
+      const aComplete = getSwapSummary(a).isComplete;
+      const bComplete = getSwapSummary(b).isComplete;
       if (aComplete !== bComplete) return aComplete ? -1 : 1;
       return 0;
     }),
@@ -37,13 +31,13 @@ export function MatchupList({ deckId, matchups, onDelete, onRename }: MatchupLis
 
   return (
     <div className="matchup-list">
-      {sorted.map((m) => (
+      {sorted.map((matchup) => (
         <MatchupListItem
-          key={m.id}
+          key={matchup.id}
           deckId={deckId}
-          matchup={m}
-          onDelete={() => onDelete(m.id)}
-          onRename={(name) => onRename(m.id, name)}
+          matchup={matchup}
+          onDelete={() => onDelete(matchup.id)}
+          onRename={(name) => onRename(matchup.id, name)}
         />
       ))}
     </div>

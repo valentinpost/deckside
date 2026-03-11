@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Matchup } from '@/types/deck';
-import { sumQuantities } from '@/utils/validation';
-import { calcWinRate, formatWinRate } from '@/utils/winRate';
+import { getSwapSummary, formatSwapCounts } from '@/utils/validation';
+import { calcWinRate } from '@/utils/winRate';
 import { EditIcon, TrashIcon } from '@/components/icons';
+import { WinRateBadge } from '@/components/shared/WinRateBadge';
+import { InlineRenameInput } from './InlineRenameInput';
 
 interface MatchupListItemProps {
   deckId: string;
@@ -14,52 +16,30 @@ interface MatchupListItemProps {
 
 export function MatchupListItem({ deckId, matchup, onDelete, onRename }: MatchupListItemProps) {
   const [editing, setEditing] = useState(false);
-  const [editName, setEditName] = useState(matchup.name);
-  const outCount = sumQuantities(matchup.out);
-  const inCount = sumQuantities(matchup.in);
-  const results = matchup.results ?? [];
-  const stats = calcWinRate(results);
-
-  function handleRenameSubmit() {
-    const trimmed = editName.trim();
-    if (trimmed && trimmed !== matchup.name) {
-      onRename(trimmed);
-    }
-    setEditing(false);
-  }
+  const { outCount, inCount } = getSwapSummary(matchup);
+  const winRateStats = calcWinRate(matchup.results ?? []);
 
   return (
     <div className="matchup-list-item">
       <Link to={`/deck/${deckId}/${matchup.slug}`} className="link">
         {editing ? (
-          <input
-            type="text"
-            value={editName}
-            onChange={(e) => setEditName(e.target.value)}
-            onBlur={handleRenameSubmit}
-            onKeyDown={(e) => { if (e.key === 'Enter') handleRenameSubmit(); if (e.key === 'Escape') setEditing(false); }}
-            onClick={(e) => e.preventDefault()}
-            autoFocus
-            className="inline-input"
+          <InlineRenameInput
+            initialName={matchup.name}
+            onSubmit={onRename}
+            onCancel={() => setEditing(false)}
           />
         ) : (
           <>
             <div className="name">{matchup.name}</div>
             <div className="subtitle">
-              {outCount > 0 || inCount > 0
-                ? `-${outCount} / +${inCount}`
-                : 'No swaps configured'}
-              {stats.totalMatches > 0 && (
-                <span className="win-rate">
-                  {formatWinRate(stats.matchWinRate)} ({stats.matchWins}W-{stats.matchLosses}L)
-                </span>
-              )}
+              {formatSwapCounts(outCount, inCount)}
+              <WinRateBadge stats={winRateStats} />
             </div>
           </>
         )}
       </Link>
       <button
-        onClick={(e) => { e.preventDefault(); setEditName(matchup.name); setEditing(true); }}
+        onClick={(e) => { e.preventDefault(); setEditing(true); }}
         className="btn-icon-neutral"
         aria-label={`Rename ${matchup.name}`}
       >

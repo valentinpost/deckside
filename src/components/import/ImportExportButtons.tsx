@@ -1,6 +1,6 @@
-import { useRef } from 'react';
 import type { StoredDeck } from '@/types/deck';
 import { exportDeckToJson, importDeckFromJson } from '@/utils/exportImport';
+import { FilePickerButton } from '@/components/shared/FilePickerButton';
 
 interface ImportExportButtonsProps {
   deck: StoredDeck;
@@ -8,18 +8,13 @@ interface ImportExportButtonsProps {
 }
 
 export function ImportExportButtons({ deck, onImport }: ImportExportButtonsProps) {
-  const fileRef = useRef<HTMLInputElement>(null);
-
-  async function handleImport(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  async function handleFileSelected(file: File) {
     try {
       const imported = await importDeckFromJson(file);
       onImport(imported);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Failed to import file');
     }
-    if (fileRef.current) fileRef.current.value = '';
   }
 
   return (
@@ -27,16 +22,12 @@ export function ImportExportButtons({ deck, onImport }: ImportExportButtonsProps
       <button onClick={() => exportDeckToJson(deck)} className="btn-secondary">
         Export JSON
       </button>
-      <label className="import-label">
-        Import JSON
-        <input
-          ref={fileRef}
-          type="file"
-          accept=".json"
-          onChange={handleImport}
-          className="hidden"
-        />
-      </label>
+      <FilePickerButton
+        accept=".json"
+        onSelect={handleFileSelected}
+        label="Import JSON"
+        className="import-label"
+      />
     </div>
   );
 }

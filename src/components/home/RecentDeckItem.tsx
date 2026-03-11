@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import type { RecentDeck } from '@/types/deck';
 import { CloseIcon } from '@/components/icons';
+import { FormatBadge } from '@/components/shared/FormatBadge';
 
 interface RecentDeckItemProps {
   deck: RecentDeck;
@@ -13,11 +14,7 @@ export function RecentDeckItem({ deck, onRemove }: RecentDeckItemProps) {
       <Link to={`/deck/${deck.deckId}`} className="link">
         <div className="name">
           {deck.deckName}
-          {deck.format && (
-            <span className="format-badge">
-              {deck.format.charAt(0).toUpperCase() + deck.format.slice(1)}
-            </span>
-          )}
+          <FormatBadge format={deck.format} />
         </div>
         <div className="meta">
           Last opened {new Date(deck.lastOpened).toLocaleDateString()}

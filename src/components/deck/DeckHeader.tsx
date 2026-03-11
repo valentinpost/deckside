@@ -1,7 +1,9 @@
 import type { StoredDeck } from '@/types/deck';
 import { sumQuantities } from '@/utils/validation';
-import { calcDeckWinRate, formatWinRate } from '@/utils/winRate';
+import { calcDeckWinRate } from '@/utils/winRate';
 import { RefreshIcon } from '@/components/icons';
+import { FormatBadge } from '@/components/shared/FormatBadge';
+import { WinRateBadge } from '@/components/shared/WinRateBadge';
 
 interface DeckHeaderProps {
   deck: StoredDeck;
@@ -30,12 +32,8 @@ export function DeckHeader({ deck, onRefreshMoxfield, refreshing }: DeckHeaderPr
         )}
       </div>
       <div className="meta">
-        {deck.format && <span className="format-badge">{deck.format}</span>}
-        {deckStats.totalMatches > 0 && (
-          <span className="win-rate-badge">
-            {formatWinRate(deckStats.matchWinRate)} ({deckStats.matchWins}W-{deckStats.matchLosses}L)
-          </span>
-        )}
+        <FormatBadge format={deck.format} />
+        <WinRateBadge stats={deckStats} className="win-rate-badge" />
         <span className="counts">{mainCount} main / {sideCount} side</span>
         <a href={deck.moxfieldUrl} target="_blank" rel="noopener noreferrer" className="link">
           Moxfield
