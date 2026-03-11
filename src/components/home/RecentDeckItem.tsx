@@ -15,7 +15,7 @@ export function RecentDeckItem({ deck, onRemove }: RecentDeckItemProps) {
           {deck.deckName}
           {deck.format && (
             <span className="format-badge">
-              {deck.format}
+              {deck.format.charAt(0).toUpperCase() + deck.format.slice(1)}
             </span>
           )}
         </div>
