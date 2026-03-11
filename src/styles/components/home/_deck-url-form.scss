@@ -12,7 +12,7 @@
     font-size: $text-sm;
     line-height: $leading-sm;
     font-weight: 500;
-    color: $slate-300;
+    color: var(--text-secondary);
   }
 
   .row {
@@ -30,7 +30,7 @@
     color: inherit;
 
     &::placeholder {
-      color: $slate-500;
+      color: var(--text-faint);
     }
 
     &:focus {
@@ -48,7 +48,7 @@
   }
 
   .error {
-    color: $red-400;
+    color: var(--color-loss);
     font-size: $text-sm;
     line-height: $leading-sm;
   }

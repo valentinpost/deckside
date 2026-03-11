@@ -9,11 +9,11 @@
     font-size: $text-lg;
     line-height: $leading-lg;
     font-weight: 600;
-    color: $slate-300;
+    color: var(--text-secondary);
   }
 
   .empty {
-    color: $slate-500;
+    color: var(--text-faint);
     font-size: $text-sm;
     line-height: $leading-sm;
   }

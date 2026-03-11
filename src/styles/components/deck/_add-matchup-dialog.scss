@@ -21,7 +21,7 @@
     font-weight: 500;
 
     &::placeholder {
-      color: $slate-500;
+      color: var(--text-faint);
       font-weight: 400;
     }
 
@@ -31,7 +31,7 @@
   }
 
   .error {
-    color: $red-400;
+    color: var(--color-loss);
     font-size: $text-xs;
     line-height: $leading-xs;
     padding-left: $sp-3;

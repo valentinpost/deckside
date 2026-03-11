@@ -34,15 +34,15 @@
 
   .back-link {
     flex-shrink: 0;
-    color: $blue-400;
+    color: var(--link-color);
     padding: $sp-1;
     margin-left: -$sp-1;
     transition: $transition-colors;
     border-radius: $radius-lg;
 
     &:hover {
-      color: $blue-300;
-      background: $glass-tint;
+      color: var(--link-hover);
+      background: var(--glass-tint);
     }
   }
 
@@ -66,14 +66,14 @@
 
   .theme-toggle {
     flex-shrink: 0;
-    color: $slate-400;
+    color: var(--text-faint);
     padding: $sp-1_5;
     border-radius: $radius-lg;
     transition: $transition-colors;
 
     &:hover {
-      color: $slate-200;
-      background: $glass-tint;
+      color: var(--text-primary);
+      background: var(--glass-tint);
     }
   }
 }

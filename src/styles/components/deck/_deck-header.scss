@@ -25,14 +25,14 @@
 
   .refresh-btn {
     flex-shrink: 0;
-    color: $slate-500;
+    color: var(--text-faint);
     padding: $sp-1;
     border-radius: $radius-lg;
     transition: $transition-colors;
 
     &:hover {
-      color: $slate-200;
-      background: $glass-tint;
+      color: var(--text-primary);
+      background: var(--glass-tint);
     }
 
     &:disabled {
@@ -50,7 +50,7 @@
     gap: $sp-2;
     font-size: $text-xs;
     line-height: $leading-xs;
-    color: $slate-400;
+    color: var(--text-muted);
     flex-wrap: wrap;
 
     @include respond-sm {
@@ -63,7 +63,7 @@
   .format-badge {
     text-transform: capitalize;
     font-weight: 500;
-    color: $slate-300;
+    color: var(--text-secondary);
     @include glass-badge;
     padding: $sp-0_5 $sp-2;
     font-size: $text-xs;
@@ -72,19 +72,19 @@
 
   .win-rate-badge {
     font-weight: 500;
-    color: $slate-300;
+    color: var(--text-secondary);
   }
 
   .counts {
-    color: $slate-500;
+    color: var(--text-faint);
   }
 
   .link {
-    color: $blue-400;
+    color: var(--link-color);
     font-weight: 500;
 
     &:hover {
-      color: $blue-300;
+      color: var(--link-hover);
     }
   }
 }

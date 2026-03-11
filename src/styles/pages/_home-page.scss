@@ -21,7 +21,7 @@
   }
 
   .subtitle {
-    color: $slate-400;
+    color: var(--text-muted);
     font-size: $text-base;
     line-height: $leading-base;
   }

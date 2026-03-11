@@ -10,8 +10,8 @@
   transition: $transition-all;
 
   &:hover {
-    background: rgba($slate-800, 0.6);
-    border-color: $glass-highlight;
+    background: var(--panel-hover-bg);
+    border-color: var(--glass-highlight);
   }
 
   .link {
@@ -46,7 +46,7 @@
   .subtitle {
     font-size: $text-xs;
     line-height: $leading-xs;
-    color: $slate-400;
+    color: var(--text-muted);
     margin-top: $sp-0_5;
   }
 
@@ -61,27 +61,27 @@
 
   .btn-icon-neutral {
     padding: $sp-2;
-    color: $slate-500;
+    color: var(--text-faint);
     flex-shrink: 0;
     transition: $transition-colors;
     border-radius: $radius-lg;
 
     &:hover {
-      color: $slate-300;
-      background: $glass-tint;
+      color: var(--text-secondary);
+      background: var(--glass-tint);
     }
   }
 
   .btn-icon-danger {
     padding: $sp-2;
-    color: $slate-500;
+    color: var(--text-faint);
     flex-shrink: 0;
     transition: $transition-colors;
     border-radius: $radius-lg;
 
     &:hover {
-      color: $red-400;
-      background: $danger-tint;
+      color: var(--color-loss);
+      background: var(--danger-tint);
     }
   }
 }

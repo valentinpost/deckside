@@ -5,7 +5,7 @@
   align-items: flex-start;
   gap: $sp-3;
   padding: $sp-3 0;
-  border-bottom: 1px solid $glass-tint;
+  border-bottom: 1px solid var(--divider);
 
   &:last-child {
     border-bottom: 0;
@@ -20,28 +20,28 @@
     font-size: $text-sm;
     line-height: $leading-sm;
     font-weight: 500;
-    color: $slate-200;
+    color: var(--text-primary);
     @include truncate;
   }
 
   .meta {
     font-size: $text-xs;
     line-height: $leading-xs;
-    color: $slate-400;
+    color: var(--text-muted);
     margin-top: $sp-0_5;
   }
 
   .revert-btn {
     font-size: $text-xs;
     line-height: $leading-xs;
-    color: $blue-400;
+    color: var(--link-color);
     padding: $sp-1 $sp-2;
     border-radius: $radius-lg;
     flex-shrink: 0;
     transition: $transition-colors;
 
     &:hover {
-      color: $blue-300;
+      color: var(--link-hover);
       background: rgba($blue-400, 0.1);
     }
   }

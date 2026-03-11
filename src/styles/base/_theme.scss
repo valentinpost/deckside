@@ -1,284 +1,161 @@
 @use '../abstracts' as *;
 
-// ─── Light Theme Overrides ─────────────────────────────
-// Applied when [data-theme="light"] is set on <html>.
-// Dark mode is the default — no overrides needed.
+// ─── Dark Theme (default) ──────────────────────────────
+:root {
+  // Text
+  --text-primary: #{$slate-100};
+  --text-secondary: #{$slate-300};
+  --text-muted: #{$slate-400};
+  --text-faint: #{$slate-500};
 
+  // Backgrounds
+  --bg-base: #{$slate-950};
+  --bg-surface: #{$slate-800};
+
+  // Semantic accent text
+  --color-win: #{$green-400};
+  --color-loss: #{$red-400};
+  --color-warning: #{$yellow-400};
+  --color-error: #{$red-400};
+  --color-error-text: #{$red-200};
+  --color-warning-heading: #{$yellow-200};
+  --color-warning-body: #{rgba($yellow-300, 0.7)};
+
+  // Links
+  --link-color: #{$blue-400};
+  --link-hover: #{$blue-300};
+
+  // Glass panels
+  --glass-bg: #{rgba($slate-800, 0.45)};
+  --glass-bg-heavy: #{rgba($slate-800, 0.65)};
+  --glass-border: #{rgba($white, 0.08)};
+  --glass-highlight: #{rgba($white, 0.12)};
+  --glass-tint: #{rgba($white, 0.06)};
+  --glass-tint-subtle: #{rgba($white, 0.04)};
+  --glass-shadow: 0 4px 24px #{rgba($black, 0.25)}, 0 1px 4px #{rgba($black, 0.15)};
+  --glass-shadow-lg: 0 8px 40px #{rgba($black, 0.35)}, 0 2px 8px #{rgba($black, 0.2)};
+
+  // Glows
+  --glass-glow-blue: 0 0 16px #{rgba($blue-500, 0.25)};
+  --glass-glow-red: 0 0 16px #{rgba($red-500, 0.25)};
+  --glass-glow-green: 0 0 12px #{rgba($green-500, 0.15)};
+  --danger-tint: #{rgba($red-500, 0.1)};
+
+  // Glass inset (inputs)
+  --glass-inset-bg: #{rgba($slate-900, 0.4)};
+  --glass-inset-border: #{rgba($white, 0.05)};
+  --glass-inset-shadow: inset 0 1px 3px #{rgba($black, 0.2)};
+
+  // Glass button (secondary)
+  --glass-btn-bg: #{rgba($white, 0.06)};
+  --glass-btn-border: #{rgba($white, 0.1)};
+  --glass-btn-highlight: #{rgba($white, 0.15)};
+  --glass-btn-hover-bg: #{rgba($white, 0.12)};
+  --glass-btn-active-bg: #{rgba($white, 0.04)};
+
+  // Primary button
+  --btn-primary-bg: #{rgba($blue-600, 0.8)};
+  --btn-primary-border: #{rgba($blue-400, 0.3)};
+  --btn-primary-hover: #{rgba($blue-500, 0.9)};
+
+  // Danger button
+  --btn-danger-bg: #{rgba($red-600, 0.8)};
+  --btn-danger-border: #{rgba($red-400, 0.3)};
+  --btn-danger-hover: #{rgba($red-500, 0.9)};
+
+  // UI
+  --backdrop-bg: #{rgba($black, 0.4)};
+  --divider: #{rgba($white, 0.06)};
+  --panel-hover-bg: #{rgba($slate-800, 0.6)};
+  --focus-ring: 0 0 0 2px #{rgba($blue-400, 0.5)};
+
+  // Banners
+  --banner-error-bg: #{rgba($red-950, 0.4)};
+  --banner-error-border: #{rgba($red-900, 0.5)};
+  --banner-warning-bg: #{rgba($yellow-950, 0.4)};
+  --banner-warning-border: #{rgba($yellow-800, 0.5)};
+
+  // Body gradient
+  --body-gradient-1: #{rgba($blue-600, 0.08)};
+  --body-gradient-2: #{rgba($blue-500, 0.05)};
+}
+
+// ─── Light Theme ───────────────────────────────────────
 [data-theme='light'] {
-  background: #f1f5f9;
-  color: #1e293b;
+  // Text — high contrast for light backgrounds
+  --text-primary: #{$slate-900};
+  --text-secondary: #{$slate-600};
+  --text-muted: #{$slate-500};
+  --text-faint: #{$slate-400};
 
-  body {
-    background:
-      radial-gradient(ellipse at 20% 0%, rgba(37, 99, 235, 0.06) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 100%, rgba(59, 130, 246, 0.04) 0%, transparent 60%),
-      #f1f5f9;
-  }
+  // Backgrounds
+  --bg-base: #{$slate-100};
+  --bg-surface: #{$white};
 
-  // ─── Glass Panels (white-based in light mode) ───────
-  .app-shell__header {
-    background: rgba(255, 255, 255, 0.7);
-    border-color: rgba(0, 0, 0, 0.06);
-    border-top-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.08);
-  }
+  // Semantic accent text — darker for light bg contrast
+  --color-win: #{$green-600};
+  --color-loss: #{$red-600};
+  --color-warning: #{$yellow-800};
+  --color-error: #{$red-600};
+  --color-error-text: #{$red-600};
+  --color-warning-heading: #{$yellow-800};
+  --color-warning-body: #{rgba($yellow-800, 0.7)};
 
-  .matchup-list-item,
-  .recent-deck-item {
-    background: rgba(255, 255, 255, 0.55);
-    border-color: rgba(0, 0, 0, 0.06);
-    border-top-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  // Links — deeper blue for readability
+  --link-color: #{$blue-600};
+  --link-hover: #{$blue-500};
 
-    &:hover {
-      background: rgba(255, 255, 255, 0.75);
-      border-color: rgba(0, 0, 0, 0.1);
-    }
-  }
+  // Glass panels — white-based translucency
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg-heavy: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-highlight: rgba(255, 255, 255, 0.8);
+  --glass-tint: rgba(0, 0, 0, 0.04);
+  --glass-tint-subtle: rgba(0, 0, 0, 0.02);
+  --glass-shadow: 0 2px 12px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --glass-shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
 
-  .author-name-input {
-    background: rgba(255, 255, 255, 0.55);
-    border-color: rgba(0, 0, 0, 0.06);
-    border-top-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  }
+  // Glows — subtler on light
+  --glass-glow-blue: 0 0 16px #{rgba($blue-500, 0.2)};
+  --glass-glow-red: 0 0 16px #{rgba($red-500, 0.2)};
+  --glass-glow-green: 0 0 12px #{rgba($green-500, 0.12)};
+  --danger-tint: #{rgba($red-500, 0.08)};
 
-  .confirm-dialog {
-    background: rgba(255, 255, 255, 0.85);
-    border-color: rgba(0, 0, 0, 0.06);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
-    color: #1e293b;
+  // Glass inset — subtle dark depression
+  --glass-inset-bg: rgba(0, 0, 0, 0.03);
+  --glass-inset-border: rgba(0, 0, 0, 0.1);
+  --glass-inset-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
 
-    &::backdrop {
-      background: rgba(0, 0, 0, 0.25);
-    }
-  }
+  // Glass button — dark tints on white
+  --glass-btn-bg: rgba(0, 0, 0, 0.04);
+  --glass-btn-border: rgba(0, 0, 0, 0.08);
+  --glass-btn-highlight: rgba(255, 255, 255, 0.5);
+  --glass-btn-hover-bg: rgba(0, 0, 0, 0.08);
+  --glass-btn-active-bg: rgba(0, 0, 0, 0.02);
 
-  .history-panel {
-    background: rgba(255, 255, 255, 0.85);
-    border-color: rgba(0, 0, 0, 0.06);
-    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.1);
-  }
+  // Primary button — more opaque for contrast
+  --btn-primary-bg: #{rgba($blue-600, 0.9)};
+  --btn-primary-border: #{rgba($blue-600, 0.3)};
+  --btn-primary-hover: #{$blue-600};
 
-  .history-panel-backdrop {
-    background: rgba(0, 0, 0, 0.2);
-  }
+  // Danger button
+  --btn-danger-bg: #{rgba($red-600, 0.9)};
+  --btn-danger-border: #{rgba($red-600, 0.3)};
+  --btn-danger-hover: #{$red-600};
 
-  // ─── Sideboard Summary ──────────────────────────────
-  .matchup-page .sideboard-summary {
-    background: rgba(255, 255, 255, 0.75);
-    border-color: rgba(0, 0, 0, 0.06);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-  }
+  // UI
+  --backdrop-bg: rgba(0, 0, 0, 0.2);
+  --divider: rgba(0, 0, 0, 0.06);
+  --panel-hover-bg: rgba(255, 255, 255, 0.75);
+  --focus-ring: 0 0 0 2px #{rgba($blue-500, 0.4)};
 
-  // ─── Glass Inset (inputs, textareas) ────────────────
-  .add-matchup-inline .input,
-  .matchup-notes .textarea,
-  .deck-url-form .input,
-  .author-name-input .input,
-  .matchup-list-item .inline-input {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.1);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
-    color: #1e293b;
+  // Banners
+  --banner-error-bg: #{rgba($red-200, 0.4)};
+  --banner-error-border: #{rgba($red-400, 0.3)};
+  --banner-warning-bg: #{rgba($yellow-200, 0.4)};
+  --banner-warning-border: #{rgba($yellow-400, 0.3)};
 
-    &::placeholder {
-      color: #94a3b8;
-    }
-  }
-
-  // ─── Glass Buttons ──────────────────────────────────
-  .deck-page .btn-secondary,
-  .import-export-buttons .btn-secondary,
-  .import-export-buttons .import-label {
-    background: rgba(0, 0, 0, 0.04);
-    border-color: rgba(0, 0, 0, 0.1);
-    border-top-color: rgba(255, 255, 255, 0.5);
-    color: #334155;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.08);
-      border-color: rgba(0, 0, 0, 0.15);
-    }
-  }
-
-  .confirm-dialog .btn-ghost {
-    color: #475569;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.04);
-    }
-  }
-
-  // ─── Glass Badges ───────────────────────────────────
-  .format-badge {
-    background: rgba(0, 0, 0, 0.04);
-    border-color: rgba(0, 0, 0, 0.08);
-    color: #475569;
-  }
-
-  // ─── Text Colors ────────────────────────────────────
-  .deck-header .title,
-  .matchup-page .title,
-  .home-page .title,
-  .recent-deck-list .title,
-  .history-panel .title,
-  .confirm-dialog .title {
-    color: #0f172a;
-  }
-
-  .deck-header .meta,
-  .deck-header .counts,
-  .matchup-list-item .subtitle,
-  .recent-deck-item .meta,
-  .history-entry .meta,
-  .matchup-notes .label,
-  .card-preview .section-label,
-  .card-preview .toggle-btn,
-  .home-page .subtitle,
-  .loading-spinner .message,
-  .match-result-logger .stats,
-  .match-result-logger .time,
-  .match-result-logger .play-draw-tag {
-    color: #64748b;
-  }
-
-  .deck-header .win-rate-badge,
-  .deck-header .format-badge,
-  .matchup-list-item .name,
-  .recent-deck-item .name-text,
-  .history-entry .action,
-  .confirm-dialog .message,
-  .match-result-logger .label,
-  .deck-url-form .label,
-  .author-name-input .prompt,
-  .sideboard-plan .item {
-    color: #334155;
-  }
-
-  .matchup-page .matchups-title,
-  .deck-page .matchups-title {
-    color: #1e293b;
-  }
-
-  // ─── Header Theme Toggle ────────────────────────────
-  .app-shell__header .theme-toggle {
-    color: #64748b;
-
-    &:hover {
-      color: #334155;
-      background: rgba(0, 0, 0, 0.04);
-    }
-  }
-
-  .app-shell__header .back-link {
-    &:hover {
-      background: rgba(0, 0, 0, 0.04);
-    }
-  }
-
-  // ─── Icon Buttons ───────────────────────────────────
-  .matchup-list-item .btn-icon-neutral,
-  .history-panel .close-btn,
-  .deck-header .refresh-btn {
-    color: #94a3b8;
-
-    &:hover {
-      color: #334155;
-      background: rgba(0, 0, 0, 0.04);
-    }
-  }
-
-  .matchup-list-item .btn-icon-danger,
-  .recent-deck-item .remove-btn,
-  .match-result-logger .remove-btn {
-    color: #94a3b8;
-
-    &:hover {
-      color: $red-500;
-      background: rgba(239, 68, 68, 0.08);
-    }
-  }
-
-  // ─── Dividers ───────────────────────────────────────
-  .history-entry {
-    border-bottom-color: rgba(0, 0, 0, 0.06);
-  }
-
-  .history-panel .header {
-    border-bottom-color: rgba(0, 0, 0, 0.06);
-  }
-
-  // ─── Score / Toggle Buttons ─────────────────────────
-  .match-result-logger .toggle-btn {
-    border-color: rgba(0, 0, 0, 0.1);
-    color: #64748b;
-
-    &:hover {
-      color: #334155;
-      background: rgba(0, 0, 0, 0.03);
-      border-color: rgba(0, 0, 0, 0.15);
-    }
-
-    &.active {
-      background: rgba(59, 130, 246, 0.1);
-      color: $blue-600;
-      border-color: rgba(59, 130, 246, 0.3);
-    }
-  }
-
-  .match-result-logger .result-item:hover {
-    background: rgba(0, 0, 0, 0.03);
-  }
-
-  // ─── Card Tiles ─────────────────────────────────────
-  .card-tile {
-    background: rgba(0, 0, 0, 0.05);
-  }
-
-  .card-tile .spinner {
-    border-color: rgba(0, 0, 0, 0.1);
-    border-top-color: $blue-500;
-  }
-
-  .loading-spinner .spinner {
-    border-color: rgba(0, 0, 0, 0.08);
-    border-top-color: $blue-500;
-  }
-
-  // ─── Banners ────────────────────────────────────────
-  .error-banner {
-    background: rgba(254, 202, 202, 0.4);
-    border-color: rgba(239, 68, 68, 0.2);
-  }
-
-  .stale-card-banner {
-    background: rgba(254, 240, 138, 0.3);
-    border-color: rgba(250, 204, 21, 0.3);
-  }
-
-  // ─── JSON Import ────────────────────────────────────
-  .json-import-button .label {
-    border-color: rgba(0, 0, 0, 0.12);
-    color: #64748b;
-
-    &:hover {
-      border-color: rgba(0, 0, 0, 0.2);
-      color: #334155;
-      background: rgba(0, 0, 0, 0.02);
-    }
-  }
-
-  // ─── Empty / Muted States ──────────────────────────
-  .matchup-list-empty,
-  .recent-deck-list .empty,
-  .history-panel .empty,
-  .sideboard-plan .none,
-  .in-out-counter .diff {
-    color: #94a3b8;
-  }
-
-  .matchup-list-empty {
-    color: #94a3b8;
-  }
+  // Body gradient
+  --body-gradient-1: #{rgba($blue-600, 0.05)};
+  --body-gradient-2: #{rgba($blue-500, 0.03)};
 }

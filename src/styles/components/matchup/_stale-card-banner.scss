@@ -2,20 +2,20 @@
 
 .stale-card-banner {
   border-radius: $radius-xl;
-  background: rgba($yellow-950, 0.4);
+  background: var(--banner-warning-bg);
   @include glass-blur(12px);
-  border: 1px solid rgba($yellow-800, 0.5);
+  border: 1px solid var(--banner-warning-border);
   padding: $sp-3;
 
   .heading {
-    color: $yellow-200;
+    color: var(--color-warning-heading);
     font-size: $text-sm;
     line-height: $leading-sm;
     font-weight: 500;
   }
 
   .body {
-    color: rgba($yellow-300, 0.7);
+    color: var(--color-warning-body);
     font-size: $text-xs;
     line-height: $leading-xs;
     margin-top: $sp-1;

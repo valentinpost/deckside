@@ -10,7 +10,7 @@
     font-size: $text-sm;
     line-height: $leading-sm;
     font-weight: 500;
-    color: $slate-400;
+    color: var(--text-muted);
   }
 
   .textarea {
@@ -24,7 +24,7 @@
     resize: vertical;
 
     &::placeholder {
-      color: $slate-500;
+      color: var(--text-faint);
     }
 
     &:focus {

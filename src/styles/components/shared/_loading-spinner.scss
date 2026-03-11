@@ -11,14 +11,14 @@
   .spinner {
     width: $sp-8;
     height: $sp-8;
-    border: 3px solid $glass-border;
+    border: 3px solid var(--glass-border);
     border-top-color: $blue-500;
     border-radius: $radius-full;
     animation: spin 1s linear infinite;
   }
 
   .message {
-    color: $slate-400;
+    color: var(--text-muted);
     font-size: $text-sm;
     line-height: $leading-sm;
   }

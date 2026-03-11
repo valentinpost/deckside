@@ -11,7 +11,7 @@
   .prompt {
     font-size: $text-sm;
     line-height: $leading-sm;
-    color: $slate-300;
+    color: var(--text-secondary);
   }
 
   .row {
@@ -29,7 +29,7 @@
     color: inherit;
 
     &::placeholder {
-      color: $slate-500;
+      color: var(--text-faint);
     }
 
     &:focus {

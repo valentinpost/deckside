@@ -15,13 +15,13 @@
     font-size: $text-sm;
     line-height: $leading-sm;
     font-weight: 500;
-    color: $slate-300;
+    color: var(--text-secondary);
   }
 
   .stats {
     font-size: $text-xs;
     line-height: $leading-xs;
-    color: $slate-400;
+    color: var(--text-muted);
   }
 
   .controls {
@@ -41,21 +41,21 @@
     line-height: $leading-xs;
     padding: $sp-1 $sp-2;
     border-radius: $radius-lg;
-    border: 1px solid $glass-border;
-    color: $slate-400;
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
     transition: $transition-colors;
     cursor: pointer;
     background: transparent;
 
     &:hover {
-      color: $slate-200;
-      border-color: rgba($white, 0.15);
-      background: $glass-tint-subtle;
+      color: var(--text-primary);
+      border-color: var(--glass-highlight);
+      background: var(--glass-tint-subtle);
     }
 
     &.active {
       background: rgba($blue-500, 0.15);
-      color: $blue-400;
+      color: var(--link-color);
       border-color: rgba($blue-500, 0.3);
     }
   }
@@ -79,24 +79,24 @@
     @include glass-blur;
 
     &.win {
-      color: $green-400;
+      color: var(--color-win);
       border: 1px solid rgba($green-500, 0.25);
 
       &:hover {
         background: rgba($green-500, 0.15);
         border-color: rgba($green-500, 0.4);
-        box-shadow: $glass-glow-green;
+        box-shadow: var(--glass-glow-green);
       }
     }
 
     &.loss {
-      color: $red-400;
+      color: var(--color-loss);
       border: 1px solid rgba($red-500, 0.25);
 
       &:hover {
         background: rgba($red-500, 0.15);
         border-color: rgba($red-500, 0.4);
-        box-shadow: $glass-glow-red;
+        box-shadow: var(--glass-glow-red);
       }
     }
   }
@@ -117,7 +117,7 @@
     line-height: $leading-xs;
 
     &:hover {
-      background: $glass-tint-subtle;
+      background: var(--glass-tint-subtle);
     }
   }
 
@@ -125,23 +125,23 @@
     font-weight: 600;
     min-width: 1.75rem;
 
-    &.win { color: $green-400; }
-    &.loss { color: $red-400; }
+    &.win { color: var(--color-win); }
+    &.loss { color: var(--color-loss); }
   }
 
   .play-draw-tag {
-    color: $slate-500;
+    color: var(--text-faint);
     font-size: $text-xs;
   }
 
   .time {
-    color: $slate-500;
+    color: var(--text-faint);
     margin-left: auto;
   }
 
   .remove-btn {
     padding: $sp-1;
-    color: $slate-600;
+    color: var(--text-faint);
     flex-shrink: 0;
     transition: $transition-colors;
     background: transparent;
@@ -150,8 +150,8 @@
     border-radius: $radius-lg;
 
     &:hover {
-      color: $red-400;
-      background: $danger-tint;
+      color: var(--color-loss);
+      background: var(--danger-tint);
     }
   }
 }

@@ -6,12 +6,12 @@
   gap: $sp-4;
 
   .back-link {
-    color: $blue-400;
+    color: var(--link-color);
     font-size: $text-sm;
     line-height: $leading-sm;
 
     &:hover {
-      color: $blue-300;
+      color: var(--link-hover);
     }
   }
 }
@@ -40,7 +40,7 @@
   .format-badge {
     font-size: $text-xs;
     line-height: $leading-xs;
-    color: $slate-400;
+    color: var(--text-muted);
     @include glass-badge;
     padding: $sp-0_5 $sp-1_5;
     text-transform: capitalize;
@@ -60,14 +60,14 @@
     font-size: $text-sm;
     line-height: $leading-sm;
     font-weight: 500;
-    color: $red-400;
+    color: var(--color-loss);
   }
 
   .in-label {
     font-size: $text-sm;
     line-height: $leading-sm;
     font-weight: 500;
-    color: $green-400;
+    color: var(--color-win);
   }
 
   .sideboard-summary {
@@ -89,8 +89,8 @@
       order: -1;
       min-height: 5rem;
       border-radius: $radius-xl;
-      border: 1px solid $glass-border;
-      border-top-color: $glass-highlight;
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-highlight);
       overflow: hidden;
       transition: height 300ms ease;
     }

@@ -2,7 +2,7 @@
 
 .confirm-dialog {
   @include glass-panel-heavy;
-  color: $slate-100;
+  color: var(--text-primary);
   border-radius: $radius-2xl;
   padding: 0;
   max-width: $max-w-sm;
@@ -26,7 +26,7 @@
   }
 
   .message {
-    color: $slate-300;
+    color: var(--text-secondary);
     font-size: $text-sm;
     line-height: $leading-sm;
   }
@@ -43,11 +43,11 @@
     line-height: $leading-sm;
     transition: $transition-colors;
     cursor: pointer;
-    color: $slate-300;
+    color: var(--text-secondary);
     padding: $sp-2 $sp-4;
 
     &:hover {
-      background: $glass-tint;
+      background: var(--glass-tint);
     }
   }
 

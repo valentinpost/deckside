@@ -4,7 +4,7 @@
   position: relative;
   border-radius: $radius-card;
   overflow: hidden;
-  background: rgba($slate-800, 0.5);
+  background: var(--bg-surface);
   transition: $transition-all;
   aspect-ratio: 5 / 7;
   cursor: default;
@@ -22,11 +22,11 @@
   }
 
   &[data-mode='out'][data-selected] {
-    box-shadow: 0 0 0 2px $red-500, $glass-glow-red;
+    box-shadow: 0 0 0 2px $red-500, var(--glass-glow-red);
   }
 
   &[data-mode='in'][data-selected] {
-    box-shadow: 0 0 0 2px $green-500, $glass-glow-green;
+    box-shadow: 0 0 0 2px $green-500, var(--glass-glow-green);
   }
 
   .loading-overlay {
@@ -40,8 +40,8 @@
   .spinner {
     width: $sp-5;
     height: $sp-5;
-    border: 2px solid rgba($white, 0.1);
-    border-top-color: $slate-400;
+    border: 2px solid var(--glass-border);
+    border-top-color: var(--text-muted);
     border-radius: $radius-full;
     animation: spin 1s linear infinite;
   }

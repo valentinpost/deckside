@@ -28,7 +28,7 @@
     align-items: center;
     justify-content: space-between;
     padding: $sp-3 $sp-4;
-    border-bottom: 1px solid $glass-tint;
+    border-bottom: 1px solid var(--divider);
   }
 
   .title {
@@ -37,13 +37,13 @@
 
   .close-btn {
     padding: $sp-1;
-    color: $slate-400;
+    color: var(--text-muted);
     transition: $transition-colors;
     border-radius: $radius-lg;
 
     &:hover {
-      color: $slate-200;
-      background: $glass-tint;
+      color: var(--text-primary);
+      background: var(--glass-tint);
     }
   }
 
@@ -54,7 +54,7 @@
   }
 
   .empty {
-    color: $slate-500;
+    color: var(--text-faint);
     font-size: $text-sm;
     line-height: $leading-sm;
     padding: $sp-6 0;

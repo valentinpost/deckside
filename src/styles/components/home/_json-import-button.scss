@@ -9,18 +9,18 @@
     align-items: center;
     justify-content: center;
     border-radius: $radius-xl;
-    border: 1px dashed $glass-highlight;
+    border: 1px dashed var(--glass-highlight);
     padding: $sp-4;
     font-size: $text-sm;
     line-height: $leading-sm;
-    color: $slate-400;
+    color: var(--text-muted);
     transition: $transition-all;
     cursor: pointer;
 
     &:hover {
-      border-color: rgba($white, 0.2);
-      color: $slate-300;
-      background: $glass-tint-subtle;
+      border-color: var(--glass-btn-hover-bg);
+      color: var(--text-secondary);
+      background: var(--glass-tint-subtle);
     }
   }
 }

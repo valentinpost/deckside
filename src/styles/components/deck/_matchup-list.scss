@@ -1,7 +1,7 @@
 @use '../../abstracts' as *;
 
 .matchup-list-empty {
-  color: $slate-500;
+  color: var(--text-faint);
   font-size: $text-sm;
   line-height: $leading-sm;
   padding: $sp-4 0;

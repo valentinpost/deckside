@@ -14,12 +14,12 @@
   }
 
   .out-count {
-    color: $red-400;
+    color: var(--color-loss);
     font-weight: 500;
   }
 
   .in-count {
-    color: $green-400;
+    color: var(--color-win);
     font-weight: 500;
   }
 
@@ -29,12 +29,12 @@
   }
 
   .balanced {
-    color: $green-400;
+    color: var(--color-win);
     font-weight: 500;
   }
 
   .diff {
-    color: $yellow-400;
+    color: var(--color-warning);
     font-weight: 500;
   }
 }

@@ -10,8 +10,8 @@
   transition: $transition-all;
 
   &:hover {
-    background: rgba($slate-800, 0.6);
-    border-color: $glass-highlight;
+    background: var(--panel-hover-bg);
+    border-color: var(--glass-highlight);
   }
 
   .link {
@@ -34,7 +34,7 @@
     margin-left: $sp-2;
     font-size: $text-xs;
     line-height: $leading-xs;
-    color: $slate-400;
+    color: var(--text-muted);
     @include glass-badge;
     padding: $sp-0_5 $sp-1_5;
     text-transform: capitalize;
@@ -43,20 +43,20 @@
   .meta {
     font-size: $text-xs;
     line-height: $leading-xs;
-    color: $slate-400;
+    color: var(--text-muted);
     margin-top: $sp-0_5;
   }
 
   .remove-btn {
     padding: $sp-2;
-    color: $slate-500;
+    color: var(--text-faint);
     flex-shrink: 0;
     transition: $transition-colors;
     border-radius: $radius-lg;
 
     &:hover {
-      color: $red-400;
-      background: $danger-tint;
+      color: var(--color-loss);
+      background: var(--danger-tint);
     }
   }
 }
