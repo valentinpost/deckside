@@ -37,6 +37,7 @@ describe('findStaleRefs', () => {
       id: '1', name: 'vs X', slug: 'vs-x', notes: '',
       out: [{ name: 'Removed Card', quantity: 1 }],
       in: [],
+      results: [],
     }];
     const result = findStaleRefs(matchups, [card('A')], []);
     expect(result.get('1')).toEqual(['Removed Card']);
@@ -47,6 +48,7 @@ describe('findStaleRefs', () => {
       id: '1', name: 'vs X', slug: 'vs-x', notes: '',
       out: [],
       in: [{ name: 'Removed Side', quantity: 1 }],
+      results: [],
     }];
     const result = findStaleRefs(matchups, [], [card('A')]);
     expect(result.get('1')).toEqual(['Removed Side']);
@@ -57,6 +59,7 @@ describe('findStaleRefs', () => {
       id: '1', name: 'vs X', slug: 'vs-x', notes: '',
       out: [{ name: 'A', quantity: 1 }],
       in: [{ name: 'B', quantity: 1 }],
+      results: [],
     }];
     const result = findStaleRefs(matchups, [card('A')], [card('B')]);
     expect(result.size).toBe(0);
