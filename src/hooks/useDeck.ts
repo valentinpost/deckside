@@ -22,6 +22,14 @@ function migrateImageUrls(cards: Card[]): boolean {
 }
 
 async function loadDeck(deckId: string): Promise<StoredDeck> {
+  // If the Zustand store already has this deck, return it directly.
+  // The store is the authoritative source once a deck is loaded —
+  // it contains local edits that aren't in IndexedDB/KV yet.
+  const existing = useDeckStore.getState().deck;
+  if (existing && existing.deckId === deckId) {
+    return existing;
+  }
+
   console.log(`[loadDeck] Starting load for ${deckId}`);
 
   // 1. Try IndexedDB cache first
@@ -92,28 +100,22 @@ async function loadDeck(deckId: string): Promise<StoredDeck> {
 
 export function useDeck(deckId: string | undefined) {
   const setDeck = useDeckStore((s) => s.setDeck);
-  const storeDeck = useDeckStore((s) => s.deck);
+  const storeDeckId = useDeckStore((s) => s.deck?.deckId);
 
   const query = useQuery({
     queryKey: ['deck', deckId],
     queryFn: () => loadDeck(deckId!),
     enabled: !!deckId,
-    // Don't refetch in the background — the Zustand store is the
-    // authoritative source once the deck is loaded. Background
-    // refetches would overwrite local edits.
     staleTime: Infinity,
   });
 
-  // Seed the Zustand store when loading a deck for the first time or
-  // switching to a different deck. Once the store has data for this
-  // deckId it becomes the single source of truth — local edits
-  // (matchups, card toggles, notes) live there and must not be
-  // overwritten by react-query's cache.
+  // Seed the Zustand store when we have data for a different deck
+  // than what's currently in the store.
   useEffect(() => {
-    if (query.data && storeDeck?.deckId !== query.data.deckId) {
+    if (query.data && query.data.deckId !== storeDeckId) {
       setDeck(query.data);
     }
-  }, [query.data, storeDeck?.deckId, setDeck]);
+  }, [query.data, storeDeckId, setDeck]);
 
   return query;
 }
