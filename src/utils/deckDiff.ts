@@ -7,24 +7,24 @@ export interface DeckDiffResult {
 }
 
 export function diffCardLists(oldCards: Card[], newCards: Card[]): DeckDiffResult {
-  const oldMap = new Map(oldCards.map((c) => [c.name, c]));
-  const newMap = new Map(newCards.map((c) => [c.name, c]));
+  const oldCardsByName = new Map(oldCards.map((card) => [card.name, card]));
+  const newCardsByName = new Map(newCards.map((card) => [card.name, card]));
 
   const addedCards: string[] = [];
   const removedCards: string[] = [];
   const changedQuantities: DeckDiffResult['changedQuantities'] = [];
 
-  for (const [name, card] of newMap) {
-    const old = oldMap.get(name);
-    if (!old) {
+  for (const [name, card] of newCardsByName) {
+    const previousCard = oldCardsByName.get(name);
+    if (!previousCard) {
       addedCards.push(name);
-    } else if (old.quantity !== card.quantity) {
-      changedQuantities.push({ name, oldQty: old.quantity, newQty: card.quantity });
+    } else if (previousCard.quantity !== card.quantity) {
+      changedQuantities.push({ name, oldQty: previousCard.quantity, newQty: card.quantity });
     }
   }
 
-  for (const [name] of oldMap) {
-    if (!newMap.has(name)) {
+  for (const [name] of oldCardsByName) {
+    if (!newCardsByName.has(name)) {
       removedCards.push(name);
     }
   }
@@ -34,22 +34,22 @@ export function diffCardLists(oldCards: Card[], newCards: Card[]): DeckDiffResul
 
 /** Find matchup CardRefs that reference cards no longer in the deck */
 export function findStaleRefs(matchups: Matchup[], mainboard: Card[], sideboard: Card[]): Map<string, string[]> {
-  const mainNames = new Set(mainboard.map((c) => c.name));
-  const sideNames = new Set(sideboard.map((c) => c.name));
-  const stale = new Map<string, string[]>();
+  const mainboardNames = new Set(mainboard.map((card) => card.name));
+  const sideboardNames = new Set(sideboard.map((card) => card.name));
+  const staleByMatchup = new Map<string, string[]>();
 
   for (const matchup of matchups) {
     const staleCards: string[] = [];
     for (const ref of matchup.out) {
-      if (!mainNames.has(ref.name)) staleCards.push(ref.name);
+      if (!mainboardNames.has(ref.name)) staleCards.push(ref.name);
     }
     for (const ref of matchup.in) {
-      if (!sideNames.has(ref.name)) staleCards.push(ref.name);
+      if (!sideboardNames.has(ref.name)) staleCards.push(ref.name);
     }
     if (staleCards.length > 0) {
-      stale.set(matchup.id, staleCards);
+      staleByMatchup.set(matchup.id, staleCards);
     }
   }
 
-  return stale;
+  return staleByMatchup;
 }

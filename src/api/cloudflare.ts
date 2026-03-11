@@ -2,23 +2,23 @@ import type { StoredDeck } from '@/types/deck';
 import { API } from '@/config';
 
 export async function fetchDeckFromCloud(deckId: string): Promise<StoredDeck | null> {
-  const res = await fetch(API.deck(deckId));
-  if (res.status === 404) return null;
-  if (!res.ok) throw new Error(`Cloud fetch failed (${res.status})`);
-  return res.json() as Promise<StoredDeck>;
+  const response = await fetch(API.deck(deckId));
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error(`Cloud fetch failed (${response.status})`);
+  return response.json() as Promise<StoredDeck>;
 }
 
 export async function saveDeckToCloud(deck: StoredDeck): Promise<{ ok: boolean; conflict?: StoredDeck }> {
-  const res = await fetch(API.deck(deck.deckId), {
+  const response = await fetch(API.deck(deck.deckId), {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(deck),
   });
 
-  if (res.status === 409) {
-    const conflict = (await res.json()) as StoredDeck;
-    return { ok: false, conflict };
+  if (response.status === 409) {
+    const conflictDeck = (await response.json()) as StoredDeck;
+    return { ok: false, conflict: conflictDeck };
   }
-  if (!res.ok) throw new Error(`Cloud save failed (${res.status})`);
+  if (!response.ok) throw new Error(`Cloud save failed (${response.status})`);
   return { ok: true };
 }

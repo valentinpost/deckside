@@ -11,7 +11,7 @@ interface CardGridProps {
 }
 
 export function CardGrid({ cards, selectedRefs = [], mode = 'view', onToggle }: CardGridProps) {
-  const refMap = new Map(selectedRefs.map((r) => [r.name, r.quantity]));
+  const selectedQuantityByName = new Map(selectedRefs.map((ref) => [ref.name, ref.quantity]));
   const sorted = useMemo(() => sortCards(cards), [cards]);
 
   return (
@@ -21,7 +21,7 @@ export function CardGrid({ cards, selectedRefs = [], mode = 'view', onToggle }: 
           key={card.name}
           card={card}
           index={index}
-          selectedQty={refMap.get(card.name) ?? 0}
+          selectedQty={selectedQuantityByName.get(card.name) ?? 0}
           maxQty={card.quantity}
           mode={mode}
           onToggle={onToggle}

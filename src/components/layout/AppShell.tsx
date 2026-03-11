@@ -6,7 +6,7 @@ import { ChevronLeftIcon, LogoIcon } from '@/components/icons';
 export function AppShell({ children }: { children: ReactNode }) {
   const location = useLocation();
   const segments = location.pathname.split('/').filter(Boolean);
-  const deckName = useDeckStore((s) => s.deck?.deckName);
+  const deckName = useDeckStore((state) => state.deck?.deckName);
 
   // On matchup page: back arrow → deck page, header shows deck name
   // On deck page: back arrow → home, header shows Deckside logo

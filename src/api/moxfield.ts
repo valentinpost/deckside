@@ -8,9 +8,9 @@ import { API } from '@/config';
  * where A and B are the first two characters of the ID.
  */
 export function scryfallImageUrl(scryfallId: string, size: 'small' | 'normal' = 'small'): string {
-  const a = scryfallId[0];
-  const b = scryfallId[1];
-  return `https://cards.scryfall.io/${size}/front/${a}/${b}/${scryfallId}.jpg`;
+  const firstChar = scryfallId[0];
+  const secondChar = scryfallId[1];
+  return `https://cards.scryfall.io/${size}/front/${firstChar}/${secondChar}/${scryfallId}.jpg`;
 }
 
 export function transformMoxfieldCards(
@@ -27,9 +27,9 @@ export function transformMoxfieldCards(
 }
 
 export async function fetchMoxfieldDeck(deckId: string): Promise<MoxfieldDeckResponse> {
-  const res = await fetch(API.moxfield(deckId));
-  if (!res.ok) {
-    throw new Error(`Failed to fetch deck from Moxfield (${res.status})`);
+  const response = await fetch(API.moxfield(deckId));
+  if (!response.ok) {
+    throw new Error(`Failed to fetch deck from Moxfield (${response.status})`);
   }
-  return res.json() as Promise<MoxfieldDeckResponse>;
+  return response.json() as Promise<MoxfieldDeckResponse>;
 }

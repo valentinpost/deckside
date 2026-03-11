@@ -8,7 +8,7 @@ let snapshot: RecentDeck[] = getRecentDecks();
 function subscribe(listener: () => void) {
   listeners = [...listeners, listener];
   return () => {
-    listeners = listeners.filter((l) => l !== listener);
+    listeners = listeners.filter((existing) => existing !== listener);
   };
 }
 
@@ -19,7 +19,7 @@ function getSnapshot() {
 /** Call after any write to localStorage recents */
 export function notifyRecentDecksChanged() {
   snapshot = getRecentDecks();
-  listeners.forEach((l) => l());
+  listeners.forEach((listener) => listener());
 }
 
 export function useRecentDecks() {

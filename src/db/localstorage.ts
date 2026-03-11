@@ -6,22 +6,22 @@ const AUTHOR_KEY = 'sideboard-author';
 
 export function getRecentDecks(): RecentDeck[] {
   try {
-    const raw = localStorage.getItem(RECENT_KEY);
-    return raw ? (JSON.parse(raw) as RecentDeck[]) : [];
+    const storedJson = localStorage.getItem(RECENT_KEY);
+    return storedJson ? (JSON.parse(storedJson) as RecentDeck[]) : [];
   } catch {
     return [];
   }
 }
 
 export function addRecentDeck(deck: RecentDeck): void {
-  const recents = getRecentDecks().filter((d) => d.deckId !== deck.deckId);
-  recents.unshift({ ...deck, lastOpened: Date.now() });
-  localStorage.setItem(RECENT_KEY, JSON.stringify(recents.slice(0, MAX_RECENT_DECKS)));
+  const existing = getRecentDecks().filter((entry) => entry.deckId !== deck.deckId);
+  existing.unshift({ ...deck, lastOpened: Date.now() });
+  localStorage.setItem(RECENT_KEY, JSON.stringify(existing.slice(0, MAX_RECENT_DECKS)));
 }
 
 export function removeRecentDeck(deckId: string): void {
-  const recents = getRecentDecks().filter((d) => d.deckId !== deckId);
-  localStorage.setItem(RECENT_KEY, JSON.stringify(recents));
+  const filtered = getRecentDecks().filter((entry) => entry.deckId !== deckId);
+  localStorage.setItem(RECENT_KEY, JSON.stringify(filtered));
 }
 
 export function getAuthorName(): string {

@@ -1,12 +1,12 @@
-import type { HistoryEntry as HistoryEntryType } from '@/types/deck';
+import type { HistoryEntry } from '@/types/deck';
 import { formatTimestamp } from '@/utils/format';
 
-interface HistoryEntryProps {
-  entry: HistoryEntryType;
+interface HistoryEntryItemProps {
+  entry: HistoryEntry;
   onRevert: (entryId: string) => void;
 }
 
-export function HistoryEntryItem({ entry, onRevert }: HistoryEntryProps) {
+export function HistoryEntryItem({ entry, onRevert }: HistoryEntryItemProps) {
   return (
     <div className="history-entry">
       <div className="body">

@@ -7,10 +7,10 @@ import type { CardRef } from '@/types/deck';
  */
 export function toggleCardRef(refs: CardRef[], name: string, qty: number): CardRef[] {
   if (qty === 0) {
-    return refs.filter((r) => r.name !== name);
+    return refs.filter((ref) => ref.name !== name);
   }
-  if (refs.some((r) => r.name === name)) {
-    return refs.map((r) => (r.name === name ? { ...r, quantity: qty } : r));
+  if (refs.some((ref) => ref.name === name)) {
+    return refs.map((ref) => (ref.name === name ? { ...ref, quantity: qty } : ref));
   }
   return [...refs, { name, quantity: qty }];
 }
