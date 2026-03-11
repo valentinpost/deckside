@@ -16,7 +16,6 @@ export function MatchupListItem({ deckId, matchup, onDelete, onRename }: Matchup
   const [editName, setEditName] = useState(matchup.name);
   const outCount = sumQuantities(matchup.out);
   const inCount = sumQuantities(matchup.in);
-  const balanced = outCount === inCount;
 
   function handleRenameSubmit() {
     const trimmed = editName.trim();
@@ -44,13 +43,9 @@ export function MatchupListItem({ deckId, matchup, onDelete, onRename }: Matchup
           <>
             <div className="name">{matchup.name}</div>
             <div className="subtitle">
-              {outCount > 0 || inCount > 0 ? (
-                <span className={balanced ? 'balanced' : 'unbalanced'}>
-                  -{outCount} / +{inCount}
-                </span>
-              ) : (
-                <span>No swaps configured</span>
-              )}
+              {outCount > 0 || inCount > 0
+                ? `-${outCount} / +${inCount}`
+                : 'No swaps configured'}
             </div>
           </>
         )}
