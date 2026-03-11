@@ -92,23 +92,28 @@ async function loadDeck(deckId: string): Promise<StoredDeck> {
 
 export function useDeck(deckId: string | undefined) {
   const setDeck = useDeckStore((s) => s.setDeck);
-  const currentDeckId = useDeckStore((s) => s.deck?.deckId);
+  const storeDeck = useDeckStore((s) => s.deck);
 
   const query = useQuery({
     queryKey: ['deck', deckId],
     queryFn: () => loadDeck(deckId!),
     enabled: !!deckId,
+    // Don't refetch in the background — the Zustand store is the
+    // authoritative source once the deck is loaded. Background
+    // refetches would overwrite local edits.
+    staleTime: Infinity,
   });
 
-  // Sync query data to the Zustand store only when switching decks.
-  // If the store already has data for this deckId, don't overwrite —
-  // the store may have newer edits (added matchups, card toggles, etc.)
-  // that react-query's cache doesn't know about.
+  // Seed the Zustand store when loading a deck for the first time or
+  // switching to a different deck. Once the store has data for this
+  // deckId it becomes the single source of truth — local edits
+  // (matchups, card toggles, notes) live there and must not be
+  // overwritten by react-query's cache.
   useEffect(() => {
-    if (query.data && query.data.deckId !== currentDeckId) {
+    if (query.data && storeDeck?.deckId !== query.data.deckId) {
       setDeck(query.data);
     }
-  }, [query.data, currentDeckId, setDeck]);
+  }, [query.data, storeDeck?.deckId, setDeck]);
 
   return query;
 }
