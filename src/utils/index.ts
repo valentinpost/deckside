@@ -5,6 +5,6 @@ export { exportDeckToJson, importDeckFromJson } from './exportImport';
 export { formatTimestamp } from './format';
 export { parseMoxfieldUrl, buildMoxfieldUrl } from './moxfieldUrl';
 export { toSlug } from './slug';
-export { sumQuantities, isBalanced, validateCardRef } from './validation';
+export { sumQuantities, isBalanced, validateCardRef, getSwapSummary, formatSwapCounts } from './validation';
 export { calcWinRate, calcDeckWinRate, formatWinRate } from './winRate';
 export type { WinRateStats } from './winRate';

@@ -6,15 +6,15 @@ import { getAuthorName } from '@/db/localstorage';
 
 export function useDeckPage(deckId?: string) {
   const { isLoading, error, refetch } = useDeck(deckId);
-  const deck = useDeckStore((s) => s.deck);
-  const addMatchup = useDeckStore((s) => s.addMatchup);
-  const removeMatchup = useDeckStore((s) => s.removeMatchup);
-  const renameMatchup = useDeckStore((s) => s.renameMatchup);
-  const snapshotHistory = useDeckStore((s) => s.snapshotHistory);
-  const revertToHistory = useDeckStore((s) => s.revertToHistory);
+  const deck = useDeckStore((state) => state.deck);
+  const addMatchup = useDeckStore((state) => state.addMatchup);
+  const removeMatchup = useDeckStore((state) => state.removeMatchup);
+  const renameMatchup = useDeckStore((state) => state.renameMatchup);
+  const snapshotHistory = useDeckStore((state) => state.snapshotHistory);
+  const revertToHistory = useDeckStore((state) => state.revertToHistory);
   const { refresh: refreshMoxfield, refreshing } = useRefreshMoxfield();
 
-  const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showAddMatchup, setShowAddMatchup] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [authorName, setAuthorName] = useState(() => getAuthorName());
 
@@ -25,16 +25,16 @@ export function useDeckPage(deckId?: string) {
   }
 
   function handleDeleteMatchup(matchupId: string) {
-    const matchup = deck?.matchups.find((m) => m.id === matchupId);
-    if (!authorName || !matchup) return;
-    snapshotHistory(authorName, `Deleted matchup: ${matchup.name}`);
+    const targetMatchup = deck?.matchups.find((matchup) => matchup.id === matchupId);
+    if (!authorName || !targetMatchup) return;
+    snapshotHistory(authorName, `Deleted matchup: ${targetMatchup.name}`);
     removeMatchup(matchupId);
   }
 
   function handleRenameMatchup(matchupId: string, name: string) {
-    const matchup = deck?.matchups.find((m) => m.id === matchupId);
-    if (!authorName || !matchup) return;
-    snapshotHistory(authorName, `Renamed matchup: ${matchup.name} -> ${name}`);
+    const targetMatchup = deck?.matchups.find((matchup) => matchup.id === matchupId);
+    if (!authorName || !targetMatchup) return;
+    snapshotHistory(authorName, `Renamed matchup: ${targetMatchup.name} -> ${name}`);
     renameMatchup(matchupId, name);
   }
 
@@ -50,8 +50,8 @@ export function useDeckPage(deckId?: string) {
     deck,
     authorName,
     setAuthorName,
-    showAddDialog,
-    setShowAddDialog,
+    showAddMatchup,
+    setShowAddMatchup,
     showHistory,
     setShowHistory,
     refreshMoxfield,

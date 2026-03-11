@@ -7,12 +7,12 @@ import type { CardRef, MatchResult } from '@/types/deck';
 
 export function useMatchup(deckId?: string, matchupSlug?: string) {
   const { isLoading, error } = useDeck(deckId);
-  const deck = useDeckStore((s) => s.deck);
-  const updateMatchupCards = useDeckStore((s) => s.updateMatchupCards);
-  const updateMatchupNotes = useDeckStore((s) => s.updateMatchupNotes);
-  const addMatchResult = useDeckStore((s) => s.addMatchResult);
-  const removeMatchResult = useDeckStore((s) => s.removeMatchResult);
-  const matchup = deck?.matchups.find((m) => m.slug === matchupSlug);
+  const deck = useDeckStore((state) => state.deck);
+  const updateMatchupCards = useDeckStore((state) => state.updateMatchupCards);
+  const updateMatchupNotes = useDeckStore((state) => state.updateMatchupNotes);
+  const addMatchResult = useDeckStore((state) => state.addMatchResult);
+  const removeMatchResult = useDeckStore((state) => state.removeMatchResult);
+  const matchup = deck?.matchups.find((entry) => entry.slug === matchupSlug);
 
   const [outRefs, setOutRefs] = useState<CardRef[]>([]);
   const [inRefs, setInRefs] = useState<CardRef[]>([]);
@@ -60,12 +60,12 @@ export function useMatchup(deckId?: string, matchupSlug?: string) {
     [matchup, removeMatchResult],
   );
 
-  const staleMap = useMemo(
+  const staleCardsByMatchup = useMemo(
     () => deck ? findStaleRefs(deck.matchups, deck.mainboard, deck.sideboard) : new Map(),
     [deck?.matchups, deck?.mainboard, deck?.sideboard],
   );
 
-  const staleCards = matchup ? (staleMap.get(matchup.id) ?? []) : [];
+  const staleCards = matchup ? (staleCardsByMatchup.get(matchup.id) ?? []) : [];
 
   return {
     isLoading,

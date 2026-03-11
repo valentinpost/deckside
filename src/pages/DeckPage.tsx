@@ -16,7 +16,7 @@ export function DeckPage() {
   const {
     isLoading, error, refetch, deck,
     authorName, setAuthorName,
-    showAddDialog, setShowAddDialog,
+    showAddMatchup, setShowAddMatchup,
     showHistory, setShowHistory,
     refreshMoxfield, refreshing,
     handleAddMatchup, handleDeleteMatchup, handleRenameMatchup, handleRevert,
@@ -39,8 +39,8 @@ export function DeckPage() {
             <button onClick={() => setShowHistory(true)} className="btn-secondary" title="View edit history">
               History
             </button>
-            {!showAddDialog && (
-              <button onClick={() => setShowAddDialog(true)} disabled={!authorName} className="btn-primary">
+            {!showAddMatchup && (
+              <button onClick={() => setShowAddMatchup(true)} disabled={!authorName} className="btn-primary">
                 + Add Matchup
               </button>
             )}
@@ -52,11 +52,11 @@ export function DeckPage() {
           onDelete={handleDeleteMatchup}
           onRename={handleRenameMatchup}
         />
-        {showAddDialog && (
+        {showAddMatchup && (
           <AddMatchupInline
-            onAdd={(name) => { handleAddMatchup(name); setShowAddDialog(false); }}
-            onCancel={() => setShowAddDialog(false)}
-            existingSlugs={deck.matchups.map((m) => m.slug)}
+            onAdd={(name) => { handleAddMatchup(name); setShowAddMatchup(false); }}
+            onCancel={() => setShowAddMatchup(false)}
+            existingSlugs={deck.matchups.map((matchup) => matchup.slug)}
           />
         )}
       </div>

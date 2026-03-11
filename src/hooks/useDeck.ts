@@ -9,7 +9,8 @@ import { useDeckStore } from '@/store/deckStore';
 import { notifyRecentDecksChanged } from '@/hooks/useRecentDecks';
 import type { StoredDeck, Card } from '@/types/deck';
 
-/** Rebuild missing image URLs from scryfallId (migrates old cached data) */
+/** Rebuild missing image URLs from scryfallId (migrates old cached data).
+ *  Returns true if any cards were migrated. */
 function migrateImageUrls(cards: Card[]): boolean {
   let migrated = false;
   for (const card of cards) {
@@ -21,86 +22,100 @@ function migrateImageUrls(cards: Card[]): boolean {
   return migrated;
 }
 
+/** Apply image URL migration to both mainboard and sideboard.
+ *  Returns true if any cards were migrated. */
+function applyImageMigration(deck: StoredDeck): boolean {
+  const mainboardMigrated = migrateImageUrls(deck.mainboard);
+  const sideboardMigrated = migrateImageUrls(deck.sideboard);
+  if (mainboardMigrated || sideboardMigrated) {
+    console.log('[loadDeck] Migrated missing image URLs');
+  }
+  return mainboardMigrated || sideboardMigrated;
+}
+
+/** Add deck to recent decks list and notify subscribers */
+function registerRecentDeck(deck: StoredDeck) {
+  addRecentDeck({
+    deckId: deck.deckId,
+    deckName: deck.deckName,
+    format: deck.format,
+    lastOpened: Date.now(),
+  });
+  notifyRecentDecksChanged();
+}
+
 async function loadDeck(deckId: string): Promise<StoredDeck> {
   // If the Zustand store already has this deck, return it directly.
   // The store is the authoritative source once a deck is loaded —
   // it contains local edits that aren't in IndexedDB/KV yet.
-  const existing = useDeckStore.getState().deck;
-  if (existing && existing.deckId === deckId) {
-    return existing;
+  const existingDeck = useDeckStore.getState().deck;
+  if (existingDeck && existingDeck.deckId === deckId) {
+    return existingDeck;
   }
 
   console.log(`[loadDeck] Starting load for ${deckId}`);
 
   // 1. Try IndexedDB cache first
-  let cached: StoredDeck | undefined;
+  let cachedDeck: StoredDeck | undefined;
   try {
-    cached = await getCachedDeck(deckId);
-    console.log(`[loadDeck] IndexedDB cache: ${cached ? `found v${cached.version}` : 'miss'}`);
+    cachedDeck = await getCachedDeck(deckId);
+    console.log(`[loadDeck] IndexedDB cache: ${cachedDeck ? `found v${cachedDeck.version}` : 'miss'}`);
   } catch (err) {
     console.error('[loadDeck] IndexedDB read failed:', err);
   }
 
   // 2. Try Cloudflare KV
-  let remote: StoredDeck | null = null;
+  let remoteDeck: StoredDeck | null = null;
   try {
-    remote = await fetchDeckFromCloud(deckId);
-    console.log(`[loadDeck] Cloud fetch: ${remote ? `found v${remote.version}` : '404'}`);
+    remoteDeck = await fetchDeckFromCloud(deckId);
+    console.log(`[loadDeck] Cloud fetch: ${remoteDeck ? `found v${remoteDeck.version}` : '404'}`);
   } catch (err) {
     console.error('[loadDeck] Cloud fetch failed:', err);
   }
 
   // Use whichever is newer
-  if (remote && (!cached || remote.version > cached.version)) {
+  if (remoteDeck && (!cachedDeck || remoteDeck.version > cachedDeck.version)) {
     console.log('[loadDeck] Using remote data');
-    const m1 = migrateImageUrls(remote.mainboard);
-    const m2 = migrateImageUrls(remote.sideboard);
-    if (m1 || m2) console.log('[loadDeck] Migrated missing image URLs');
-    await cacheDeck(remote);
-    addRecentDeck({ deckId: remote.deckId, deckName: remote.deckName, format: remote.format, lastOpened: Date.now() });
-    notifyRecentDecksChanged();
-    return remote;
+    applyImageMigration(remoteDeck);
+    await cacheDeck(remoteDeck);
+    registerRecentDeck(remoteDeck);
+    return remoteDeck;
   }
-  if (cached) {
+  if (cachedDeck) {
     console.log('[loadDeck] Using cached data');
-    const c1 = migrateImageUrls(cached.mainboard);
-    const c2 = migrateImageUrls(cached.sideboard);
-    if (c1 || c2) {
-      console.log('[loadDeck] Migrated missing image URLs');
-      await cacheDeck(cached);
+    if (applyImageMigration(cachedDeck)) {
+      await cacheDeck(cachedDeck);
     }
-    addRecentDeck({ deckId: cached.deckId, deckName: cached.deckName, format: cached.format, lastOpened: Date.now() });
-    notifyRecentDecksChanged();
-    return cached;
+    registerRecentDeck(cachedDeck);
+    return cachedDeck;
   }
 
   // 3. Neither exists — import fresh from Moxfield
   console.log('[loadDeck] No cache or remote — fetching from Moxfield');
-  const moxfield = await fetchMoxfieldDeck(deckId);
-  console.log(`[loadDeck] Moxfield returned: ${moxfield.name} (${Object.keys(moxfield.mainboard).length} main, ${Object.keys(moxfield.sideboard).length} side)`);
+  const moxfieldDeck = await fetchMoxfieldDeck(deckId);
+  console.log(`[loadDeck] Moxfield returned: ${moxfieldDeck.name} (${Object.keys(moxfieldDeck.mainboard).length} main, ${Object.keys(moxfieldDeck.sideboard).length} side)`);
 
-  const deck: StoredDeck = {
+  const freshDeck: StoredDeck = {
     deckId,
-    deckName: moxfield.name,
-    format: moxfield.format,
+    deckName: moxfieldDeck.name,
+    format: moxfieldDeck.format,
     moxfieldUrl: buildMoxfieldUrl(deckId),
     lastFetchedFromMoxfield: Date.now(),
-    mainboard: transformMoxfieldCards(moxfield.mainboard),
-    sideboard: transformMoxfieldCards(moxfield.sideboard),
+    mainboard: transformMoxfieldCards(moxfieldDeck.mainboard),
+    sideboard: transformMoxfieldCards(moxfieldDeck.sideboard),
     matchups: [],
     history: [],
     version: 1,
   };
 
-  await cacheDeck(deck);
-  addRecentDeck({ deckId, deckName: deck.deckName, format: deck.format, lastOpened: Date.now() });
-  notifyRecentDecksChanged();
-  return deck;
+  await cacheDeck(freshDeck);
+  registerRecentDeck(freshDeck);
+  return freshDeck;
 }
 
 export function useDeck(deckId: string | undefined) {
-  const setDeck = useDeckStore((s) => s.setDeck);
-  const storeDeckId = useDeckStore((s) => s.deck?.deckId);
+  const setDeck = useDeckStore((state) => state.setDeck);
+  const storeDeckId = useDeckStore((state) => state.deck?.deckId);
 
   const query = useQuery({
     queryKey: ['deck', deckId],

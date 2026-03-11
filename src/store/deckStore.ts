@@ -26,6 +26,21 @@ function persistDeck(deck: StoredDeck) {
   cacheDeck(deck).catch(console.error);
 }
 
+/** Create an updated deck with a single matchup modified by the updater function */
+function withUpdatedMatchup(
+  deck: StoredDeck,
+  matchupId: string,
+  updater: (matchup: Matchup) => Matchup,
+): StoredDeck {
+  return {
+    ...deck,
+    matchups: deck.matchups.map((matchup) =>
+      matchup.id === matchupId ? updater(matchup) : matchup,
+    ),
+    version: deck.version + 1,
+  };
+}
+
 export const useDeckStore = create<DeckState>((set, get) => ({
   deck: null,
   dirty: false,
@@ -44,67 +59,55 @@ export const useDeckStore = create<DeckState>((set, get) => ({
         in: [],
         results: [],
       };
-      const deck = {
+      const updatedDeck = {
         ...state.deck,
         matchups: [...state.deck.matchups, matchup],
         version: state.deck.version + 1,
       };
-      persistDeck(deck);
-      return { deck, dirty: true };
+      persistDeck(updatedDeck);
+      return { deck: updatedDeck, dirty: true };
     }),
 
   removeMatchup: (matchupId) =>
     set((state) => {
       if (!state.deck) return state;
-      const deck = {
+      const updatedDeck = {
         ...state.deck,
-        matchups: state.deck.matchups.filter((m) => m.id !== matchupId),
+        matchups: state.deck.matchups.filter((matchup) => matchup.id !== matchupId),
         version: state.deck.version + 1,
       };
-      persistDeck(deck);
-      return { deck, dirty: true };
+      persistDeck(updatedDeck);
+      return { deck: updatedDeck, dirty: true };
     }),
 
   updateMatchupCards: (matchupId, out, inCards) =>
     set((state) => {
       if (!state.deck) return state;
-      const deck = {
-        ...state.deck,
-        matchups: state.deck.matchups.map((m) =>
-          m.id === matchupId ? { ...m, out, in: inCards } : m,
-        ),
-        version: state.deck.version + 1,
-      };
-      persistDeck(deck);
-      return { deck, dirty: true };
+      const updatedDeck = withUpdatedMatchup(state.deck, matchupId, (matchup) => ({
+        ...matchup, out, in: inCards,
+      }));
+      persistDeck(updatedDeck);
+      return { deck: updatedDeck, dirty: true };
     }),
 
   updateMatchupNotes: (matchupId, notes) =>
     set((state) => {
       if (!state.deck) return state;
-      const deck = {
-        ...state.deck,
-        matchups: state.deck.matchups.map((m) =>
-          m.id === matchupId ? { ...m, notes } : m,
-        ),
-        version: state.deck.version + 1,
-      };
-      persistDeck(deck);
-      return { deck, dirty: true };
+      const updatedDeck = withUpdatedMatchup(state.deck, matchupId, (matchup) => ({
+        ...matchup, notes,
+      }));
+      persistDeck(updatedDeck);
+      return { deck: updatedDeck, dirty: true };
     }),
 
   renameMatchup: (matchupId, name) =>
     set((state) => {
       if (!state.deck) return state;
-      const deck = {
-        ...state.deck,
-        matchups: state.deck.matchups.map((m) =>
-          m.id === matchupId ? { ...m, name, slug: toSlug(name) } : m,
-        ),
-        version: state.deck.version + 1,
-      };
-      persistDeck(deck);
-      return { deck, dirty: true };
+      const updatedDeck = withUpdatedMatchup(state.deck, matchupId, (matchup) => ({
+        ...matchup, name, slug: toSlug(name),
+      }));
+      persistDeck(updatedDeck);
+      return { deck: updatedDeck, dirty: true };
     }),
 
   snapshotHistory: (author, action) =>
@@ -117,30 +120,30 @@ export const useDeckStore = create<DeckState>((set, get) => ({
         action,
         matchups: structuredClone(state.deck.matchups),
       };
-      const history = [entry, ...state.deck.history].slice(0, HISTORY_CAP);
-      const deck = { ...state.deck, history, version: state.deck.version + 1 };
-      persistDeck(deck);
-      return { deck, dirty: true };
+      const trimmedHistory = [entry, ...state.deck.history].slice(0, HISTORY_CAP);
+      const updatedDeck = { ...state.deck, history: trimmedHistory, version: state.deck.version + 1 };
+      persistDeck(updatedDeck);
+      return { deck: updatedDeck, dirty: true };
     }),
 
   revertToHistory: (entryId, author) => {
     const state = get();
     if (!state.deck) return;
-    const entry = state.deck.history.find((h) => h.id === entryId);
+    const entry = state.deck.history.find((historyEntry) => historyEntry.id === entryId);
     if (!entry) return;
 
     // Snapshot current state before reverting
     get().snapshotHistory(author, `Reverted to: ${entry.action}`);
 
-    set((s) => {
-      if (!s.deck) return s;
-      const deck = {
-        ...s.deck,
+    set((currentState) => {
+      if (!currentState.deck) return currentState;
+      const updatedDeck = {
+        ...currentState.deck,
         matchups: structuredClone(entry.matchups),
-        version: s.deck.version + 1,
+        version: currentState.deck.version + 1,
       };
-      persistDeck(deck);
-      return { deck, dirty: true };
+      persistDeck(updatedDeck);
+      return { deck: updatedDeck, dirty: true };
     });
   },
 
@@ -152,39 +155,27 @@ export const useDeckStore = create<DeckState>((set, get) => ({
         id: nanoid(),
         timestamp: Date.now(),
       };
-      const deck = {
-        ...state.deck,
-        matchups: state.deck.matchups.map((m) =>
-          m.id === matchupId
-            ? { ...m, results: [...(m.results ?? []), result] }
-            : m,
-        ),
-        version: state.deck.version + 1,
-      };
-      persistDeck(deck);
-      return { deck, dirty: true };
+      const updatedDeck = withUpdatedMatchup(state.deck, matchupId, (matchup) => ({
+        ...matchup, results: [...(matchup.results ?? []), result],
+      }));
+      persistDeck(updatedDeck);
+      return { deck: updatedDeck, dirty: true };
     }),
 
   removeMatchResult: (matchupId, resultId) =>
     set((state) => {
       if (!state.deck) return state;
-      const deck = {
-        ...state.deck,
-        matchups: state.deck.matchups.map((m) =>
-          m.id === matchupId
-            ? { ...m, results: (m.results ?? []).filter((r) => r.id !== resultId) }
-            : m,
-        ),
-        version: state.deck.version + 1,
-      };
-      persistDeck(deck);
-      return { deck, dirty: true };
+      const updatedDeck = withUpdatedMatchup(state.deck, matchupId, (matchup) => ({
+        ...matchup, results: (matchup.results ?? []).filter((result) => result.id !== resultId),
+      }));
+      persistDeck(updatedDeck);
+      return { deck: updatedDeck, dirty: true };
     }),
 
   refreshFromMoxfield: (mainboard, sideboard, format) =>
     set((state) => {
       if (!state.deck) return state;
-      const deck = {
+      const updatedDeck = {
         ...state.deck,
         mainboard,
         sideboard,
@@ -192,8 +183,8 @@ export const useDeckStore = create<DeckState>((set, get) => ({
         lastFetchedFromMoxfield: Date.now(),
         version: state.deck.version + 1,
       };
-      persistDeck(deck);
-      return { deck, dirty: true };
+      persistDeck(updatedDeck);
+      return { deck: updatedDeck, dirty: true };
     }),
 
   markClean: () => set({ dirty: false }),
