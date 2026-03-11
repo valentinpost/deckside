@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import type { RecentDeck } from '@/types/deck';
 import { CloseIcon } from '@/components/icons';
 import { FormatBadge } from '@/components/shared/FormatBadge';
+import { scryfallImageUrl } from '@/api/moxfield';
 
 interface RecentDeckItemProps {
   deck: RecentDeck;
@@ -9,8 +10,17 @@ interface RecentDeckItemProps {
 }
 
 export function RecentDeckItem({ deck, onRemove }: RecentDeckItemProps) {
+  const deckColor = deck.deckColor ?? 'slate';
+  const artUrl = deck.faceCardId ? scryfallImageUrl(deck.faceCardId, 'art_crop') : null;
+
   return (
-    <div className="recent-deck-item">
+    <div className="recent-deck-item" data-color={deckColor} data-has-art={artUrl ? '' : undefined}>
+      <div className="color-bg" />
+      {artUrl && (
+        <div className="art-bg">
+          <img src={artUrl} alt="" className="art-img" loading="lazy" />
+        </div>
+      )}
       <Link to={`/deck/${deck.deckId}`} className="link">
         <div className="name">
           <span className="name-text">{deck.deckName}</span>
