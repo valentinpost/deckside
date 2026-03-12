@@ -123,7 +123,8 @@ export function useDeck(deckId: string | undefined) {
     queryKey: ['deck', deckId],
     queryFn: () => loadDeck(deckId!),
     enabled: !!deckId,
-    staleTime: Infinity,
+    staleTime: 0,
+    gcTime: 0,
   });
 
   // Seed the Zustand store when we have data for a different deck
