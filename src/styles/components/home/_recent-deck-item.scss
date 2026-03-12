@@ -113,7 +113,12 @@
     position: absolute;
     top: $sp-2;
     right: $sp-2;
-    padding: $sp-1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
     color: var(--color-loss);
     border-radius: $radius-full;
     background: var(--glass-bg);
