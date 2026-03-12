@@ -16,31 +16,45 @@ export function useMatchup(deckId?: string, matchupSlug?: string) {
 
   const [outRefs, setOutRefs] = useState<CardRef[]>([]);
   const [inRefs, setInRefs] = useState<CardRef[]>([]);
+  const [outDrawRefs, setOutDrawRefs] = useState<CardRef[]>([]);
+  const [inDrawRefs, setInDrawRefs] = useState<CardRef[]>([]);
   const [notes, setNotes] = useState('');
+  const [onDraw, setOnDraw] = useState(false);
 
   useEffect(() => {
     if (matchup) {
       setOutRefs(matchup.out);
       setInRefs(matchup.in);
+      setOutDrawRefs(matchup.outOnDraw ?? matchup.out);
+      setInDrawRefs(matchup.inOnDraw ?? matchup.in);
       setNotes(matchup.notes);
+      setOnDraw(false);
     }
   }, [matchup?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const activeOut = onDraw ? outDrawRefs : outRefs;
+  const activeIn = onDraw ? inDrawRefs : inRefs;
+  const hasDrawPlan = matchup?.outOnDraw !== undefined || matchup?.inOnDraw !== undefined;
+
   const handleOutToggle = useCallback((name: string, qty: number) => {
-    setOutRefs((prev) => {
+    const setter = onDraw ? setOutDrawRefs : setOutRefs;
+    const currentIn = onDraw ? inDrawRefs : inRefs;
+    setter((prev) => {
       const next = toggleCardRef(prev, name, qty);
-      if (matchup) updateMatchupCards(matchup.id, next, inRefs);
+      if (matchup) updateMatchupCards(matchup.id, next, currentIn, onDraw ? true : undefined);
       return next;
     });
-  }, [matchup, inRefs, updateMatchupCards]);
+  }, [matchup, onDraw, inRefs, inDrawRefs, updateMatchupCards]);
 
   const handleInToggle = useCallback((name: string, qty: number) => {
-    setInRefs((prev) => {
+    const setter = onDraw ? setInDrawRefs : setInRefs;
+    const currentOut = onDraw ? outDrawRefs : outRefs;
+    setter((prev) => {
       const next = toggleCardRef(prev, name, qty);
-      if (matchup) updateMatchupCards(matchup.id, outRefs, next);
+      if (matchup) updateMatchupCards(matchup.id, currentOut, next, onDraw ? true : undefined);
       return next;
     });
-  }, [matchup, outRefs, updateMatchupCards]);
+  }, [matchup, onDraw, outRefs, outDrawRefs, updateMatchupCards]);
 
   const handleNotesBlur = useCallback(() => {
     if (matchup) updateMatchupNotes(matchup.id, notes);
@@ -72,10 +86,13 @@ export function useMatchup(deckId?: string, matchupSlug?: string) {
     error,
     deck,
     matchup,
-    outRefs,
-    inRefs,
+    outRefs: activeOut,
+    inRefs: activeIn,
     notes,
     setNotes,
+    onDraw,
+    setOnDraw,
+    hasDrawPlan,
     staleCards,
     handleOutToggle,
     handleInToggle,

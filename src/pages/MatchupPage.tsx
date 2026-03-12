@@ -16,6 +16,7 @@ export function MatchupPage() {
   const {
     isLoading, error, deck, matchup,
     outRefs, inRefs, notes, setNotes,
+    onDraw, setOnDraw,
     staleCards, handleOutToggle, handleInToggle, handleNotesBlur,
     handleAddResult, handleRemoveResult,
   } = useMatchup(deckId, matchupSlug);
@@ -45,6 +46,23 @@ export function MatchupPage() {
       </div>
 
       <StaleCardBanner staleCards={staleCards} />
+
+      <div className="play-draw-toggle">
+        <button
+          className="toggle-btn"
+          data-active={!onDraw ? '' : undefined}
+          onClick={() => setOnDraw(false)}
+        >
+          Play
+        </button>
+        <button
+          className="toggle-btn"
+          data-active={onDraw ? '' : undefined}
+          onClick={() => setOnDraw(true)}
+        >
+          Draw
+        </button>
+      </div>
 
       <div className="section" data-disabled={isAnimating || undefined}>
         <h3 className="out-label">Tap mainboard cards to take OUT</h3>

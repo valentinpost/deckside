@@ -13,7 +13,7 @@ interface DeckState {
   setDeck: (deck: StoredDeck) => void;
   addMatchup: (name: string) => void;
   removeMatchup: (matchupId: string) => void;
-  updateMatchupCards: (matchupId: string, out: CardRef[], inCards: CardRef[]) => void;
+  updateMatchupCards: (matchupId: string, out: CardRef[], inCards: CardRef[], onDraw?: boolean) => void;
   updateMatchupNotes: (matchupId: string, notes: string) => void;
   renameMatchup: (matchupId: string, name: string) => void;
   snapshotHistory: (author: string, action: string) => void;
@@ -96,12 +96,14 @@ export const useDeckStore = create<DeckState>((set, get) => ({
       return { deck: updatedDeck, dirty: true };
     }),
 
-  updateMatchupCards: (matchupId, out, inCards) =>
+  updateMatchupCards: (matchupId, out, inCards, onDraw) =>
     set((state) => {
       if (!state.deck) return state;
-      const updatedDeck = withUpdatedMatchup(state.deck, matchupId, (matchup) => ({
-        ...matchup, out, in: inCards,
-      }));
+      const updatedDeck = withUpdatedMatchup(state.deck, matchupId, (matchup) =>
+        onDraw
+          ? { ...matchup, outOnDraw: out, inOnDraw: inCards }
+          : { ...matchup, out, in: inCards },
+      );
       persistDeck(updatedDeck);
       return { deck: updatedDeck, dirty: true };
     }),

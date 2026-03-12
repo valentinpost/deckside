@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import type { StoredDeck, DeckColor } from '@/types/deck';
 import { DECK_COLORS } from '@/utils/deckColor';
 import { exportDeckToJson, importDeckFromJson } from '@/utils/exportImport';
+import { exportSideboardGuide } from '@/utils/exportGuide';
 import { MoreHorizontalIcon } from '@/components/icons';
 import { FilePickerButton } from '@/components/shared/FilePickerButton';
 
@@ -99,6 +100,12 @@ export function DeckOptionsMenu({ deck, onImport, onColorChange }: DeckOptionsMe
           <div className="divider" />
 
           <div className="section">
+            <button
+              onClick={() => { exportSideboardGuide(deck); setOpen(false); }}
+              className="menu-item"
+            >
+              Export Guide (.txt)
+            </button>
             <button
               onClick={() => { exportDeckToJson(deck); setOpen(false); }}
               className="menu-item"

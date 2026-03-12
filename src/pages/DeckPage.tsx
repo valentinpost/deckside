@@ -4,6 +4,7 @@ import { DeckHeader } from '@/components/deck/DeckHeader';
 import { MatchupList } from '@/components/deck/MatchupList';
 import { AddMatchupInline } from '@/components/deck/AddMatchupInline';
 import { CardPreview } from '@/components/deck/CardPreview';
+import { RefreshDiffBanner } from '@/components/deck/RefreshDiffBanner';
 import { HistoryPanel } from '@/components/history/HistoryPanel';
 import { AuthorNameInput } from '@/components/shared/AuthorNameInput';
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
@@ -16,7 +17,7 @@ export function DeckPage() {
     authorName, setAuthorName,
     showAddMatchup, setShowAddMatchup,
     showHistory, setShowHistory,
-    refreshMoxfield, refreshing,
+    refreshMoxfield, refreshing, lastDiff, dismissDiff,
     handleAddMatchup, handleDeleteMatchup, handleRenameMatchup, handleRevert,
     handleImport, handleColorChange, handleFaceCardSelect,
   } = useDeckPage(deckId);
@@ -35,6 +36,7 @@ export function DeckPage() {
         onColorChange={handleColorChange}
       />
 
+      {lastDiff && <RefreshDiffBanner diff={lastDiff} onDismiss={dismissDiff} />}
       {!authorName && <AuthorNameInput onSet={setAuthorName} />}
 
       <div className="matchups-section">

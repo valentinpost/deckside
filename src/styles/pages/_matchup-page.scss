@@ -46,6 +46,27 @@
     text-transform: capitalize;
   }
 
+  .play-draw-toggle {
+    display: flex;
+    gap: $sp-1;
+    align-self: flex-start;
+
+    .toggle-btn {
+      font-size: $text-xs;
+      line-height: $leading-xs;
+      padding: $sp-0_5 $sp-2;
+      border-radius: $radius-full;
+      color: var(--text-faint);
+      cursor: pointer;
+      @include glass-button;
+
+      &[data-active] {
+        color: var(--text-primary);
+        background: var(--glass-btn-hover-bg);
+      }
+    }
+  }
+
   .section {
     display: flex;
     flex-direction: column;

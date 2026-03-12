@@ -16,7 +16,7 @@ export function useDeckPage(deckId?: string) {
   const setDeck = useDeckStore((state) => state.setDeck);
   const setDeckColor = useDeckStore((state) => state.setDeckColor);
   const setFaceCard = useDeckStore((state) => state.setFaceCard);
-  const { refresh: refreshMoxfield, refreshing } = useRefreshMoxfield();
+  const { refresh: refreshMoxfield, refreshing, lastDiff, dismissDiff } = useRefreshMoxfield();
 
   const [showAddMatchup, setShowAddMatchup] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
@@ -72,6 +72,8 @@ export function useDeckPage(deckId?: string) {
     setShowHistory,
     refreshMoxfield,
     refreshing,
+    lastDiff,
+    dismissDiff,
     handleAddMatchup,
     handleDeleteMatchup,
     handleRenameMatchup,

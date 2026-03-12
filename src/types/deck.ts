@@ -31,6 +31,8 @@ export interface Matchup {
   notes: string;
   out: CardRef[];
   in: CardRef[];
+  outOnDraw?: CardRef[];
+  inOnDraw?: CardRef[];
   results: MatchResult[];
 }
 

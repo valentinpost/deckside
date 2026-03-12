@@ -6,6 +6,10 @@ export interface DeckDiffResult {
   changedQuantities: Array<{ name: string; oldQty: number; newQty: number }>;
 }
 
+export function isDiffEmpty(diff: DeckDiffResult): boolean {
+  return diff.addedCards.length === 0 && diff.removedCards.length === 0 && diff.changedQuantities.length === 0;
+}
+
 export function diffCardLists(oldCards: Card[], newCards: Card[]): DeckDiffResult {
   const oldCardsByName = new Map(oldCards.map((card) => [card.name, card]));
   const newCardsByName = new Map(newCards.map((card) => [card.name, card]));
@@ -39,15 +43,21 @@ export function findStaleRefs(matchups: Matchup[], mainboard: Card[], sideboard:
   const staleByMatchup = new Map<string, string[]>();
 
   for (const matchup of matchups) {
-    const staleCards: string[] = [];
+    const staleSet = new Set<string>();
     for (const ref of matchup.out) {
-      if (!mainboardNames.has(ref.name)) staleCards.push(ref.name);
+      if (!mainboardNames.has(ref.name)) staleSet.add(ref.name);
     }
     for (const ref of matchup.in) {
-      if (!sideboardNames.has(ref.name)) staleCards.push(ref.name);
+      if (!sideboardNames.has(ref.name)) staleSet.add(ref.name);
     }
-    if (staleCards.length > 0) {
-      staleByMatchup.set(matchup.id, staleCards);
+    for (const ref of matchup.outOnDraw ?? []) {
+      if (!mainboardNames.has(ref.name)) staleSet.add(ref.name);
+    }
+    for (const ref of matchup.inOnDraw ?? []) {
+      if (!sideboardNames.has(ref.name)) staleSet.add(ref.name);
+    }
+    if (staleSet.size > 0) {
+      staleByMatchup.set(matchup.id, [...staleSet]);
     }
   }
 
