@@ -2,8 +2,13 @@
 
 .deck-options-menu {
   .trigger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
     color: var(--text-faint);
-    padding: $sp-1;
     border-radius: $radius-lg;
     transition: $transition-colors;
 
