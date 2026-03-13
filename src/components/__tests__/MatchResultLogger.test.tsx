@@ -117,8 +117,7 @@ describe('MatchResultLogger', () => {
     ];
     render(<MatchResultLogger results={results} onAdd={vi.fn()} onRemove={vi.fn()} />);
     expect(screen.getByText(/67%/)).toBeInTheDocument();
-    expect(screen.getByText(/2W/)).toBeInTheDocument();
-    expect(screen.getByText(/1L/)).toBeInTheDocument();
+    expect(screen.getByText(/3 matches/)).toBeInTheDocument();
   });
 
   it('does not display stats when no results', () => {

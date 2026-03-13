@@ -29,7 +29,7 @@ describe('DeckHeader', () => {
 
   it('renders format badge when format exists', () => {
     render(<DeckHeader deck={baseDeck({ format: 'legacy' })} onImport={vi.fn()} onColorChange={vi.fn()} />);
-    expect(screen.getByText('legacy')).toBeInTheDocument();
+    expect(screen.getByText('Legacy')).toBeInTheDocument();
   });
 
   it('hides format badge when no format', () => {
@@ -79,8 +79,7 @@ describe('DeckHeader', () => {
     });
     render(<DeckHeader deck={deck} onImport={vi.fn()} onColorChange={vi.fn()} />);
     expect(screen.getByText(/50%/)).toBeInTheDocument();
-    expect(screen.getByText(/1W/)).toBeInTheDocument();
-    expect(screen.getByText(/1L/)).toBeInTheDocument();
+    expect(screen.getByText(/2 matches/)).toBeInTheDocument();
   });
 
   it('hides win rate when no results', () => {

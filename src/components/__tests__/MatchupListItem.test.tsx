@@ -18,36 +18,21 @@ function matchup(overrides?: Partial<Matchup>): Matchup {
   };
 }
 
-function renderItem(m: Matchup, props?: { onDelete?: () => void; onRename?: (n: string) => void }) {
-  return render(
+function renderItem(m: Matchup, expanded = false) {
+  const onToggle = vi.fn();
+  const onAddResult = vi.fn();
+  const result = render(
     <MemoryRouter>
-      <MatchupListItem
-        deckId="deck1"
-        matchup={m}
-        onDelete={props?.onDelete ?? vi.fn()}
-        onRename={props?.onRename ?? vi.fn()}
-      />
+      <MatchupListItem deckId="deck1" matchup={m} expanded={expanded} onToggle={onToggle} onAddResult={onAddResult} />
     </MemoryRouter>,
   );
+  return { ...result, onToggle, onAddResult };
 }
 
 describe('MatchupListItem', () => {
   it('renders matchup name', () => {
     renderItem(matchup());
     expect(screen.getByText('vs Burn')).toBeInTheDocument();
-  });
-
-  it('shows "No swaps configured" when out and in are empty', () => {
-    renderItem(matchup());
-    expect(screen.getByText('No swaps configured')).toBeInTheDocument();
-  });
-
-  it('shows swap counts when cards are configured', () => {
-    renderItem(matchup({
-      out: [{ name: 'A', quantity: 2 }],
-      in: [{ name: 'B', quantity: 3 }],
-    }));
-    expect(screen.getByText('-2 / +3')).toBeInTheDocument();
   });
 
   it('shows win rate when results exist', () => {
@@ -59,7 +44,7 @@ describe('MatchupListItem', () => {
       ],
     }));
     expect(screen.getByText(/67%/)).toBeInTheDocument();
-    expect(screen.getByText(/2W/)).toBeInTheDocument();
+    expect(screen.getByText(/3 matches/)).toBeInTheDocument();
   });
 
   it('hides win rate when no results', () => {
@@ -67,54 +52,36 @@ describe('MatchupListItem', () => {
     expect(screen.queryByText(/%/)).not.toBeInTheDocument();
   });
 
-  it('links to the correct matchup page', () => {
+  it('calls onToggle when row clicked', async () => {
+    const user = userEvent.setup();
+    const { onToggle } = renderItem(matchup());
+    await user.click(screen.getByRole('button', { name: /vs Burn/i }));
+    expect(onToggle).toHaveBeenCalledOnce();
+  });
+
+  it('shows preview with sideboard plan when expanded', () => {
+    renderItem(matchup({
+      out: [{ name: 'Lightning Bolt', quantity: 2 }],
+      in: [{ name: 'Leyline', quantity: 2 }],
+    }), true);
+    expect(screen.getByText(/Lightning Bolt/)).toBeInTheDocument();
+    expect(screen.getByText('Log Result')).toBeInTheDocument();
+  });
+
+  it('hides preview when collapsed', () => {
+    renderItem(matchup(), false);
+    expect(screen.queryByText('Log Result')).not.toBeInTheDocument();
+  });
+
+  it('shows edit link pointing to matchup page', () => {
     renderItem(matchup());
-    const link = screen.getByRole('link');
+    const link = screen.getByLabelText('Edit vs Burn');
     expect(link).toHaveAttribute('href', '/deck/deck1/vs-burn');
   });
 
-  it('enters edit mode on edit button click', async () => {
-    const user = userEvent.setup();
-    renderItem(matchup());
-    await user.click(screen.getByLabelText('Rename vs Burn'));
-    expect(screen.getByDisplayValue('vs Burn')).toBeInTheDocument();
-  });
-
-  it('submits rename on Enter', async () => {
-    const user = userEvent.setup();
-    const onRename = vi.fn();
-    renderItem(matchup(), { onRename });
-    await user.click(screen.getByLabelText('Rename vs Burn'));
-    const input = screen.getByDisplayValue('vs Burn');
-    await user.clear(input);
-    await user.type(input, 'vs Aggro{Enter}');
-    expect(onRename).toHaveBeenCalledWith('vs Aggro');
-  });
-
-  it('cancels rename on Escape without calling onRename', async () => {
-    const user = userEvent.setup();
-    const onRename = vi.fn();
-    renderItem(matchup(), { onRename });
-    await user.click(screen.getByLabelText('Rename vs Burn'));
-    await user.type(screen.getByDisplayValue('vs Burn'), '{Escape}');
-    expect(onRename).not.toHaveBeenCalled();
-    expect(screen.getByText('vs Burn')).toBeInTheDocument();
-  });
-
-  it('does not rename if value unchanged', async () => {
-    const user = userEvent.setup();
-    const onRename = vi.fn();
-    renderItem(matchup(), { onRename });
-    await user.click(screen.getByLabelText('Rename vs Burn'));
-    await user.type(screen.getByDisplayValue('vs Burn'), '{Enter}');
-    expect(onRename).not.toHaveBeenCalled();
-  });
-
-  it('calls onDelete when delete button clicked', async () => {
-    const user = userEvent.setup();
-    const onDelete = vi.fn();
-    renderItem(matchup(), { onDelete });
-    await user.click(screen.getByLabelText('Delete vs Burn'));
-    expect(onDelete).toHaveBeenCalledOnce();
+  it('shows play/draw toggle in preview when draw plan exists', () => {
+    renderItem(matchup({ outOnDraw: [{ name: 'A', quantity: 1 }] }), true);
+    expect(screen.getByText('Play')).toBeInTheDocument();
+    expect(screen.getByText('Draw')).toBeInTheDocument();
   });
 });

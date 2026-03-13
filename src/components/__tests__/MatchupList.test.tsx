@@ -19,7 +19,7 @@ function matchup(name: string, out: number, inCount: number): Matchup {
 function renderList(matchups: Matchup[]) {
   return render(
     <MemoryRouter>
-      <MatchupList deckId="d1" matchups={matchups} onDelete={vi.fn()} onRename={vi.fn()} />
+      <MatchupList deckId="d1" matchups={matchups} onAddResult={vi.fn()} />
     </MemoryRouter>,
   );
 }

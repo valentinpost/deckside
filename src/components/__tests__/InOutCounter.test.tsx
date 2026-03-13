@@ -8,25 +8,24 @@ describe('InOutCounter', () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it('displays out and in counts', () => {
-    render(<InOutCounter out={[{ name: 'A', quantity: 3 }]} inCards={[{ name: 'B', quantity: 2 }]} />);
-    expect(screen.getByText('Out: 3')).toBeInTheDocument();
-    expect(screen.getByText('In: 2')).toBeInTheDocument();
+  it('displays swap count', () => {
+    render(<InOutCounter out={[{ name: 'A', quantity: 3 }]} inCards={[{ name: 'B', quantity: 3 }]} />);
+    expect(screen.getByText('3 swaps')).toBeInTheDocument();
   });
 
-  it('shows "Balanced" when counts are equal', () => {
+  it('hides unbalanced indicator when balanced', () => {
     render(<InOutCounter out={[{ name: 'A', quantity: 2 }]} inCards={[{ name: 'B', quantity: 2 }]} />);
-    expect(screen.getByText('Balanced')).toBeInTheDocument();
+    expect(screen.queryByText(/out \/ .* in/)).not.toBeInTheDocument();
   });
 
-  it('shows positive diff when in > out', () => {
-    render(<InOutCounter out={[{ name: 'A', quantity: 1 }]} inCards={[{ name: 'B', quantity: 3 }]} />);
-    expect(screen.getByText('+2 cards')).toBeInTheDocument();
-  });
-
-  it('shows negative diff when out > in', () => {
+  it('shows unbalanced indicator when out > in', () => {
     render(<InOutCounter out={[{ name: 'A', quantity: 4 }]} inCards={[{ name: 'B', quantity: 1 }]} />);
-    expect(screen.getByText('-3 cards')).toBeInTheDocument();
+    expect(screen.getByText('4 out / 1 in')).toBeInTheDocument();
+  });
+
+  it('shows unbalanced indicator when in > out', () => {
+    render(<InOutCounter out={[{ name: 'A', quantity: 1 }]} inCards={[{ name: 'B', quantity: 3 }]} />);
+    expect(screen.getByText('1 out / 3 in')).toBeInTheDocument();
   });
 
   it('sums multiple card refs', () => {
@@ -36,8 +35,6 @@ describe('InOutCounter', () => {
         inCards={[{ name: 'C', quantity: 3 }]}
       />,
     );
-    expect(screen.getByText('Out: 3')).toBeInTheDocument();
-    expect(screen.getByText('In: 3')).toBeInTheDocument();
-    expect(screen.getByText('Balanced')).toBeInTheDocument();
+    expect(screen.getByText('3 swaps')).toBeInTheDocument();
   });
 });
