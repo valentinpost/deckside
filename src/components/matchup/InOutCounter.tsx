@@ -16,18 +16,11 @@ export function InOutCounter({ out, inCards }: InOutCounterProps) {
 
   return (
     <div className="in-out-counter">
-      <div className="counts">
+      {balanced ? (
         <span className="swap-count">{outCount} swaps</span>
-      </div>
-      <div className="status">
-        {balanced ? (
-          <span className="balanced">Balanced</span>
-        ) : (
-          <span className="diff">
-            {outCount} out / {inCount} in
-          </span>
-        )}
-      </div>
+      ) : (
+        <span className="diff">{outCount} out / {inCount} in</span>
+      )}
     </div>
   );
 }

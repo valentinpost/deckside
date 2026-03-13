@@ -3,27 +3,11 @@
 .in-out-counter {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: $sp-2;
   font-size: $text-sm;
   line-height: $leading-sm;
 
-  .counts {
-    display: flex;
-    align-items: center;
-    gap: $sp-4;
-  }
-
   .swap-count {
-    font-weight: 500;
-  }
-
-  .status {
-    font-size: $text-sm;
-    line-height: $leading-sm;
-  }
-
-  .balanced {
-    color: var(--color-win);
     font-weight: 500;
   }
 
