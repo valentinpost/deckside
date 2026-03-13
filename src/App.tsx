@@ -1,9 +1,16 @@
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AppShell } from './components/layout/AppShell';
 import { HomePage } from './pages/HomePage';
 import { DeckPage } from './pages/DeckPage';
 import { MatchupPage } from './pages/MatchupPage';
 import { useDeckSync } from './hooks/useDeckSync';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
 
 function SyncProvider({ children }: { children: React.ReactNode }) {
   useDeckSync();
@@ -13,6 +20,7 @@ function SyncProvider({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <HashRouter>
+      <ScrollToTop />
       <SyncProvider>
         <AppShell>
           <Routes>

@@ -10,7 +10,7 @@ export function WinRateBadge({ stats, className = 'win-rate' }: WinRateBadgeProp
   if (stats.totalMatches === 0) return null;
   return (
     <span className={className}>
-      {formatWinRate(stats.matchWinRate)} ({stats.matchWins}W-{stats.matchLosses}L)
+      {formatWinRate(stats.matchWinRate)} ({stats.totalMatches} {stats.totalMatches === 1 ? 'match' : 'matches'})
     </span>
   );
 }

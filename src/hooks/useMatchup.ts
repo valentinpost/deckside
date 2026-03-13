@@ -1,8 +1,10 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useDeck } from '@/hooks/useDeck';
 import { useDeckStore } from '@/store/deckStore';
+import { getAuthorName } from '@/db/localstorage';
 import { findStaleRefs } from '@/utils/deckDiff';
 import { toggleCardRef } from '@/utils/cardRefs';
+import { toSlug } from '@/utils/slug';
 import type { CardRef, MatchResult } from '@/types/deck';
 
 export function useMatchup(deckId?: string, matchupSlug?: string) {
@@ -12,7 +14,20 @@ export function useMatchup(deckId?: string, matchupSlug?: string) {
   const updateMatchupNotes = useDeckStore((state) => state.updateMatchupNotes);
   const addMatchResult = useDeckStore((state) => state.addMatchResult);
   const removeMatchResult = useDeckStore((state) => state.removeMatchResult);
-  const matchup = deck?.matchups.find((entry) => entry.slug === matchupSlug);
+  const renameMatchup = useDeckStore((state) => state.renameMatchup);
+  const removeMatchup = useDeckStore((state) => state.removeMatchup);
+  const snapshotHistory = useDeckStore((state) => state.snapshotHistory);
+  // Track by ID once found so a slug rename doesn't briefly lose the reference.
+  // Reset when the slug param changes (navigation to a different matchup).
+  const matchupIdRef = useRef<string | null>(null);
+  const prevSlugRef = useRef(matchupSlug);
+  if (prevSlugRef.current !== matchupSlug) {
+    prevSlugRef.current = matchupSlug;
+    matchupIdRef.current = null;
+  }
+  const matchupBySlug = deck?.matchups.find((entry) => entry.slug === matchupSlug);
+  if (matchupBySlug) matchupIdRef.current = matchupBySlug.id;
+  const matchup = matchupBySlug ?? deck?.matchups.find((entry) => entry.id === matchupIdRef.current);
 
   const [outRefs, setOutRefs] = useState<CardRef[]>([]);
   const [inRefs, setInRefs] = useState<CardRef[]>([]);
@@ -74,6 +89,24 @@ export function useMatchup(deckId?: string, matchupSlug?: string) {
     [matchup, removeMatchResult],
   );
 
+  const handleRename = useCallback(
+    (name: string): string | undefined => {
+      if (!matchup) return undefined;
+      const author = getAuthorName();
+      if (author) snapshotHistory(author, `Renamed matchup: ${matchup.name} -> ${name}`);
+      renameMatchup(matchup.id, name);
+      return toSlug(name);
+    },
+    [matchup, renameMatchup, snapshotHistory],
+  );
+
+  const handleDelete = useCallback(() => {
+    if (!matchup) return;
+    const author = getAuthorName();
+    if (author) snapshotHistory(author, `Deleted matchup: ${matchup.name}`);
+    removeMatchup(matchup.id);
+  }, [matchup, removeMatchup, snapshotHistory]);
+
   const staleCardsByMatchup = useMemo(
     () => deck ? findStaleRefs(deck.matchups, deck.mainboard, deck.sideboard) : new Map(),
     [deck?.matchups, deck?.mainboard, deck?.sideboard],
@@ -99,5 +132,7 @@ export function useMatchup(deckId?: string, matchupSlug?: string) {
     handleNotesBlur,
     handleAddResult,
     handleRemoveResult,
+    handleRename,
+    handleDelete,
   };
 }

@@ -6,7 +6,8 @@
   border-radius: $radius-2xl;
   padding: 0;
   max-width: $max-w-sm;
-  width: 100%;
+  width: calc(100% - #{$sp-6} * 2);
+  margin: auto;
 
   &::backdrop {
     @include glass-backdrop;
