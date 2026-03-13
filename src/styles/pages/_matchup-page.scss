@@ -200,7 +200,7 @@
     }
 
     .summary-inner {
-      padding: $sp-2 $sp-4;
+      padding: $sp-2 max($sp-4, env(safe-area-inset-right)) $sp-2 max($sp-4, env(safe-area-inset-left));
       display: flex;
       align-items: center;
       justify-content: center;

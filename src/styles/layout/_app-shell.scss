@@ -19,14 +19,14 @@
   .header-inner {
     max-width: $max-w-5xl;
     margin: 0 auto;
-    padding: 0 $sp-4;
+    padding: 0 max($sp-4, env(safe-area-inset-right)) 0 max($sp-4, env(safe-area-inset-left));
     height: 3.25rem;
     display: flex;
     align-items: center;
     gap: $sp-2;
 
     @include respond-sm {
-      padding: 0 $sp-6;
+      padding: 0 max($sp-6, env(safe-area-inset-right)) 0 max($sp-6, env(safe-area-inset-left));
       height: 3.5rem;
       gap: $sp-3;
     }
@@ -83,9 +83,9 @@
   max-width: $max-w-5xl;
   margin: 0 auto;
   width: 100%;
-  padding: $sp-4 $sp-4;
+  padding: $sp-4 max($sp-4, env(safe-area-inset-right)) $sp-4 max($sp-4, env(safe-area-inset-left));
 
   @include respond-sm {
-    padding: $sp-6 $sp-6;
+    padding: $sp-6 max($sp-6, env(safe-area-inset-right)) $sp-6 max($sp-6, env(safe-area-inset-left));
   }
 }
