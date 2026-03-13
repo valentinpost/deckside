@@ -1,8 +1,7 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDeckPage } from '@/hooks/useDeckPage';
 import { DeckHeader } from '@/components/deck/DeckHeader';
 import { MatchupList } from '@/components/deck/MatchupList';
-import { AddMatchupInline } from '@/components/deck/AddMatchupInline';
 import { CardPreview } from '@/components/deck/CardPreview';
 import { RefreshDiffBanner } from '@/components/deck/RefreshDiffBanner';
 import { HistoryPanel } from '@/components/history/HistoryPanel';
@@ -12,19 +11,24 @@ import { ErrorBanner } from '@/components/shared/ErrorBanner';
 
 export function DeckPage() {
   const { deckId } = useParams<{ deckId: string }>();
+  const navigate = useNavigate();
   const {
     isLoading, error, refetch, deck,
     authorName, setAuthorName,
-    showAddMatchup, setShowAddMatchup,
     showHistory, setShowHistory,
     refreshMoxfield, refreshing, lastDiff, dismissDiff,
-    handleAddMatchup, handleDeleteMatchup, handleRenameMatchup, handleRevert,
+    handleAddMatchup, handleAddResult, handleRevert,
     handleImport, handleColorChange, handleFaceCardSelect,
   } = useDeckPage(deckId);
 
   if (isLoading) return <LoadingSpinner message="Loading deck..." />;
   if (error) return <ErrorBanner message={error.message} onRetry={() => refetch()} />;
   if (!deck) return <ErrorBanner message="Deck not found" />;
+
+  function onAddMatchup() {
+    const slug = handleAddMatchup();
+    if (slug) navigate(`/deck/${deckId}/${slug}`, { state: { isNew: true } });
+  }
 
   return (
     <div className="deck-page">
@@ -46,26 +50,12 @@ export function DeckPage() {
             <button onClick={() => setShowHistory(true)} className="btn-secondary" title="View edit history">
               History
             </button>
-            {!showAddMatchup && (
-              <button onClick={() => setShowAddMatchup(true)} disabled={!authorName} className="btn-primary">
-                + Add Matchup
-              </button>
-            )}
+            <button onClick={onAddMatchup} disabled={!authorName} className="btn-primary">
+              + Add Matchup
+            </button>
           </div>
         </div>
-        <MatchupList
-          deckId={deck.deckId}
-          matchups={deck.matchups}
-          onDelete={handleDeleteMatchup}
-          onRename={handleRenameMatchup}
-        />
-        {showAddMatchup && (
-          <AddMatchupInline
-            onAdd={(name) => { handleAddMatchup(name); setShowAddMatchup(false); }}
-            onCancel={() => setShowAddMatchup(false)}
-            existingSlugs={deck.matchups.map((matchup) => matchup.slug)}
-          />
-        )}
+        <MatchupList deckId={deck.deckId} matchups={deck.matchups} onAddResult={handleAddResult} />
       </div>
 
       <CardPreview

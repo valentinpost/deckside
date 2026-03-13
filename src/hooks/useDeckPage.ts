@@ -3,14 +3,14 @@ import { useDeck } from '@/hooks/useDeck';
 import { useDeckStore } from '@/store/deckStore';
 import { useRefreshMoxfield } from '@/hooks/useRefreshMoxfield';
 import { getAuthorName } from '@/db/localstorage';
-import type { StoredDeck, DeckColor } from '@/types/deck';
+import { toSlug } from '@/utils/slug';
+import type { StoredDeck, DeckColor, MatchResult } from '@/types/deck';
 
 export function useDeckPage(deckId?: string) {
   const { isLoading, error, refetch } = useDeck(deckId);
   const deck = useDeckStore((state) => state.deck);
   const addMatchup = useDeckStore((state) => state.addMatchup);
-  const removeMatchup = useDeckStore((state) => state.removeMatchup);
-  const renameMatchup = useDeckStore((state) => state.renameMatchup);
+  const addMatchResult = useDeckStore((state) => state.addMatchResult);
   const snapshotHistory = useDeckStore((state) => state.snapshotHistory);
   const revertToHistory = useDeckStore((state) => state.revertToHistory);
   const setDeck = useDeckStore((state) => state.setDeck);
@@ -18,28 +18,23 @@ export function useDeckPage(deckId?: string) {
   const setFaceCard = useDeckStore((state) => state.setFaceCard);
   const { refresh: refreshMoxfield, refreshing, lastDiff, dismissDiff } = useRefreshMoxfield();
 
-  const [showAddMatchup, setShowAddMatchup] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [authorName, setAuthorName] = useState(() => getAuthorName());
 
-  function handleAddMatchup(name: string) {
-    if (!authorName) return;
+  /** Creates a matchup with a default name and returns its slug for navigation. */
+  function handleAddMatchup(): string | undefined {
+    if (!authorName || !deck) return undefined;
+    const baseName = 'New Matchup';
+    const existingSlugs = new Set(deck.matchups.map((m) => m.slug));
+    let name = baseName;
+    let counter = 2;
+    while (existingSlugs.has(toSlug(name))) {
+      name = `${baseName} ${counter}`;
+      counter++;
+    }
     snapshotHistory(authorName, `Added matchup: ${name}`);
     addMatchup(name);
-  }
-
-  function handleDeleteMatchup(matchupId: string) {
-    const targetMatchup = deck?.matchups.find((matchup) => matchup.id === matchupId);
-    if (!authorName || !targetMatchup) return;
-    snapshotHistory(authorName, `Deleted matchup: ${targetMatchup.name}`);
-    removeMatchup(matchupId);
-  }
-
-  function handleRenameMatchup(matchupId: string, name: string) {
-    const targetMatchup = deck?.matchups.find((matchup) => matchup.id === matchupId);
-    if (!authorName || !targetMatchup) return;
-    snapshotHistory(authorName, `Renamed matchup: ${targetMatchup.name} -> ${name}`);
-    renameMatchup(matchupId, name);
+    return toSlug(name);
   }
 
   function handleRevert(entryId: string) {
@@ -59,6 +54,10 @@ export function useDeckPage(deckId?: string) {
     setFaceCard(scryfallId);
   }
 
+  function handleAddResult(matchupId: string, result: Omit<MatchResult, 'id' | 'timestamp'>) {
+    addMatchResult(matchupId, result);
+  }
+
   return {
     isLoading,
     error,
@@ -66,8 +65,6 @@ export function useDeckPage(deckId?: string) {
     deck,
     authorName,
     setAuthorName,
-    showAddMatchup,
-    setShowAddMatchup,
     showHistory,
     setShowHistory,
     refreshMoxfield,
@@ -75,8 +72,7 @@ export function useDeckPage(deckId?: string) {
     lastDiff,
     dismissDiff,
     handleAddMatchup,
-    handleDeleteMatchup,
-    handleRenameMatchup,
+    handleAddResult,
     handleRevert,
     handleImport,
     handleColorChange,

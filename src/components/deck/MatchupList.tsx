@@ -1,16 +1,17 @@
-import { useMemo } from 'react';
-import type { Matchup } from '@/types/deck';
+import { useState, useMemo } from 'react';
+import type { Matchup, MatchResult } from '@/types/deck';
 import { getSwapSummary } from '@/utils/validation';
 import { MatchupListItem } from './MatchupListItem';
 
 interface MatchupListProps {
   deckId: string;
   matchups: Matchup[];
-  onDelete: (matchupId: string) => void;
-  onRename: (matchupId: string, name: string) => void;
+  onAddResult: (matchupId: string, result: Omit<MatchResult, 'id' | 'timestamp'>) => void;
 }
 
-export function MatchupList({ deckId, matchups, onDelete, onRename }: MatchupListProps) {
+export function MatchupList({ deckId, matchups, onAddResult }: MatchupListProps) {
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
   const sorted = useMemo(
     () => [...matchups].sort((a, b) => {
       const aComplete = getSwapSummary(a).isComplete;
@@ -36,8 +37,9 @@ export function MatchupList({ deckId, matchups, onDelete, onRename }: MatchupLis
           key={matchup.id}
           deckId={deckId}
           matchup={matchup}
-          onDelete={() => onDelete(matchup.id)}
-          onRename={(name) => onRename(matchup.id, name)}
+          expanded={expandedId === matchup.id}
+          onToggle={() => setExpandedId(expandedId === matchup.id ? null : matchup.id)}
+          onAddResult={onAddResult}
         />
       ))}
     </div>

@@ -1,41 +1,59 @@
 @use '../../abstracts' as *;
 
 .matchup-list-item {
-  display: flex;
-  align-items: center;
-  gap: $sp-3;
   border-radius: $radius-xl;
   @include glass-panel;
-  padding: $sp-3;
-  transition: $transition-all;
+  transition: $transition-colors;
+  scroll-margin-top: 4rem;
 
   &:hover {
     background: var(--panel-hover-bg);
     border-color: var(--glass-highlight);
   }
 
-  .link {
-    flex: 1;
-    min-width: 0;
+  .row {
+    display: flex;
+    align-items: center;
+    padding: $sp-2 $sp-2 $sp-2 0;
   }
 
-  .inline-input {
-    width: 100%;
-    border-radius: $radius-lg;
-    @include glass-inset;
-    padding: $sp-1 $sp-2;
-    font-size: $text-base;
-    line-height: $leading-base;
+  .row-toggle {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    padding: $sp-1 $sp-2 $sp-1 $sp-3;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
     color: inherit;
+  }
 
-    @include respond-sm {
-      font-size: $text-sm;
-      line-height: $leading-sm;
-    }
+  .edit-link,
+  .chevron-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: $radius-lg;
+    transition: $transition-colors;
+    color: var(--text-faint);
 
-    &:focus {
-      @include focus-ring;
+    &:hover {
+      color: var(--text-secondary);
+      background: var(--glass-tint);
     }
+  }
+
+  .info {
+    flex: 1;
+    min-width: 0;
   }
 
   .name {
@@ -53,43 +71,95 @@
     margin-top: $sp-0_5;
   }
 
-  .draw-tag {
-    @include glass-badge;
-    font-size: $text-xs;
-    padding: 0 $sp-1_5;
-    color: var(--text-secondary);
-  }
-
   .win-rate {
+    color: var(--text-muted);
+  }
+
+  .chevron {
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+    position: relative;
+    transition: transform 200ms ease;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 0.4rem;
+      height: 1.5px;
+      background: var(--text-faint);
+      border-radius: 1px;
+    }
+
     &::before {
-      content: '\00b7';
-      margin-right: $sp-1;
+      right: 50%;
+      transform: translateY(-50%) rotate(40deg);
+      transform-origin: right center;
+    }
+
+    &::after {
+      left: 50%;
+      transform: translateY(-50%) rotate(-40deg);
+      transform-origin: left center;
     }
   }
 
-  .btn-icon-neutral {
-    padding: $sp-2;
-    color: var(--text-faint);
-    flex-shrink: 0;
-    transition: $transition-colors;
-    border-radius: $radius-lg;
+  &[data-expanded] .chevron {
+    transform: rotate(180deg);
+  }
+
+  &[data-incomplete] {
+    opacity: 0.6;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 6px,
+      var(--glass-border) 6px,
+      var(--glass-border) 7px
+    );
 
     &:hover {
-      color: var(--text-secondary);
-      background: var(--glass-tint);
+      opacity: 0.8;
     }
   }
 
-  .btn-icon-danger {
-    padding: $sp-2;
-    color: var(--text-faint);
-    flex-shrink: 0;
-    transition: $transition-colors;
+  .preview {
+    padding: 0 $sp-3 $sp-3;
+    display: flex;
+    flex-direction: column;
+    gap: $sp-3;
+    border-top: 1px solid var(--glass-border);
+    padding-top: $sp-3;
+    margin: 0 $sp-2;
+  }
+
+  .preview-results {
+    border-top: 1px solid var(--glass-border);
+    padding-top: $sp-2;
+  }
+
+  .log-result-btn {
+    font-size: $text-xs;
+    line-height: $leading-xs;
+    padding: $sp-1_5 $sp-3;
     border-radius: $radius-lg;
+    color: var(--text-muted);
+    cursor: pointer;
+    @include glass-button;
+    align-self: flex-start;
+    transition: $transition-colors;
 
     &:hover {
-      color: var(--color-loss);
-      background: var(--danger-tint);
+      color: var(--text-primary);
     }
   }
+
+  .empty {
+    color: var(--text-faint);
+    font-size: $text-sm;
+    line-height: $leading-sm;
+  }
+
 }
