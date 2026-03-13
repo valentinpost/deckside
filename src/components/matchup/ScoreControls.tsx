@@ -19,16 +19,18 @@ interface ScoreControlsProps {
 
 export function ScoreControls({ onPlay, onPlayChange, onScore }: ScoreControlsProps) {
   return (
-    <div className="controls">
+    <div className="score-controls">
       <div className="play-draw">
         <button
-          className={`toggle-btn ${onPlay === true ? 'active' : ''}`}
+          className="toggle-btn"
+          data-active={onPlay === true ? '' : undefined}
           onClick={() => onPlayChange(onPlay === true ? undefined : true)}
         >
           Play
         </button>
         <button
-          className={`toggle-btn ${onPlay === false ? 'active' : ''}`}
+          className="toggle-btn"
+          data-active={onPlay === false ? '' : undefined}
           onClick={() => onPlayChange(onPlay === false ? undefined : false)}
         >
           Draw
