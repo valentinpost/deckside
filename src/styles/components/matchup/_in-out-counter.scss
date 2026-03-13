@@ -13,13 +13,7 @@
     gap: $sp-4;
   }
 
-  .out-count {
-    color: var(--color-loss);
-    font-weight: 500;
-  }
-
-  .in-count {
-    color: var(--color-win);
+  .swap-count {
     font-weight: 500;
   }
 

@@ -82,10 +82,17 @@
       color: var(--color-win);
       border: 1px solid rgba($green-500, 0.25);
 
-      &:hover {
-        background: rgba($green-500, 0.15);
-        border-color: rgba($green-500, 0.4);
-        box-shadow: var(--glass-glow-green);
+      @media (hover: hover) {
+        &:hover {
+          background: rgba($green-500, 0.15);
+          border-color: rgba($green-500, 0.4);
+          box-shadow: var(--glass-glow-green);
+        }
+      }
+
+      &:active {
+        background: rgba($green-500, 0.2);
+        border-color: rgba($green-500, 0.5);
       }
     }
 
@@ -93,10 +100,17 @@
       color: var(--color-loss);
       border: 1px solid rgba($red-500, 0.25);
 
-      &:hover {
-        background: rgba($red-500, 0.15);
-        border-color: rgba($red-500, 0.4);
-        box-shadow: var(--glass-glow-red);
+      @media (hover: hover) {
+        &:hover {
+          background: rgba($red-500, 0.15);
+          border-color: rgba($red-500, 0.4);
+          box-shadow: var(--glass-glow-red);
+        }
+      }
+
+      &:active {
+        background: rgba($red-500, 0.2);
+        border-color: rgba($red-500, 0.5);
       }
     }
   }

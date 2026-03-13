@@ -44,18 +44,26 @@
   }
 
   .subtitle {
+    display: flex;
+    align-items: center;
+    gap: $sp-2;
     font-size: $text-xs;
     line-height: $leading-xs;
     color: var(--text-muted);
     margin-top: $sp-0_5;
   }
 
-  .win-rate {
-    margin-left: $sp-2;
+  .draw-tag {
+    @include glass-badge;
+    font-size: $text-xs;
+    padding: 0 $sp-1_5;
+    color: var(--text-secondary);
+  }
 
+  .win-rate {
     &::before {
       content: '\00b7';
-      margin-right: $sp-2;
+      margin-right: $sp-1;
     }
   }
 

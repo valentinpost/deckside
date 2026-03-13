@@ -17,10 +17,11 @@ export function getSwapSummary(matchup: Matchup): { outCount: number; inCount: n
   return { outCount, inCount, isComplete: outCount > 0 && outCount === inCount };
 }
 
-/** Format swap counts as a display string like "-3 / +3" */
+/** Format swap counts as a concise display string */
 export function formatSwapCounts(outCount: number, inCount: number): string {
   if (outCount === 0 && inCount === 0) return 'No swaps configured';
-  return `-${outCount} / +${inCount}`;
+  if (outCount === inCount) return `${outCount} swaps`;
+  return `${outCount} out / ${inCount} in`;
 }
 
 /** Validate that CardRef quantities don't exceed available deck quantities */

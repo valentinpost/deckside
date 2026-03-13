@@ -18,6 +18,7 @@ export function MatchupListItem({ deckId, matchup, onDelete, onRename }: Matchup
   const [editing, setEditing] = useState(false);
   const { outCount, inCount } = getSwapSummary(matchup);
   const winRateStats = calcWinRate(matchup.results ?? []);
+  const hasDrawPlan = matchup.outOnDraw !== undefined || matchup.inOnDraw !== undefined;
 
   return (
     <div className="matchup-list-item">
@@ -33,6 +34,7 @@ export function MatchupListItem({ deckId, matchup, onDelete, onRename }: Matchup
             <div className="name">{matchup.name}</div>
             <div className="subtitle">
               {formatSwapCounts(outCount, inCount)}
+              {hasDrawPlan && <span className="draw-tag">Play/Draw</span>}
               <WinRateBadge stats={winRateStats} />
             </div>
           </>
